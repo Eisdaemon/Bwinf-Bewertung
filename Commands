@@ -24,3 +24,11 @@ choco install kate; choco install okular; choco upgrade all
 winget install -e --id Oracle.VirtualBox; winget install -e --id BlueJTeam.BlueJ; winget install -e --id MITMediaLab.Scratch.3; winget install -e --id TheDocumentFoundation.LibreOffice; winget install -e --id LibreWolf.LibreWolf; winget install -e --id Neovim.Neovim; winget install -e --id vim.vim; winget install -e --id JetBrains.PyCharm.Community.EAP; winget install -e --id JetBrains.IntelliJIDEA.Community; winget install -e --id Microsoft.WindowsTerminal; winget upgrade --all; net user user /ADD
 #Legt eine Txt mit Infos über die Programme an
 cd ..\..\users\Bewertung\Desktop; echo "Installiert sind folgende Programmier Tools:" "Kate, vim, neovim, Pycharm, IntelliJ, BlueJ, Scratch, Windows Terminal" "Ansonsten sind installiert worden:" "LibreWolf, Okular, LibreOffice, VirtualBox" > Programme.txt
+
+#Linux Install
+sudo apt-get update --fix-missing
+sudo apt install kate okular gnome-boxes vim neovim 
+sudo snap install pycharm-community --classic
+sudo snap install intellij-idea-community --classic
+sudo useradd user
+sudo apt update && sudo apt upgrade
