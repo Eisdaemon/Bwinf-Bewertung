@@ -39,7 +39,13 @@ sudo apt install squid
 #Copy The Config file, before making changes
 sudo cp /etc/squid/squid.conf /etc/squid/squid.conf.original
 sudo chmod a-w /etc/squid/squid.conf.original
+#Open Squid Config
+sudo vim /etc/squid/squid.conf
 #Squid Rules
 acl GOOD dstdomain .bwinf.de
 http_access allow GOOD
 http_access deny all
+#Enable Squid
+sudo systemctl enable --now squid
+#If ufw is enabled
+sudo ufw allow 'Squid'
