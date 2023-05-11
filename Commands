@@ -33,3 +33,13 @@ sudo snap install intellij-idea-community --classic
 sudo snap install code --classic
 sudo useradd user
 sudo apt update && sudo apt upgrade
+
+#Install Squid, for some Contests contestants should not access all of the Web, it is controlled by using the Squid Proxy
+sudo apt install squid
+#Copy The Config file, before making changes
+sudo cp /etc/squid/squid.conf /etc/squid/squid.conf.original
+sudo chmod a-w /etc/squid/squid.conf.original
+#Squid Rules
+acl GOOD dstdomain .bwinf.de
+http_access allow GOOD
+http_access deny all
