@@ -34,18 +34,8 @@ sudo snap install code --classic
 sudo useradd user
 sudo apt update && sudo apt upgrade
 
-#Install Squid, for some Contests contestants should not access all of the Web, it is controlled by using the Squid Proxy
-sudo apt install squid
-#Copy The Config file, before making changes
-sudo cp /etc/squid/squid.conf /etc/squid/squid.conf.original
-sudo chmod a-w /etc/squid/squid.conf.original
-#Open Squid Config
-sudo vim /etc/squid/squid.conf
-#Squid Rules
-acl GOOD dstdomain .bwinf.de
-http_access allow GOOD
-http_access deny all
-#Enable Squid
-sudo systemctl enable --now squid
-#If ufw is enabled
-sudo ufw allow 'Squid'
+#Setup IP Tables
+Das sind angepasste iptables-Konfigurationen vom GCPC. Unter Ubuntu müsste man wohl iptables-persistent installieren, die Dateien unter /etc/iptables/rules.v4 und /etc/iptables/rules.v6 ablegen und systemctl enable iptables-persistent (evtl. heißt es auch nur iptables) ausführen.
+
+DNS sollte eigentlich funktionieren damit, aber falls es nicht geht einfach in die Datei /etc/hosts die folgende Zeile einfügen:
+138.201.137.186 contest.informatik-olympiade.de
