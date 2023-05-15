@@ -35,6 +35,7 @@ sudo useradd user
 sudo passwd -d user
 sudo apt update && sudo apt upgrade
 
-#Setup IP Tables
-Download the ip.sh file and make it executable by using sudo chmod +x ip.sh.
-Run the file and everything will be taken care off
+#Setup  iptables. The iptable Rules will block every website but contest.informatik-contest.de. It will also download a script (and make it executable) to remove all iptable rules. Both the scripts are found in this repo 
+wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/ip.sh
+sudo chmod +x ip.sh
+sudo ./ip.sh
