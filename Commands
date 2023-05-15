@@ -35,7 +35,5 @@ sudo useradd user
 sudo apt update && sudo apt upgrade
 
 #Setup IP Tables
-Das sind angepasste iptables-Konfigurationen vom GCPC. Unter Ubuntu müsste man wohl iptables-persistent installieren, die Dateien unter /etc/iptables/rules.v4 und /etc/iptables/rules.v6 ablegen und systemctl enable iptables-persistent (evtl. heißt es auch nur iptables) ausführen.
-
-DNS sollte eigentlich funktionieren damit, aber falls es nicht geht einfach in die Datei /etc/hosts die folgende Zeile einfügen:
-138.201.137.186 contest.informatik-olympiade.de
+Download the ip.sh file and make it executable by using sudo chmod +x ip.sh.
+Run the file and everything will be taken care off
