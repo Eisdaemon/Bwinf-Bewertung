@@ -1,3 +1,7 @@
+## The Commands in this file are made to set up Laptops for Contents of BWINF easier.
+## The First half or so download all the necessary Programms for Windows via Winget and Chocolatey, in the second half the same Programms are downloaded for Linux and a password less user is added.
+## Lastly there is the Option to execute the script for strictly limiting Internet Access through iptables
+
 #Install Winget
 # get latest download url
 $URL = "https://api.github.com/repos/microsoft/winget-cli/releases/latest"
@@ -31,6 +35,7 @@ sudo apt install kate okular gnome-boxes vim neovim
 sudo snap install pycharm-community --classic
 sudo snap install intellij-idea-community --classic
 sudo snap install code --classic
+# Add a user without Password
 sudo useradd user
 sudo passwd -d user
 sudo apt update && sudo apt upgrade
