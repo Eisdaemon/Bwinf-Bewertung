@@ -6,6 +6,12 @@ else
 	# Make it executable
 	chmod +x ip_away.sh
 fi
+
+
+#Install iptables-persistant 
+apt-get install netfilter-persistent
+apt-get install iptables-persistent
+
 # IPv6
 
 ##
@@ -76,10 +82,6 @@ iptables -A INPUT  -p tcp -s $SERVER_IP -m tcp --dport 443 -j ACCEPT
 iptables -A INPUT  -p tcp -s $SERVER_IP -m tcp --dport 80 -j ACCEPT
 iptables -A OUTPUT -p tcp -d $SERVER_IP -m tcp --dport 80 -j ACCEPT
 iptables -A OUTPUT -p tcp -d $SERVER_IP -m tcp --dport 443 -j ACCEPT
-
-#Install iptables-persistant 
-apt-get install netfilter-persistent
-apt-get install iptables-persistent
 
 
 # Save these Rules to make them Persistant
