@@ -1,3 +1,7 @@
+#Install iptables-persistant 
+apt-get install netfilter-persistent
+apt-get install iptables-persistent
+
 # Download File to remove all IPtable settings if no longer needed
 if test -f ip_away.sh; then
 	echo "ip_away.sh is already downloaded"
@@ -6,11 +10,6 @@ else
 	# Make it executable
 	chmod +x ip_away.sh
 fi
-
-
-#Install iptables-persistant 
-apt-get install netfilter-persistent
-apt-get install iptables-persistent
 
 # IPv6
 
