@@ -96,5 +96,5 @@ netfilter-persistant start
 if grep -Fxq '138.201.137.186 contest.informatik-olympiade.de' /etc/hosts; then
     echo "contest.informatik-olympiade.de is already in the host file"
 else
-    138.201.137.186 contest.informatik-olympiade.de >> /etc/hosts
+    echo "138.201.137.186 contest.informatik-olympiade.de" >> /etc/hosts
 fi
