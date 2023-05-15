@@ -32,6 +32,7 @@ sudo snap install pycharm-community --classic
 sudo snap install intellij-idea-community --classic
 sudo snap install code --classic
 sudo useradd user
+sudo passwd -d user
 sudo apt update && sudo apt upgrade
 
 #Setup IP Tables
