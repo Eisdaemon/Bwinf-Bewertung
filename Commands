@@ -44,3 +44,6 @@ sudo apt update && sudo apt upgrade
 wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/ip.sh
 sudo chmod +x ip.sh
 sudo ./ip.sh
+
+#Mädchenworkshop:
+winget install -e --id Spyder.Spyder; winget install -e --id Python.Python.3.11; winget install -e --id Anaconda.Anaconda3
