@@ -31,14 +31,23 @@ cd ..\..\users\Bewertung\Desktop; echo "Installiert sind folgende Programmier To
 
 #Linux Install
 sudo apt-get update --fix-missing
-sudo apt install kate okular gnome-boxes vim neovim 
+sudo apt install kate okular gnome-boxes vim neovim visualvm codeblocks valgrind ddd emacs geany joe KDevelop gdb gcc nano konsole firefox gnome-terminal
+sudo apt-get install ruby-full byobu
 sudo snap install pycharm-community --classic
 sudo snap install intellij-idea-community --classic
 sudo snap install code --classic
+sudo snap install atom --classic
+snap install --classic eclipse
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
+echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+sudo apt-get update
+sudo apt-get install apt-transport-https
+sudo apt-get install sublime-text
+sudo apt update && sudo apt upgrade
 # Add a user without Password
 sudo useradd user
 sudo passwd -d user
-sudo apt update && sudo apt upgrade
+
 
 #Setup  iptables. The iptable Rules will block every website but contest.informatik-contest.de. It will also download a script (and make it executable) to remove all iptable rules. Both the scripts are found in this repo 
 wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/ip.sh
