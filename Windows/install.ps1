@@ -5,7 +5,7 @@
 
 do {
   $RunDebloat = Read-Host -Prompt "Have you already run the Debloat Script? (y/n)"
-} while ($RunDebloat -ne "y" -or $RunDebloat -ne "n")
+} while ($RunDebloat -ne "y" -and $RunDebloat -ne "n")
 
 if ($RunDebloat -eq "n") {
   Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/debloat.ps1" -OutFile "C:\Users\SysOperator\debloat.ps1"
@@ -16,7 +16,7 @@ if ($RunDebloat -eq "n") {
 #Check if Chris Titus tool war run for Optimizations
 do {
   $RunChris = Read-Host -Prompt "Have you already run the Chris Titus Tool for Optimizations? You may have to restart the script after using it(y/n)"
-} while ($RunChris -ne "y" -or $RunChris -ne "n")
+} while ($RunChris -ne "y" -and $RunChris -ne "n")
 
 if ($RunChris -eq "n") {
   iwr -useb https://christitus.com/win | iex
@@ -44,8 +44,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 
 do {
   $WhatKind = Read-Host -Prompt "Is the Device for the Pool or a coworker (pool/coworker)"
-} while ($WhatKind -ne "pool" -or $WhatKind -ne "coworker")
-
+} while ($WhatKind -ne "pool" -and $WhatKind -ne "coworker")
 if ($WhatKind -eq "pool") {
 #Install all Pool Software for Windows
 
@@ -83,7 +82,7 @@ if ($WhatKind -eq "pool") {
 
   do {
     $Exists = Read-Host -Prompt "Is the Shortcut ready? (y/n)"
-  } while ($Exists -ne "y" -or $Exists -ne "n")
+  } while ($Exists -ne "y" -and $Exists -ne "n")
   cd ..\..\users\operator\Desktop; copy Server.lnk ..\..\Public\Desktop
   "For CloudPBX 2.0 there is no convient way of installation and for Element you have to change the Account to the Coworkers Accout, as there is no System Wide Installation"
 }
