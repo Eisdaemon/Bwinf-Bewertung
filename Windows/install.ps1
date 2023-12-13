@@ -9,7 +9,7 @@ do {
 
 if ($RunDebloat -eq "n") {
   Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/debloat.ps1" -OutFile "C:\Users\SysOperator\debloat.ps1"
-  $PSScriptRoot/C:\Users\SysOperator\debloat.ps1
+  $PSScriptRoot/debloat.ps1
 }
 
 #Check if Chris Titus tool war run for Optimizations
@@ -54,7 +54,7 @@ if ($WhatKind -eq "pool") {
   net user bewertung $BewertungPass /add
   #Make Bewertung Adming
   Add-LocalGroupMember -Group "Administrators" -Member "bewertung"
-  $Users "SysOperator", "bewertung", "user"
+  $Users = "SysOperator", "bewertung", "user"
   #Remove Expiring Password
   $Users | ForEach-Object {Set-ADUser -Identity $_.SamAccountName -PasswordNeverExpires:$True}
 
@@ -73,7 +73,7 @@ if ($WhatKind -eq "pool") {
   $UserPass = Read-Host -Prompt "Enter the Password for the User"
   net user $UserName $UserPass /add
   Add-LocalGroupMember -Group "Administrators" -Member $UserName
-  $Users "SysOperator", $UserName
+  $Users = "SysOperator", $UserName
   #Remove Expiring Password
   $Users | ForEach-Object {Set-ADUser -Identity $_.SamAccountName -PasswordNeverExpires:$True}
   winget install -e --id 7zip.7zip; winget install -e --id TheDocumentFoundation.LibreOffice; winget install -e --id Mozilla.Thunderbird; winget install -e --id Mozilla.Firefox; winget install -e --id Google.Chrome; winget install -e --id Adobe.Acrobat.Reader.64-bit; winget install -e --id GIMP.GIMP; winget install -e --id WireGuard.WireGuard
