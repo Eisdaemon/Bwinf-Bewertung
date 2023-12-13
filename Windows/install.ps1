@@ -2,6 +2,11 @@
 # The Scipt Assumes it is used by SysOperator
 
 #We begin by debloating
+Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe
+
+#  #Install Chocolatey
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
 
 do {
   $RunDebloat = Read-Host -Prompt "Have you already run the Debloat Script? (y/n)"
@@ -24,24 +29,6 @@ if ($RunChris -eq "n") {
 
 #Now it should be Sufficiently Debloated
 #Install Winget and Chocolatey
-  $URL = "https://api.github.com/repos/microsoft/winget-cli/releases/latest"
-  $URL = (Invoke-WebRequest -Uri $URL).Content | ConvertFrom-Json |
-        Select-Object -ExpandProperty "assets" |
-        Where-Object "browser_download_url" -Match '.msixbundle' |
-        Select-Object -ExpandProperty "browser_download_url"
-
-  #  download
-  Invoke-WebRequest -Uri $URL -OutFile "Setup.msix" -UseBasicParsing
-
-  # install
-  Add-AppxPackage -Path "Setup.msix"
-
-  # delete file
-  Remove-Item "Setup.msix"
-
-#  #Install Chocolatey
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-
 do {
   $WhatKind = Read-Host -Prompt "Is the Device for the Pool or a coworker (pool/coworker)"
 } while ($WhatKind -ne "pool" -and $WhatKind -ne "coworker")
