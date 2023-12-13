@@ -8,9 +8,8 @@ do {
 } while ($RunDebloat -ne "y" or $RunDebloat -ne "n")
 
 if ($RunDebloat -eq "n") {
-  $WebClient = New-Object System.Net.WebClient
-  $WebClient.DownlaodFile("https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/debloat.ps1")
-  $PSScriptRoot/debloat.ps1
+  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/debloat.ps1" -OutFile "C:\Users\SysOperator\debloat.ps1"
+  $PSScriptRoot/C:\Users\SysOperator\debloat.ps1
 }
 
 #Check if Chris Titus tool war run for Optimizations
