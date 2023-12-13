@@ -9,7 +9,8 @@ do {
 
 if ($RunDebloat -eq "n") {
   Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/debloat.ps1" -OutFile "C:\Users\SysOperator\debloat.ps1"
-  $PSScriptRoot/debloat.ps1
+  $PSScriptRoot
+  & "$PSScriptRoot\debloat.ps1"
 }
 
 #Check if Chris Titus tool war run for Optimizations
