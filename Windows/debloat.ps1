@@ -3,7 +3,6 @@
 .Removes bloat from a fresh Windows build
 .DESCRIPTION
 .Removes AppX Packages
-.Disables Cortana
 .Removes McAfee
 .Removes HP Bloat
 .Removes Dell Bloat
@@ -460,33 +459,6 @@ $UserSIDs = Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Pr
     If (Test-Path $Advertising) {
         Set-ItemProperty $Advertising Enabled -Value 0 
     }
-            
-    #Stops Cortana from being used as part of your Windows Search Function
-    Write-Host "Stopping Cortana from being used as part of your Windows Search Function"
-    $Search = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search"
-    If (!(Test-Path $Search)) {
-        New-Item $Search
-    }
-    If (Test-Path $Search) {
-        Set-ItemProperty $Search AllowCortana -Value 0 
-    }
-
-    #Disables Web Search in Start Menu
-    Write-Host "Disabling Bing Search in Start Menu"
-    $WebSearch = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search"
-    If (!(Test-Path $WebSearch)) {
-        New-Item $WebSearch
-    }
-    Set-ItemProperty $WebSearch DisableWebSearch -Value 1 
-    ##Loop through all user SIDs in the registry and disable Bing Search
-    foreach ($sid in $UserSIDs) {
-        $WebSearch = "Registry::HKU\$sid\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
-        If (!(Test-Path $WebSearch)) {
-            New-Item $WebSearch
-        }
-        Set-ItemProperty $WebSearch BingSearchEnabled -Value 0
-    }
-    
     Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" BingSearchEnabled -Value 0 
 
             
@@ -634,45 +606,6 @@ $UserSIDs = Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Pr
         }
     }
 
-    Write-Host "Disabling Cortana"
-    $Cortana1 = "HKCU:\SOFTWARE\Microsoft\Personalization\Settings"
-    $Cortana2 = "HKCU:\SOFTWARE\Microsoft\InputPersonalization"
-    $Cortana3 = "HKCU:\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore"
-    If (!(Test-Path $Cortana1)) {
-        New-Item $Cortana1
-    }
-    Set-ItemProperty $Cortana1 AcceptedPrivacyPolicy -Value 0 
-    If (!(Test-Path $Cortana2)) {
-        New-Item $Cortana2
-    }
-    Set-ItemProperty $Cortana2 RestrictImplicitTextCollection -Value 1 
-    Set-ItemProperty $Cortana2 RestrictImplicitInkCollection -Value 1 
-    If (!(Test-Path $Cortana3)) {
-        New-Item $Cortana3
-    }
-    Set-ItemProperty $Cortana3 HarvestContacts -Value 0
-
-    ##Loop through users and do the same
-    foreach ($sid in $UserSIDs) {
-        $Cortana1 = "Registry::HKU\$sid\SOFTWARE\Microsoft\Personalization\Settings"
-        $Cortana2 = "Registry::HKU\$sid\SOFTWARE\Microsoft\InputPersonalization"
-        $Cortana3 = "Registry::HKU\$sid\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore"
-        If (!(Test-Path $Cortana1)) {
-            New-Item $Cortana1
-        }
-        Set-ItemProperty $Cortana1 AcceptedPrivacyPolicy -Value 0 
-        If (!(Test-Path $Cortana2)) {
-            New-Item $Cortana2
-        }
-        Set-ItemProperty $Cortana2 RestrictImplicitTextCollection -Value 1 
-        Set-ItemProperty $Cortana2 RestrictImplicitInkCollection -Value 1 
-        If (!(Test-Path $Cortana3)) {
-            New-Item $Cortana3
-        }
-        Set-ItemProperty $Cortana3 HarvestContacts -Value 0
-    }
-
-
     #Removes 3D Objects from the 'My Computer' submenu in explorer
     Write-Host "Removing 3D Objects from explorer 'My Computer' submenu"
     $Objects32 = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}"
@@ -699,9 +632,6 @@ else {
     New-ItemProperty -Path $registryPath -Name $name -Value $value -PropertyType DWORD -Force | Out-Null
 }
 
-##Kill Cortana again
-Get-AppxPackage - allusers Microsoft.549981C3F5F10 | Remove AppxPackage
-    
 ############################################################################################################
 #                                        Remove Scheduled Tasks                                            #
 #                                                                                                          #
@@ -757,10 +687,6 @@ Get-AppxPackage - allusers Microsoft.549981C3F5F10 | Remove AppxPackage
     write-host "Removed Xbox Gaming Overlay"
     Get-AppxPackage -allusers Microsoft.XboxGameCallableUI | Remove-AppxPackage
     write-host "Removed Xbox Game Callable UI"
-
-    #Remove Cortana
-    Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage
-    write-host "Removed Cortana"
 
     #Remove GetStarted
     Get-AppxPackage -allusers *getstarted* | Remove-AppxPackage
@@ -1676,9 +1602,7 @@ $whitelistapps = @(
     "Microsoft Edge Update"
     "Microsoft Edge WebView2 Runtime"
     "Google Chrome"
-    "Microsoft Teams"
-    "Teams Machine-Wide Installer"
-    "Microsoft OneDrive"
+    "Cortana"
 )
 
 $InstalledSoftware = Get-ChildItem "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
@@ -1723,36 +1647,6 @@ foreach($obj32 in $InstalledSoftware32){
         start-process "cmd.exe" -ArgumentList "/c $uninstallapp"
         }
     }
-}
-
-##Remove Chrome
-$chrome32path = "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Google Chrome"
-
-if ($null -ne $chrome32path) {
-
-$versions = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Google Chrome').version
-ForEach ($version in $versions) {
-write-host "Found Chrome version $version"
-$directory = ${env:ProgramFiles(x86)}
-write-host "Removing Chrome"
-Start-Process "$directory\Google\Chrome\Application\$version\Installer\setup.exe" -argumentlist  "--uninstall --multi-install --chrome --system-level --force-uninstall"
-}
-
-}
-
-$chromepath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Google Chrome"
-
-if ($null -ne $chromepath) {
-
-$versions = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Google Chrome').version
-ForEach ($version in $versions) {
-write-host "Found Chrome version $version"
-$directory = ${env:ProgramFiles}
-write-host "Removing Chrome"
-Start-Process "$directory\Google\Chrome\Application\$version\Installer\setup.exe" -argumentlist  "--uninstall --multi-install --chrome --system-level --force-uninstall"
-}
-
-
 }
 
 }
