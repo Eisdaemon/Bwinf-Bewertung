@@ -23,6 +23,24 @@ if ($RunChris -eq "n") {
 }
 
 #Now it should be Sufficiently Debloated
+#Install Winget and Chocolatey
+  $URL = "https://api.github.com/repos/microsoft/winget-cli/releases/latest"
+  $URL = (Invoke-WebRequest -Uri $URL).Content | ConvertFrom-Json |
+        Select-Object -ExpandProperty "assets" |
+        Where-Object "browser_download_url" -Match '.msixbundle' |
+        Select-Object -ExpandProperty "browser_download_url"
+
+  #  download
+  Invoke-WebRequest -Uri $URL -OutFile "Setup.msix" -UseBasicParsing
+
+  # install
+  Add-AppxPackage -Path "Setup.msix"
+
+  # delete file
+  Remove-Item "Setup.msix"
+
+#  #Install Chocolatey
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 do {
   $WhatKind = Read-Host -Prompt "Is the Device for the Pool or a coworker (pool/coworker)"
@@ -41,25 +59,6 @@ if ($WhatKind -eq "pool") {
   #Remove Expiring Password
   $Users | ForEach-Object {Set-ADUser -Identity $_.SamAccountName -PasswordNeverExpires:$True}
 
-  #Install Winget
-  # get latest download url
-  $URL = "https://api.github.com/repos/microsoft/winget-cli/releases/latest"
-  $URL = (Invoke-WebRequest -Uri $URL).Content | ConvertFrom-Json |
-        Select-Object -ExpandProperty "assets" |
-        Where-Object "browser_download_url" -Match '.msixbundle' |
-        Select-Object -ExpandProperty "browser_download_url"
-
-  #  download
-  Invoke-WebRequest -Uri $URL -OutFile "Setup.msix" -UseBasicParsing
-
-  # install
-  Add-AppxPackage -Path "Setup.msix"
-
-  # delete file
-  Remove-Item "Setup.msix"
-
-  #Install Chocolatey
-  Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
   #Install via Choco: Kate, Okular and Update every choco Package
   choco install kate; choco install okular; choco upgrade all
 
