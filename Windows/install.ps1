@@ -3,6 +3,14 @@
 
 #We begin by debloating
 Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe
+Invoke-WebRequest `
+    -URI https://www.nuget.org/api/v2/package/Microsoft.UI.Xaml/2.7.3 `
+    -OutFile xaml.zip -UseBasicParsing
+New-Item -ItemType Directory -Path xaml
+Expand-Archive -Path xaml.zip -DestinationPath xaml
+Add-AppxPackage -Path "xaml\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx"
+Remove-Item xaml.zip
+Remove-Item xaml -Recurse
 
 #  #Install Chocolatey
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
