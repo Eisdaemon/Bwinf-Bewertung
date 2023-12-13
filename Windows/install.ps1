@@ -79,6 +79,12 @@ if ($WhatKind -eq "pool") {
   $Users | ForEach-Object {Set-ADUser -Identity $_.SamAccountName -PasswordNeverExpires:$True}
   winget install -e --id 7zip.7zip; winget install -e --id TheDocumentFoundation.LibreOffice; winget install -e --id Mozilla.Thunderbird; winget install -e --id Mozilla.Firefox; winget install -e --id Google.Chrome; winget install -e --id Adobe.Acrobat.Reader.64-bit; winget install -e --id GIMP.GIMP; winget install -e --id WireGuard.WireGuard
   choco install okular
+  "Create Shortcut on Desktop pointing to \\192.168.2.2\ with the Name Server"
+
+  do {
+    $Exists = Read-Host -Prompt "Is the Shortcut ready? (y/n)"
+  } while ($Exists -ne "y" or $Exists -ne "n")
+  cd ..\..\users\operator\Desktop; copy Server.lnk ..\..\Public\Desktop
   "For CloudPBX 2.0 there is no convient way of installation and for Element you have to change the Account to the Coworkers Accout, as there is no System Wide Installation"
 }
 
