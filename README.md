@@ -16,4 +16,22 @@ Laptop for colleges are setup with Software like Element, Thunderbird, Different
 They also get an Admin account with their name and Server passwords. They have to be Admin Account due to the usage of Wireguard.
 They also get a shortcut to the Server on the Desktop. Last but not least some of the people get Access to Filemaker. Filemaker Licenses and Installation Files are Stores on the Server und geste\\Filemaker
 
+The Chris Titus Tool is only used here for the Standard Settings, not installation.
+
+The Windows Script should be executed while being in the Home Dir as Working dir.
+
+It can be that windows does not allow the Script execution. You can change it by typing the following command:
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+
+You should change it back later to
+
+Set-ExecutionPolicy -ExecutionPolicy AllSigned
+
+For Security Reasons
+
+You can download the Script by using 
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/install.ps1" -OutFile "C:\Users\SysOperator\install.ps1"
+
+Bugs: Removing the password expiry doesn't work right now and has to be done manually
+
 ![alt text](https://maxleiter.com/blog/node-tooling/unix-poster.jpg)
