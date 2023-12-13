@@ -2,7 +2,7 @@
 
 ## Author: Joris Lamberty
 
-### Credit too Chris Titus Windows Debloat tool and andrew-s-taylor debloat script which is used here slightly modified
+### Credit too Chris Titus Windows Debloat tool and andrew-s-taylor debloat script which is used here slightly modified, aswell to the add user scipt provided here https://www.baeldung.com/linux/automate-user-account-creation
 
 All BWINF Laptops are setup with a Windows installation and an Linux Installation. It was Ubuntu for the longest time, but i switched to KDE Neon, due to the use of flatpak
 
