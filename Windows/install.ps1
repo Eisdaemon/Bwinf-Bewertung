@@ -77,7 +77,7 @@ if ($WhatKind -eq "pool") {
   $Users "SysOperator", $UserName
   #Remove Expiring Password
   $Users | ForEach-Object {Set-ADUser -Identity $_.SamAccountName -PasswordNeverExpires:$True}
-  winget install -e --id 7zip.7zip; winget install -e --id TheDocumentFoundation.LibreOffice; winget install -e --id Mozilla.Thunderbird; winget install -e --id Mozilla.Firefox; winget install -e --id Google.Chrome; winget install -e --id Adobe.Acrobat.Reader.64-bit; winget install -e --id GIMP.GIMP
+  winget install -e --id 7zip.7zip; winget install -e --id TheDocumentFoundation.LibreOffice; winget install -e --id Mozilla.Thunderbird; winget install -e --id Mozilla.Firefox; winget install -e --id Google.Chrome; winget install -e --id Adobe.Acrobat.Reader.64-bit; winget install -e --id GIMP.GIMP; winget install -e --id WireGuard.WireGuard
   choco install okular
   "For CloudPBX 2.0 there is no convient way of installation and for Element you have to change the Account to the Coworkers Accout, as there is no System Wide Installation"
 }
