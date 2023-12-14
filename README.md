@@ -32,7 +32,7 @@ You should change it back later to:
 For Security Reasons\
 
 You can download the Script by using:
-
+    
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/install.ps1" -OutFile "C:\Users\SysOperator\install.ps1"
 
 Bugs: Removing the password expiry doesn't work right now and has to be done manually
