@@ -9,7 +9,7 @@ All BWINF Laptops are setup with a Windows installation and an Linux Installatio
 All Laptops have an SysOperator Account as Admin Account on each installation.  
 
 Pool Laptops are setup with more Programming Software which is useful. They are also available as "Bewertungs Laptops". Therefore they are getting an additional Admin Account "bewertung"  
-If used for any usage with people outside BWINF, like for IOI Training, they get an additional "user" Account.  
+If used for any usage with people outside BWINF, like for IOI Training, they get an additional "bwinfuser" Account.  
 While Most of the Time a VM with all Software is used, there is the possibility to use the Laptops as well, by using the ip.sh script provided. It cuts all Internet Access, but to a selected Website and the Localhost.  
 This Script is only available on Linux. It is downloaded, but the executed while installing all software  
 

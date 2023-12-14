@@ -50,12 +50,12 @@ if ($WhatKind -eq "pool") {
   #For a Pool Laptop we use to accounts, besides the SysOperator, these are an Admin "bewertung" Account for the evaluation days of the BWINF and a user account, for something like the Girl Camps
 
   $UserPass = Read-Host -Prompt "Enter the Password for the User Account"
-  net user user $UserPass /add
+  net user bwinfuser $UserPass /add
   $BewertungPass  = Read-Host -Prompt "Enter the Password for the Bewertungs Account"
   net user bewertung $BewertungPass /add
   #Make Bewertung Adming
   Add-LocalGroupMember -Group "Administrators" -Member "bewertung"
-  Set-LocalUser -Name "user" -PasswordNeverExpires:$true
+  Set-LocalUser -Name "bwinfuser" -PasswordNeverExpires:$true
   Set-LocalUser -Name "bewertung" -PasswordNeverExpires:$true
   Set-LocalUser -Name "SysOperator" -PasswordNeverExpires:$true
 
