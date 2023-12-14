@@ -22,6 +22,7 @@ The Chris Titus Tool is only used here for the Standard Settings, not installati
 The Windows Script should be executed while being in the home dir as working dir. \
 
 It can be that windows does not allow the Script execution. You can change it by typing the following command: \
+    
     Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 
 You should change it back later to: \
@@ -31,6 +32,7 @@ You should change it back later to: \
 For Security Reasons \
 
 You can download the Script by using: \
+    
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/install.ps1" -OutFile "C:\Users\SysOperator\install.ps1"
 
 Bugs: Removing the password expiry doesn't work right now and has to be done manually
