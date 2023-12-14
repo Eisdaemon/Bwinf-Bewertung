@@ -65,10 +65,10 @@ if ($WhatKind -eq "pool") {
   #Install via Choco: Kate, Okular and Update every choco Package
   choco install kate; choco install okular; choco upgrade all
 
-  #Install via winget: Virtual Box, BlueJ, Scratch, LibreOffice, LibreWolf, Neovim, vim, Pycharm and IntelliJ, Windows Terminal and add a new "user" account, it also should update every winget install programm
-  winget install -e --id Oracle.VirtualBox; winget install -e --id BlueJTeam.BlueJ; winget install -e --id MITMediaLab.Scratch.3; winget install -e --id TheDocumentFoundation.LibreOffice; winget install -e --id LibreWolf.LibreWolf; winget install -e --id Neovim.Neovim; winget install -e --id vim.vim; winget install -e --id JetBrains.PyCharm.Community.EAP; winget install -e --id JetBrains.IntelliJIDEA.Community; winget install -e --id Microsoft.WindowsTerminal; winget install -e --id Microsoft.VisualStudioCode; winget upgrade --all; net user user ioi-workshop /ADD
+  #Install via winget: Virtual Box, BlueJ, Scratch, LibreOffice, LibreWolf, Neovim, vim, Pycharm and IntelliJ, Windows Terminal  also should update every winget install programm
+  winget install -e --id Oracle.VirtualBox; winget install -e --id BlueJTeam.BlueJ; winget install -e --id MITMediaLab.Scratch.3; winget install -e --id TheDocumentFoundation.LibreOffice; winget install -e --id LibreWolf.LibreWolf; winget install -e --id Neovim.Neovim; winget install -e --id vim.vim; winget install -e --id JetBrains.PyCharm.Community.EAP; winget install -e --id JetBrains.IntelliJIDEA.Community; winget install -e --id Microsoft.WindowsTerminal; winget install -e --id Microsoft.VisualStudioCode; winget upgrade --all;
   #Legt eine Txt mit Infos über die Programme an
-  winget install -e --id Spyder.Spyder; winget install -e --id Python.Python.3.11; winget install -e --id Anaconda.Anaconda3
+  winget install -e --id Spyder.Spyder; winget install -e --id Python.Python.3.11; winget install -e --id Anaconda.Anaconda3; winget install -e --id 7zip.7zip
   cd ..\..\users\bewertung\Desktop; echo "Installiert sind folgende Programmier Tools:" "Kate, vim, neovim, Pycharm, IntelliJ, BlueJ, Scratch, Windows Terminal, VSCode" "Ansonsten sind installiert worden:" "LibreWolf, Okular, LibreOffice, VirtualBox" > Programme.txt
 } elseif ($WhatKind -eq "coworker") {
 
