@@ -49,9 +49,9 @@ if ($WhatKind -eq "pool") {
   net user bewertung $BewertungPass /add
   #Make Bewertung Adming
   Add-LocalGroupMember -Group "Administrators" -Member "bewertung"
-  $Users = "SysOperator", "bewertung", "user"
-  #Remove Expiring Password
-  $Users | ForEach-Object {Set-ADUser -Identity $_.SamAccountName -PasswordNeverExpires:$True}
+  Set-LocalUser -Name "user" -PasswordNeverExpires:$true
+  Set-LocalUser -Name "bewertung" -PasswordNeverExpires:$true
+  Set-LocalUser -Name "SysOperator" -PasswordNeverExpires:$true
 
   #Install via Choco: Kate, Okular and Update every choco Package
   choco install kate; choco install okular; choco upgrade all
@@ -68,9 +68,9 @@ if ($WhatKind -eq "pool") {
   $UserPass = Read-Host -Prompt "Enter the Password for the User"
   net user $UserName $UserPass /add
   Add-LocalGroupMember -Group "Administrators" -Member $UserName
-  $Users = "SysOperator", $UserName
   #Remove Expiring Password
-  $Users | ForEach-Object {Set-ADUser -Identity $_.SamAccountName -PasswordNeverExpires:$True}
+  Set-LocalUser -Name "SysOperator" -PasswordNeverExpires:$true
+  Set-LocalUser -Name $UserName -PasswordNeverExpires:$true
   winget install -e --id 7zip.7zip; winget install -e --id TheDocumentFoundation.LibreOffice; winget install -e --id Mozilla.Thunderbird; winget install -e --id Mozilla.Firefox; winget install -e --id Google.Chrome; winget install -e --id Adobe.Acrobat.Reader.64-bit; winget install -e --id GIMP.GIMP; winget install -e --id WireGuard.WireGuard
   choco install okular
   "Create Shortcut on Desktop pointing to \\192.168.2.2\ with the Name Server"
