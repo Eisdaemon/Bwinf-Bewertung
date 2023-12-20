@@ -55,6 +55,7 @@ if ($WhatKind -eq "pool") {
   net user bewertung $BewertungPass /add
   #Make Bewertung Adming
   Add-LocalGroupMember -Group "Administrators" -Member "bewertung"
+  Add-LocalGroupMember -Group "Administratoren" -Member "bewertung" #We try again with the German word
   Set-LocalUser -Name "bwinfuser" -PasswordNeverExpires:$true
   Set-LocalUser -Name "bewertung" -PasswordNeverExpires:$true
   Set-LocalUser -Name "SysOperator" -PasswordNeverExpires:$true
