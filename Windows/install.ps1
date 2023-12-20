@@ -10,6 +10,8 @@ Write-Host "Downloading Winget Script and Executing it"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/winget.ps1" -OutFile "C:\Users\SysOperator\winget.ps1"
 $PSScriptRoot
 & "$PSScriptRoot\winget.ps1"
+#Register Winget
+Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe
 #Clean Up the Winget install script
 Write-Host "Downloading and Installing Chocolatey"
 Remove-Item C:\Users\SysOperator\winget.ps1
