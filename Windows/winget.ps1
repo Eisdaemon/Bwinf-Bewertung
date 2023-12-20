@@ -793,15 +793,6 @@ if ($osVersion.Type -eq "Server" -and $osVersion.NumericVersion -lt 2022) {
     Write-Error "winget is only compatible with Windows Server 2022+."
     exit 1
 }
-
-# Check if winget is already installed
-if (Get-WingetStatus) {
-    if ($Force -eq $false) {
-        Write-Output "winget is already installed, exiting..."
-        exit 0
-    }
-}
-
 # ============================================================================ #
 # Beginning of installation process
 # ============================================================================ #
