@@ -99,3 +99,4 @@ if ($WhatKind -eq "pool") {
 }
 
 Write-Host "Finished Install Script for Windows"
+Set-ExecutionPolicy -ExecutionPolicy AllSigned

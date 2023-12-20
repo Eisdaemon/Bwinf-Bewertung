@@ -25,11 +25,7 @@ It can be that windows does not allow the Script execution. You can change it by
 
     Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 
-You should change it back later to: 
-
-    Set-ExecutionPolicy -ExecutionPolicy AllSigned
-
-For Security Reasons  
+The Script changes it at the end of execution back  
 
 You can download the Script by using:
     
