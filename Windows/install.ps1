@@ -58,6 +58,7 @@ if ($WhatKind -eq "pool") {
   #Make Bewertung Adming
   Add-LocalGroupMember -Group "Administrators" -Member "bewertung"
   Add-LocalGroupMember -Group "Administratoren" -Member "bewertung" #We try again with the German word
+  Write-Host "You Only need to check if you get two Errors like that, as it tries german and english localization"
   Set-LocalUser -Name "bwinfuser" -PasswordNeverExpires:$true
   Set-LocalUser -Name "bewertung" -PasswordNeverExpires:$true
   Set-LocalUser -Name "SysOperator" -PasswordNeverExpires:$true
@@ -81,6 +82,8 @@ if ($WhatKind -eq "pool") {
   net user $UserName $UserPass /add
   #The Coworkers do have to become admins, due to the Fact that WireGuard only works on admin accounts
   Add-LocalGroupMember -Group "Administrators" -Member $UserName
+  Add-LocalGroupMember -Group "Administratoren" -Member $UserName #We try again with the German word
+  Write-Host "You Only need to check if you get two Errors like that, as it tries german and english localization"
   #Remove Expiring Password
   Set-LocalUser -Name "SysOperator" -PasswordNeverExpires:$true
   Set-LocalUser -Name $UserName -PasswordNeverExpires:$true
