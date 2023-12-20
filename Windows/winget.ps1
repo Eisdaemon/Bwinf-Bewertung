@@ -761,10 +761,7 @@ function Install-Prerequisite {
 # Initial checks
 # ============================================================================ #
 
-# Check for updates if -CheckForUpdate is specified
-if ($CheckForUpdate) {
-    CheckForUpdate -RepoOwner $RepoOwner -RepoName $RepoName -CurrentVersion $CurrentVersion -PowerShellGalleryName $PowerShellGalleryName
-}
+CheckForUpdate -RepoOwner $RepoOwner -RepoName $RepoName -CurrentVersion $CurrentVersion -PowerShellGalleryName $PowerShellGalleryName
 
 # Heading
 Write-Output "winget-install $CurrentVersion"
