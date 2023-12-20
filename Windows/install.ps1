@@ -99,3 +99,4 @@ if ($WhatKind -eq "pool") {
 
 Write-Host "Finished Install Script for Windows"
 Set-ExecutionPolicy -ExecutionPolicy AllSigned
+Remove-Item C:\Users\SysOperator\install.ps1 #Removes itself at the end
