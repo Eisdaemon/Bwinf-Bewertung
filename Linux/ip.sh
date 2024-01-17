@@ -6,7 +6,7 @@ apt-get install iptables-persistent
 if test -f ip_away.sh; then
 	echo "ip_away.sh is already downloaded"
 else
-	wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/ip_away.sh
+	wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip_away.sh
 	# Make it executable
 	chmod +x ip_away.sh
 fi
