@@ -33,7 +33,7 @@ apt update && sudo apt upgrade
 
 
 #Setup  iptables. The iptable Rules will block every website but contest.informatik-contest.de. It will also download a script (and make it executable) to remove all iptable rules. Both the scripts are found in this repo 
-wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/ip.sh
+wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip.sh
 chmod +x ip.sh
 
 #Mädchenworkshop:
