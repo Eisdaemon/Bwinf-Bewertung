@@ -17,7 +17,7 @@ usermod -aG root bewertung
 
 
 apt-get update --fix-missing
-apt install kate okular gnome-boxes vim neovim visualvm codeblocks valgrind ddd emacs geany joe KDevelop gdb gcc nano konsole firefox gnome-terminal
+apt install kate okular gnome-boxes vim neovim visualvm codeblocks valgrind ddd emacs geany joe kdevelop gdb gcc nano konsole firefox gnome-terminal
 apt-get install ruby-full byobu
 snap install pycharm-community --classic
 snap install intellij-idea-community --classic
