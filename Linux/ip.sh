@@ -1,3 +1,26 @@
+
+add_accept () { #Add the accepted IP to the Accept list
+  iptables -A INPUT  -p tcp -s $1 -m tcp --dport 443 -j ACCEPT
+  iptables -A INPUT  -p tcp -s $1 -m tcp --dport 80 -j ACCEPT
+  iptables -A OUTPUT -p tcp -d $1 -m tcp --dport 80 -j ACCEPT
+  iptables -A OUTPUT -p tcp -d $1 -m tcp --dport 443 -j ACCEPT
+  echo "Added $1 to Accept list"
+
+}
+
+more_sites () {
+  echo "Usually only the ip for contest.informatik-olympiade.de is allowed\n If more ip have to be allowed we need to add them here. \n This is e.g. necessary if all traffic is routed through something else first\n Is it necessary(y/n)"
+  read YESNO
+  if [ "$YESNO" == "y" ];
+    echo "Please type the ip in:"
+    read IP_ADRESS
+    add_accept $IP_ADRESS
+    more_sites
+  else 
+    echo "Continue as usual"
+  fi
+}
+
 #Install iptables-persistant 
 apt-get install netfilter-persistent
 apt-get install iptables-persistent
@@ -75,12 +98,13 @@ iptables -A OUTPUT -p tcp -m tcp ! --tcp-flags SYN,RST,ACK SYN -m state --state 
 # ESTABLISHED,RELATED (OUT)
 iptables -A OUTPUT  -m state --state ESTABLISHED,RELATED  -j ACCEPT
 
+more_sites
+
 ## repeat this section for multiple IPs
-SERVER_IP="138.201.137.186" #the IP you want to allow for this machine
-iptables -A INPUT  -p tcp -s $SERVER_IP -m tcp --dport 443 -j ACCEPT
-iptables -A INPUT  -p tcp -s $SERVER_IP -m tcp --dport 80 -j ACCEPT
-iptables -A OUTPUT -p tcp -d $SERVER_IP -m tcp --dport 80 -j ACCEPT
-iptables -A OUTPUT -p tcp -d $SERVER_IP -m tcp --dport 443 -j ACCEPT
+add_accept "128.201.137.196"
+
+
+
 
 
 # Save these Rules to make them Persistant
@@ -90,7 +114,7 @@ ip6tables-save > /etc/iptables/rules.v6
 # Activate the Persistant Netfilter
 systemctl enable netfilter-persistent.service
 systemctl status netfilter-persistent.service
-netfilter-persistant start
+netfilter-persistent start
 
 # Add the Website to Hosts:
 if grep -Fxq '138.201.137.186 contest.informatik-olympiade.de' /etc/hosts; then
@@ -98,3 +122,5 @@ if grep -Fxq '138.201.137.186 contest.informatik-olympiade.de' /etc/hosts; then
 else
     echo "138.201.137.186 contest.informatik-olympiade.de" >> /etc/hosts
 fi
+
+
