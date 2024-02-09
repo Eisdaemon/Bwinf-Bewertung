@@ -11,7 +11,7 @@ echo "Enter the Password for user"
 read UserPass
 echo "Enter the Password for bewertung"
 read bewertungPass
-./add-user.sh -u bwinf-user -p "$UserPass"
+./add-user.sh -u bwinfuser -p "$UserPass"
 ./add-user.sh -u bewertung -p "$bewertungPass"
 usermod -aG root bewertung
 
