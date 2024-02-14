@@ -11,13 +11,13 @@ echo "Enter the Password for user"
 read UserPass
 echo "Enter the Password for bewertung"
 read bewertungPass
-./add-user.sh -u bwinf-user -p "$UserPass"
+./add-user.sh -u bwinfuser -p "$UserPass"
 ./add-user.sh -u bewertung -p "$bewertungPass"
 usermod -aG root bewertung
 
 
 apt-get update --fix-missing
-apt install kate okular gnome-boxes vim neovim visualvm codeblocks valgrind ddd emacs geany joe KDevelop gdb gcc nano konsole firefox gnome-terminal
+apt install kate okular gnome-boxes vim neovim visualvm codeblocks valgrind ddd emacs geany joe kdevelop gdb gcc nano konsole firefox gnome-terminal
 apt-get install ruby-full byobu
 snap install pycharm-community --classic
 snap install intellij-idea-community --classic
@@ -33,7 +33,7 @@ apt update && sudo apt upgrade
 
 
 #Setup  iptables. The iptable Rules will block every website but contest.informatik-contest.de. It will also download a script (and make it executable) to remove all iptable rules. Both the scripts are found in this repo 
-wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/ip.sh
+wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip.sh
 chmod +x ip.sh
 
 #Mädchenworkshop:
