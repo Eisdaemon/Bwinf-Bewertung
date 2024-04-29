@@ -47,6 +47,23 @@ function deblaot {
   }
 }
 
+function sec_up {
+  #This function changes windows to only install security updates immediatly, but delays function updates for a year
+
+  Write-Host "Now Windows Updates a configured"
+  do {
+    $RunDebloat = Read-Host -Prompt "Have you already configured windows updates? (y/n)"
+  } while ($RunDebloat -ne "y" -and $RunDebloat -ne "n")
+
+  if ($RunDebloat -eq "n") {
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/updates.ps1" -OutFile "C:\Users\SysOperator\updates.ps1"
+    #Load Update Filter
+.   ".\updates.ps1"
+    Invoke-WPFUpdatessecurity
+    Remove-Item C:\Users\SysOperator\updates.ps1
+  }
+}
+
 function install_pool {
 
   #For a Pool Laptop we use to accounts, besides the SysOperator, these are an Admin "bewertung" Account for the evaluation days of the BWINF and a user account, for something like the Girl Camps
@@ -107,6 +124,8 @@ install_prerequisites
 #The Debloat Script is downloaded and executed, if not done already
 
 deblaot
+
+sec_up
 
 #Now Windows should be sufficiently debloated, removing a lot of bullsit, diabsling telemetry and many stupid tasks
 #We now ask if the device is used for a pool Laptop, or a coworker. Depending on which, different accounts and software will be used
