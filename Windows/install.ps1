@@ -21,6 +21,19 @@ function install_prerequisites {
 
 }
 
+function chrissi {
+  #Check if Chris Titus tool was run for Optimizations, this should be (most of the time) only be used for Optimizations. Installs are handled later, depending on Laptop type.
+  Write-Host "Now we execute the Chris Titus Tool. Installing Programms is handled later, but the Optimizations should be executed"
+  Start-Sleep -Seconds 2.5
+  do {
+    $RunChris = Read-Host -Prompt "Have you already run the Chris Titus Tool for Optimizations? You may have to restart the script after using it(y/n)"
+  } while ($RunChris -ne "y" -and $RunChris -ne "n")
+
+  if ($RunChris -eq "n") {
+    iwr -useb https://christitus.com/win | iex
+  }
+}
+
 function deblaot {
   
   Write-Host "Now we begin with debloating Windows"
@@ -35,16 +48,6 @@ function deblaot {
     Remove-Item C:\Users\SysOperator\debloat.ps1
   }
 
-  #Check if Chris Titus tool was run for Optimizations, this should be (most of the time) only be used for Optimizations. Installs are handled later, depending on Laptop type.
-  Write-Host "Now we execute the Chris Titus Tool. Installing Programms is handled later, but the Optimizations should be executed"
-  Start-Sleep -Seconds 2.5
-  do {
-    $RunChris = Read-Host -Prompt "Have you already run the Chris Titus Tool for Optimizations? You may have to restart the script after using it(y/n)"
-  } while ($RunChris -ne "y" -and $RunChris -ne "n")
-
-  if ($RunChris -eq "n") {
-    iwr -useb https://christitus.com/win | iex
-  }
 }
 
 function sec_up {
@@ -121,6 +124,10 @@ function install_coworker {
 
 install_prerequisites
 
+#Chris titus script is used
+
+chrissi
+
 #The Debloat Script is downloaded and executed, if not done already
 
 deblaot
@@ -141,6 +148,9 @@ if ($WhatKind -eq "pool") {
   install_coworker
 
 }
+
+
+
 
 #Now we can finish up and cleanup
 
