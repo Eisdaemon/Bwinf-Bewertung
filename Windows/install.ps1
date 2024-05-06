@@ -5,6 +5,15 @@
 #It is not possible to download something to the standard folder, so we move to out homefolder
 cd C:\Users\SysOperator
 
+function remove_adds {
+  $isWin11 = (Get-WmiObject Win32_OperatingSystem).Caption -Match "Windows 11"
+  if($isWin11) {
+    Invoke-WebRequest -Uri "https://github.com/xM4ddy/OFGB/releases/download/v0.3/OFGB-Deps.exe" -OutFile "C:\Users\SysOperator\OFGB.exe"
+    Start-Process -FilePath "C:\Users\SysOperator\OFGB.exe"
+    Remove-Item "C:\Users\SysOperator\OFGB.exe"
+  }
+}
+
 function install_prerequisites {
 
   Write-Host "Downloading Winget Script and Executing it"
@@ -45,7 +54,7 @@ function deblaot {
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/debloat.ps1" -OutFile "C:\Users\SysOperator\debloat.ps1"
     $PSScriptRoot
     & "$PSScriptRoot\debloat.ps1"
-    Remove-Item C:\Users\SysOperator\debloat.ps1
+    Remove-Item "C:\Users\SysOperator\debloat.ps1"
   }
 
 }
@@ -63,7 +72,7 @@ function sec_up {
     #Load Update Filter
 .   ".\updates.ps1"
     Invoke-WPFUpdatessecurity
-    Remove-Item C:\Users\SysOperator\updates.ps1
+    Remove-Item "C:\Users\SysOperator\updates.ps1"
   }
 }
 
@@ -132,7 +141,13 @@ chrissi
 
 deblaot
 
+#Configutes Updates
+
 sec_up
+
+#Remove adds from Win 11
+
+remove_adds
 
 #Now Windows should be sufficiently debloated, removing a lot of bullsit, diabsling telemetry and many stupid tasks
 #We now ask if the device is used for a pool Laptop, or a coworker. Depending on which, different accounts and software will be used
@@ -156,4 +171,4 @@ if ($WhatKind -eq "pool") {
 
 Write-Host "Finished Install Script for Windows"
 Set-ExecutionPolicy -ExecutionPolicy AllSigned
-Remove-Item C:\Users\SysOperator\install.ps1 #Removes itself at the end
+Remove-Item "C:\Users\SysOperator\install.ps1" #Removes itself at the end
