@@ -14,6 +14,31 @@ function remove_adds {
   }
 }
 
+function  disable_bitlocker {
+  $BLinfo = Get-BitlockerVolume
+  if ($BLinfo.ProtectionStatus -eq 'On' -and $BLinfo.EncryptionPercentage -eq 100) {
+    Write-Host "'$env:COMPUTERNAME' - '$($BLinfo.MountPoint)' is encrypted \n Bitlocker Shoud be removed if another Operating System is to be installed."
+    do {
+      $RemoveBit = Read-Host -Prompt "Do you want to remove it(y/n)"
+    } while ($RemoveBit -ne "y" -and $RemoveBit -ne "n")
+
+    if ($RemoveBit -eq "y") {
+      Write-Host "Removing Bitlocker. This can take a few Minutes"
+      try {
+        Disable-BitLocker -MountPoint "C:"
+      }
+      catch {
+        Write-Host "Error during Bitlocker removal"
+      }
+
+    }
+    else {
+      Write-Host "Proceeding with the normal Process"
+    }
+  }
+  
+}
+
 function install_prerequisites {
 
   Write-Host "Downloading Winget Script and Executing it"
@@ -148,6 +173,10 @@ sec_up
 #Remove adds from Win 11
 
 remove_adds
+
+#disable Bitlocker
+
+disable_bitlocker
 
 #Now Windows should be sufficiently debloated, removing a lot of bullsit, diabsling telemetry and many stupid tasks
 #We now ask if the device is used for a pool Laptop, or a coworker. Depending on which, different accounts and software will be used
