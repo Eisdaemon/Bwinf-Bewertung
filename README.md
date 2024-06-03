@@ -31,7 +31,7 @@ You can download the Script by using:
 
 Das Skript für Linux kann durch
     
-    https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/install.sh
+    curl https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/install.sh
     chmod +x install.sh
 
 runtergeladen werden und ausführbar gemacht werden.
