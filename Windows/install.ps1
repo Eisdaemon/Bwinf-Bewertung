@@ -3,14 +3,24 @@
 
 #Cd to home Path, where Files are downloaded.
 #It is not possible to download something to the standard folder, so we move to out homefolder
-cd C:\Users\SysOperator
+
+$homeFolder = $env:USERPROFILE
+
+cd $homeFolder
+
+function Test-IsAdmin {
+
+  $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+  return $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
 
 function remove_adds {
   $isWin11 = (Get-WmiObject Win32_OperatingSystem).Caption -Match "Windows 11"
   if($isWin11) {
-    Invoke-WebRequest -Uri "https://github.com/xM4ddy/OFGB/releases/download/v0.3/OFGB-Deps.exe" -OutFile "C:\Users\SysOperator\OFGB.exe"
-    Start-Process -FilePath "C:\Users\SysOperator\OFGB.exe"
-    Remove-Item "C:\Users\SysOperator\OFGB.exe"
+    $adPath = Join-Path -Path $homeFolder -ChildPath "OFBG.exe"
+    Invoke-WebRequest -Uri "https://github.com/xM4ddy/OFGB/releases/download/v0.3/OFGB-Deps.exe" -OutFile $adPath
+    Start-Process -FilePath $adPath
+    Remove-Item $adPath
   }
 }
 
@@ -41,15 +51,16 @@ function  disable_bitlocker {
 
 function install_prerequisites {
 
+  $wingetPath = Join-Path -Path $homeFolder -ChildPath "winget.ps1"
   Write-Host "Downloading Winget Script and Executing it"
-  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/winget.ps1" -OutFile "C:\Users\SysOperator\winget.ps1"
+  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/winget.ps1" -OutFile $wingetPath
   $PSScriptRoot
   & "$PSScriptRoot\winget.ps1"
   #Register Winget
   Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe
   #Clean Up the Winget install script
   Write-Host "Downloading and Installing Chocolatey"
-  Remove-Item C:\Users\SysOperator\winget.ps1
+  Remove-Item $wingetPath
   #Install Chocolatey
   Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
@@ -71,15 +82,16 @@ function chrissi {
 function deblaot {
   
   Write-Host "Now we begin with debloating Windows"
+  $debloatPath = Join-Path -Path $homeFolder -ChildPath "debloat.ps1"
   do {
     $RunDebloat = Read-Host -Prompt "Have you already run the Debloat Script? (y/n)"
   } while ($RunDebloat -ne "y" -and $RunDebloat -ne "n")
 
   if ($RunDebloat -eq "n") {
-    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/debloat.ps1" -OutFile "C:\Users\SysOperator\debloat.ps1"
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/debloat.ps1" -OutFile $debloatPath
     $PSScriptRoot
     & "$PSScriptRoot\debloat.ps1"
-    Remove-Item "C:\Users\SysOperator\debloat.ps1"
+    Remove-Item $debloatPath
   }
 
 }
@@ -88,16 +100,17 @@ function sec_up {
   #This function changes windows to only install security updates immediatly, but delays function updates for a year
 
   Write-Host "Now Windows Updates a configured"
+  $secPath = Join-Path -Path $homeFolder -ChildPath "updates.ps1"
   do {
-    $RunDebloat = Read-Host -Prompt "Have you already configured windows updates? (y/n)"
-  } while ($RunDebloat -ne "y" -and $RunDebloat -ne "n")
+    $secrun = Read-Host -Prompt "Have you already configured windows updates? (y/n)"
+  } while ($secrun -ne "y" -and $secrun -ne "n")
 
   if ($RunDebloat -eq "n") {
-    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/updates.ps1" -OutFile "C:\Users\SysOperator\updates.ps1"
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/updates.ps1" -OutFile $secPath
     #Load Update Filter
 .   ".\updates.ps1"
     Invoke-WPFUpdatessecurity
-    Remove-Item "C:\Users\SysOperator\updates.ps1"
+    Remove-Item $secPath
   }
 }
 
@@ -153,6 +166,14 @@ function install_coworker {
   Write-Host "For CloudPBX 2.0 there is no convient way of installation and for Element you have to change the Account to the Coworkers Accout, as there is no System Wide Installation"
 
 }
+#Check if we run with admin
+if (-not (Test-IsAdmin)) {
+    Write-Error "This script is not running with administrative privileges."
+    Start-Sleep -Seconds 3
+    exit 1  # Exit the script with a non-zero exit code to indicate failure
+} else {
+    Write-Output "This script is running with administrative privileges."
+}
 
 #Install Prerequisites
 
@@ -201,3 +222,9 @@ if ($WhatKind -eq "pool") {
 Write-Host "Finished Install Script for Windows"
 Set-ExecutionPolicy -ExecutionPolicy AllSigned
 Remove-Item "C:\Users\SysOperator\install.ps1" #Removes itself at the end
+
+
+
+Write-Output "The current user's home folder is: $homeFolder"
+
+
