@@ -8,6 +8,8 @@ $homeFolder = $env:USERPROFILE
 
 cd $homeFolder
 
+$installPath = Join-Path -Path $homeFolder -ChildPath "install.ps1"
+
 function Test-IsAdmin {
 
   $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
@@ -170,6 +172,9 @@ function install_coworker {
 if (-not (Test-IsAdmin)) {
     Write-Error "This script is not running with administrative privileges."
     Start-Sleep -Seconds 3
+    Write-Output "Changing execution Policy back and removing script"
+    Set-ExecutionPolicy -ExecutionPolicy AllSigned
+    Remove-Item $installPath
     exit 1  # Exit the script with a non-zero exit code to indicate failure
 } else {
     Write-Output "This script is running with administrative privileges."
@@ -219,12 +224,12 @@ if ($WhatKind -eq "pool") {
 
 #Now we can finish up and cleanup
 
+Write-Output "Changing execution Policy back and removing script"
 Write-Host "Finished Install Script for Windows"
 Set-ExecutionPolicy -ExecutionPolicy AllSigned
-Remove-Item "C:\Users\SysOperator\install.ps1" #Removes itself at the end
+Remove-Item $installPath
 
 
 
-Write-Output "The current user's home folder is: $homeFolder"
 
 

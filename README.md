@@ -19,8 +19,6 @@ They also get a shortcut to the Server on the Desktop. Last but not least some o
 
 The Chris Titus Tool is only used here for the Standard Settings, not installation.  
 
-The Windows Script should be executed while being in the home dir as working dir.  
-
 It can be that windows does not allow the Script execution. You can change it by typing the following command: 
 
     Set-ExecutionPolicy -ExecutionPolicy Unrestricted
