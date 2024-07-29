@@ -198,7 +198,7 @@ sec_up
 
 #Remove adds from Win 11
 
-remove_adds
+#remove_adds not working or necessary at the moment
 
 #disable Bitlocker
 
