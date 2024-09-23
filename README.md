@@ -29,6 +29,10 @@ You can download the Script by using:
     
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/install.ps1" -OutFile "C:\Users\SysOperator\install.ps1"
 
+Wenn die Laptops auf English für Mitarbeiterinnen sind, lohnt sich vorher die Sprache zu ändern. Ein Reboot danach ist nötig, so dass es ein seperates Skript ist.
+
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/language.ps1" -OutFile "C:\Users\SysOperator\language.ps1"
+
 Das Skript für Linux kann durch
     
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/install.sh
