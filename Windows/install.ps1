@@ -37,7 +37,8 @@ function  disable_bitlocker {
     if ($RemoveBit -eq "y") {
       Write-Host "Removing Bitlocker. This can take a few Minutes"
       try {
-        Disable-BitLocker -MountPoint "C:"
+        $BLV = Get-BitLockerVolume
+        Disable-BitLocker -MountPoint $BLV
       }
       catch {
         Write-Host "Error during Bitlocker removal"
