@@ -1,4 +1,4 @@
-<#PSScriptInfo
+#PSScriptInfo
 
 .VERSION 3.0.1
 
@@ -35,15 +35,15 @@
 
 <#
 .SYNOPSIS
-	Downloads and installs the latest version of winget and its dependencies. Updates the PATH variable if needed.
+    Downloads and installs the latest version of winget and its dependencies. Updates the PATH variable if needed.
 .DESCRIPTION
-	Downloads and installs the latest version of winget and its dependencies. Updates the PATH variable if needed.
+    Downloads and installs the latest version of winget and its dependencies. Updates the PATH variable if needed.
 
 This script is designed to be straightforward and easy to use, removing the hassle of manually downloading, installing, and configuring winget. To make the newly installed winget available for use, a system reboot may be required after running the script.
 
 This function should be run with administrative privileges.
 .EXAMPLE
-	winget-install
+    winget-install
 .PARAMETER DebugMode
     Enables debug mode, which shows additional information for debugging.
 .PARAMETER DisableCleanup
@@ -57,10 +57,10 @@ This function should be run with administrative privileges.
 .PARAMETER Help
     Displays the full help information for the script.
 .NOTES
-	Version      : 3.0.1
-	Created by   : asheroto
+    Version      : 3.0.1
+    Created by   : asheroto
 .LINK
-	Project Site: https://github.com/asheroto/winget-install
+    Project Site: https://github.com/asheroto/winget-install
 #>
 [CmdletBinding()]
 param (
@@ -793,6 +793,15 @@ if ($osVersion.Type -eq "Server" -and $osVersion.NumericVersion -lt 2022) {
     Write-Error "winget is only compatible with Windows Server 2022+."
     exit 1
 }
+
+# Check if winget is already installed
+if (Get-WingetStatus) {
+    if ($Force -eq $false) {
+        Write-Output "winget is already installed, exiting..."
+        exit 0
+    }
+}
+
 # ============================================================================ #
 # Beginning of installation process
 # ============================================================================ #
