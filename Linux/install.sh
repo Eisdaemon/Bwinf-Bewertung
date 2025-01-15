@@ -7,6 +7,9 @@
 [ "$UID" -eq 0 ] || exec sudo "$0" "$@"
 wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/add-user.sh
 chmod +x add-user.sh
+wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/reset_user.sh
+chmod +x reset_user.sh
+
 echo "Enter the Password for user"
 read UserPass
 echo "Enter the Password for bewertung"
