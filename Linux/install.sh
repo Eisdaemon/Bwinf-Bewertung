@@ -5,18 +5,15 @@
 # Set up All Account
 
 [ "$UID" -eq 0 ] || exec sudo "$0" "$@"
-wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/add-user.sh
-chmod +x add-user.sh
-wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/reset_user.sh
-chmod +x reset_user.sh
-
 echo "Enter the Password for user"
 read UserPass
 echo "Enter the Password for bewertung"
 read bewertungPass
-./add-user.sh -u bwinfuser -p "$UserPass"
-./add-user.sh -u bewertung -p "$bewertungPass"
-usermod -aG root bewertung
+sudo useradd -m -s /bin/bash bwinfuser
+echo "bwinfuser:$UserPass" | sudo chpasswd
+sudo useradd -m -s /bin/bash bwinfuser
+echo "bewertung:$bewertungPass" | sudo chpasswd
+usermod -aG sudo bewertung
 
 
 
