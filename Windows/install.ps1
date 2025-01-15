@@ -220,8 +220,9 @@ if ($WhatKind -eq "pool") {
 
 }
 
-
-
+#Download user account reset
+$reseruserPath = Join-Path -Path $homeFolder -ChildPath "reset_user.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Windows/reset_user.ps1" -OutFile $reseruserPath
 
 #Now we can finish up and cleanup
 
