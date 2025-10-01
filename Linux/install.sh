@@ -1,54 +1,81 @@
 #!/bin/bash
-#The Script install all necessary Software for Linux
-#The Script is only relevant for pool Laptops, as we don't use any more congif for coworkers, after the install
-
-# Set up All Account
-
-[ "$UID" -eq 0 ] || exec sudo "$0" "$@"
-echo "Enter the Password for user"
-read UserPass
-echo "Enter the Password for bewertung"
-read bewertungPass
-sudo useradd -m -s /bin/bash bwinfuser
-echo "bwinfuser:$UserPass" | sudo chpasswd
-sudo useradd -m -s /bin/bash bwinfuser
-echo "bewertung:$bewertungPass" | sudo chpasswd
-usermod -aG sudo bewertung
 
 
+#Install all Programms for the IOI and Girls Workshop
+install_all_programms () {
+    #Add Repos
+    sudo add-apt-repository universe
+    wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo tee /etc/apt/keyrings/sublimehq-pub.asc > /dev/null
+    echo -e 'Types: deb\nURIs: https://download.sublimetext.com/\nSuites: apt/stable/\nSigned-By: /etc/apt/keyrings/sublimehq-pub.asc' | sudo tee /etc/apt/sources.list.d/sublime-text.sources
+    echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+    sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+    sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 
-#VS Code
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-rm -f packages.microsoft.gpg
+    sudo apt update
+    sudo apt upgrade
 
-snap install atom --classic
+    wget github.com/atom/atom/releases/download/v1.60.0/atom-amd64.deb
+    sudo apt install ./atom-amd64.deb
+    sudo apt-get install build-essential
 
-#Eclipse
-wget https://www.eclipse.org/downloads/download.php?project=egit&file=eclipse-inst-jar
-tar -xvf eclipse-inst-jar
-cd eclipse-inst-jar && ./eclipse-inst
-
-wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
-echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-apt-get update --fix-missing
-apt-get install
-apt-get install sublime-text apt-transport-https
-apt install kate okular gnome-boxes vim neovim visualvm codeblocks valgrind ddd emacs geany joe kdevelop gdb gcc nano konsole firefox gnome-terminal code
-apt-get install ruby-full byobu
-
-apt update && sudo apt upgrade
+    #Apt installed editors
+    sudo apt-get install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre
 
 
-#Setup  iptables. The iptable Rules will block every website but contest.informatik-contest.de. It will also download a script (and make it executable) to remove all iptable rules. Both the scripts are found in this repo 
-wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip.sh
-chmod +x ip.sh
+    #Jet Brains Packages
+    sudo snap install clion --classic
+    sudo snap install pycharm --classic
 
-#Mädchenworkshop:
-#Linux:
-snap install pycharm-community --classic
-wget https://repo.anaconda.com/archive/Anaconda3-2023.03-1-Linux-x86_64.sh
-chmod +x  Anaconda3-2023.03-1-Linux-x86_64.sh
-bash Anaconda3-2023.03-1-Linux-x86_64.sh
-./anaconda3/bin/conda init
+
+    #Eclipse
+    sudo snap install eclipse --classic
+
+    #KDevelop
+    sudo snap install kdevelop --classic
+
+    #Install Anaconda
+    wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
+    chmod +x Anaconda3-2022.05-Linux-x86_64.sh
+    sudo bash Anaconda3-2022.05-Linux-x86_64.sh
+    ./anaconda3/bin/conda init
+    conda create -c conda-forge -n spyder-env spyder numpy scipy pandas matplotlib sympy cython
+
+    #ToDo
+    #Download and configure code add ons
+    #https://stackoverflow.com/questions/34286515/how-to-install-visual-studio-code-extensions-from-command-line
+}
+
+create_accounts () {
+    echo "Enter the Password for anderes"
+    read anderes_pass
+    sudo useradd -m anderes && echo "anderes:$anderes_pass" | sudo chpasswd
+    echo "Enter the Password for bewertung"
+    read bewertung_pass
+    sudo useradd -m bewertung && echo "bewertung:$bewertung_pass" | sudo chpasswd
+    echo "Enter the Password for ioiuser"
+    read ioi_pass
+    sudo useradd -m ioiuser && echo "ioiuser:$ioi_pass" | sudo chpasswd
+    echo "Enter the Password for girlsuser"
+    read girls_pass
+    sudo useradd -m girlsuser && echo "girlsuser:$girls_pass" | sudo chpasswd
+}
+
+set_ip_rules() {
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip.sh
+    mv ip.sh ~/bin/
+    chmod +x ~/bin/ip.sh
+    sudo ~/bin/ip.sh
+}
+
+add_bin_container() {
+    mkdir -p ~/bin
+    echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
+    source ~/.bashrc
+}
+
+create_backups() {
+    cp -r /home/ioiuser /home/sysoperator
+    cp -r /home/girlsuser /home/sysoperator
+    cp -r /home/anderes /home/sysoperator
+}
