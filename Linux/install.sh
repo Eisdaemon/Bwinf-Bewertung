@@ -82,4 +82,9 @@ create_backups() {
     sudo cp -r /home/anderes /home/sysoperator
 }
 
+create_accounts
 install_all_programms
+add_bin_container
+set_ip_rules
+create_backups
+
