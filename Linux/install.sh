@@ -37,10 +37,10 @@ install_all_programms () {
 
 sudo -u girlsuser bash << 'EOF'
 # Install Anaconda as USER2
-wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
-chmod +x Anaconda3-2022.05-Linux-x86_64.sh
-sudo bash Anaconda3-2022.05-Linux-x86_64.sh
-./anaconda3/bin/conda init
+wget -O /home/girsuser/Anaconda3-2022.05-Linux-x86_64.sh https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
+chmod +x /home/girsuser/Anaconda3-2022.05-Linux-x86_64.sh
+bash /home/girsuser/Anaconda3-2022.05-Linux-x86_64.sh
+/home/girsuser/anaconda3/bin/conda init
 EOF
 
     #ToDo
@@ -65,9 +65,9 @@ create_accounts () {
 
 set_ip_rules() {
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip.sh
-    mv ip.sh ~/bin/
-    chmod +x ~/bin/ip.sh
-    sudo ~/bin/ip.sh
+    mv ip.sh home/sysoperator/bin/
+    chmod +x home/sysoperator/bin/
+    sudo home/sysoperator/bin/
 }
 
 add_bin_container() {
