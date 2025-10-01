@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 
@@ -79,3 +80,5 @@ create_backups() {
     cp -r /home/girlsuser /home/sysoperator
     cp -r /home/anderes /home/sysoperator
 }
+
+install_all_programms()
