@@ -21,12 +21,12 @@ install_all_programms () {
     sudo apt-get install build-essential
 
     #Apt installed editors
-    sudo apt-get install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre
+    sudo apt-get install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre python3-pip python3-spyder
 
 
     #Jet Brains Packages
     sudo snap install clion --classic
-    sudo snap install pycharm --classic
+    sudo snap install pycharm-community --classic
 
 
     #Eclipse
@@ -35,12 +35,13 @@ install_all_programms () {
     #KDevelop
     sudo snap install kdevelop --classic
 
-    #Install Anaconda
-    wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
-    chmod +x Anaconda3-2022.05-Linux-x86_64.sh
-    sudo bash Anaconda3-2022.05-Linux-x86_64.sh
-    ./anaconda3/bin/conda init
-    conda create -c conda-forge -n spyder-env spyder numpy scipy pandas matplotlib sympy cython
+sudo -u girlsuser bash << 'EOF'
+# Install Anaconda as USER2
+wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
+chmod +x Anaconda3-2022.05-Linux-x86_64.sh
+sudo bash Anaconda3-2022.05-Linux-x86_64.sh
+./anaconda3/bin/conda init
+EOF
 
     #ToDo
     #Download and configure code add ons
@@ -76,9 +77,9 @@ add_bin_container() {
 }
 
 create_backups() {
-    cp -r /home/ioiuser /home/sysoperator
-    cp -r /home/girlsuser /home/sysoperator
-    cp -r /home/anderes /home/sysoperator
+    sudo cp -r /home/ioiuser /home/sysoperator
+    sudo cp -r /home/girlsuser /home/sysoperator
+    sudo cp -r /home/anderes /home/sysoperator
 }
 
-install_all_programms()
+install_all_programms
