@@ -8,8 +8,8 @@ if test -f ip_away.sh; then
 else
 	wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/ip_away.sh
 	# Make it executable
-	mv ip_away.sh ~/bin/
-	chmod +x ~/bin/ip_away.sh
+	mv ip_away.sh /home/sysoperator/bin/
+	chmod +x /home/sysoperator/bin/ip_away.sh
 fi
 
 # IPv6
