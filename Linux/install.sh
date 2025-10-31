@@ -21,7 +21,7 @@ install_all_programms () {
     sudo apt-get install build-essential
 
     #Apt installed editors
-    sudo apt-get install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre python3-pip python3-spyder
+    sudo apt-get install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre python3-pip
 
 
     #Jet Brains Packages
@@ -34,14 +34,6 @@ install_all_programms () {
 
     #KDevelop
     sudo snap install kdevelop --classic
-
-sudo -u girlsuser bash << 'EOF'
-# Install Anaconda as USER2
-wget -O /home/girsuser/Anaconda3-2022.05-Linux-x86_64.sh https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
-chmod +x /home/girsuser/Anaconda3-2022.05-Linux-x86_64.sh
-bash /home/girsuser/Anaconda3-2022.05-Linux-x86_64.sh
-/home/girsuser/anaconda3/bin/conda init
-EOF
 
     #ToDo
     #Download and configure code add ons
@@ -58,9 +50,6 @@ create_accounts () {
     echo "Enter the Password for ioiuser"
     read ioi_pass
     sudo useradd -m ioiuser && echo "ioiuser:$ioi_pass" | sudo chpasswd
-    echo "Enter the Password for girlsuser"
-    read girls_pass
-    sudo useradd -m girlsuser && echo "girlsuser:$girls_pass" | sudo chpasswd
 }
 
 set_ip_rules() {
@@ -78,7 +67,6 @@ add_bin_container() {
 
 create_backups() {
     sudo cp -r /home/ioiuser /home/sysoperator
-    sudo cp -r /home/girlsuser /home/sysoperator
     sudo cp -r /home/anderes /home/sysoperator
 }
 
