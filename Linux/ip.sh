@@ -1,7 +1,5 @@
 
 add_accept () { #Add the accepted IP to the Accept list
-  iptables -A INPUT  -p tcp --dport 443 -s $1 -m owner --uid-owner $UID_IP -j ACCEPT
-  iptables -A INPUT  -p tcp --dport 80 -s $1 -m owner --uid-owner $UID_IP -j ACCEPT
   iptables -A OUTPUT -p tcp --dport 80 -d $1 -m owner --uid-owner $UID_IP -j ACCEPT
   iptables -A OUTPUT -p tcp --dport 443 -d $1 -m owner --uid-owner $UID_IP -j ACCEPT
   echo "Added $1 to Accept list\nNote: This Part only adds ip adresses, if you add ip addresses which are not for the contest site and you want to use dns you may need to add them  manually to /etc/hosts"
@@ -44,7 +42,7 @@ apt-get install iptables-persistent
 if test -f ip_away.sh; then
 	echo "ip_away.sh is already downloaded"
 else
-	wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip_away.sh
+	wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/ip.sh
 	# Make it executable
 	mv ip_away.sh ~/bin/
 	chmod +x ~/bin/ip_away.sh
@@ -66,7 +64,7 @@ ip6tables -Z; # zero counters
 ip6tables -F; # flush (delete) rules
 ip6tables -X; # delete all extra chains
 
-# IPv4
+# # IPv4
 
 ## 
 ## set default policies to let everything in
@@ -83,13 +81,9 @@ iptables -X; # delete all extra chains
 
 # Drop everything
 iptables -A OUTPUT -m owner --uid-owner $UID_IP -j DROP
-iptables -A INPUT -m owner --uid-owner $UID_IP -j DROP
-iptables -A FORWARD -m owner --uid-owner $UID_IP -j DROP
 
 # Drop everything IPv6
 ip6tables -A OUTPUT -m owner --uid-owner $UID_IP -j DROP
-ip6tables -A INPUT -m owner --uid-owner $UID_IP -j DROP
-ip6tables -A FORWARD -m owner --uid-owner $UID_IP -j DROP
 
 # drop TCP sessions opened prior firewall restart
 iptables -A INPUT -p tcp -m tcp ! --tcp-flags SYN,RST,ACK SYN -m state --state NEW -j DROP
