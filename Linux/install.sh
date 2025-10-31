@@ -14,14 +14,14 @@ install_all_programms () {
     sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 
     sudo apt update
-    sudo apt upgrade
+    sudo apt -y upgrade
 
     wget github.com/atom/atom/releases/download/v1.60.0/atom-amd64.deb
-    sudo apt install ./atom-amd64.deb
-    sudo apt-get install build-essential
+    sudo apt -y install ./atom-amd64.deb
+    sudo apt-get -y install build-essential
 
     #Apt installed editors
-    sudo apt-get install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre python3-pip
+    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre python3-pip
 
 
     #Jet Brains Packages
