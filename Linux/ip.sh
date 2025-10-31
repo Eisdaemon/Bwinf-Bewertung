@@ -1,39 +1,3 @@
-
-add_accept () { #Add the accepted IP to the Accept list
-  iptables -A OUTPUT -p tcp --dport 80 -d $1 -m owner --uid-owner $UID_IP -j ACCEPT
-  iptables -A OUTPUT -p tcp --dport 443 -d $1 -m owner --uid-owner $UID_IP -j ACCEPT
-  echo "Added $1 to Accept list\nNote: This Part only adds ip adresses, if you add ip addresses which are not for the contest site and you want to use dns you may need to add them  manually to /etc/hosts"
-
-}
-
-more_sites () {
-  echo "Usually only the ip for contest.informatik-olympiade.de is allowed\n If more ip have to be allowed we need to add them here. \n This is e.g. necessary if all traffic is routed through something else first\n Is it necessary(y/n)"
-  read YESNO
-  if [ "$YESNO" == "y" ]; then
-    echo "Please type the ip in:"
-    read IP_ADRESS
-    add_accept $IP_ADRESS
-    more_sites
-  else 
-    echo "Continue as usual"
-    # Save these Rules to make them Persistant
-    iptables-save > /etc/iptables/rules.v4
-    ip6tables-save > /etc/iptables/rules.v6
-
-    # Activate the Persistant Netfilter
-    systemctl enable netfilter-persistent.service
-    systemctl status netfilter-persistent.service
-    netfilter-persistent start
-
-    # Add the Website to Hosts:
-    if grep -Fxq '138.201.137.186 contest.informatik-olympiade.de' /etc/hosts; then
-        echo "contest.informatik-olympiade.de is already in the host file"
-    else
-        echo "138.201.137.186 contest.informatik-olympiade.de" >> /etc/hosts
-    fi
-  fi
-}
-
 #Install iptables-persistant 
 apt-get install netfilter-persistent
 apt-get install iptables-persistent
@@ -42,7 +6,7 @@ apt-get install iptables-persistent
 if test -f ip_away.sh; then
 	echo "ip_away.sh is already downloaded"
 else
-	wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/ip.sh
+	wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/ip_away.sh
 	# Make it executable
 	mv ip_away.sh ~/bin/
 	chmod +x ~/bin/ip_away.sh
@@ -78,42 +42,52 @@ iptables -Z; # zero counters
 iptables -F; # flush (delete) rules
 iptables -X; # delete all extra chains
 
+# --- IPv4 rules ---
 
-# Drop everything
-iptables -A OUTPUT -m owner --uid-owner $UID_IP -j DROP
+# Allow established and related connections (systemwide)
+iptables -A INPUT  -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-# Drop everything IPv6
-ip6tables -A OUTPUT -m owner --uid-owner $UID_IP -j DROP
+# Allow all on loopback for that user
+iptables -A OUTPUT -o lo -m owner --uid-owner $UID_IP -j ACCEPT
 
-# drop TCP sessions opened prior firewall restart
-iptables -A INPUT -p tcp -m tcp ! --tcp-flags SYN,RST,ACK SYN -m state --state NEW -j DROP
-iptables -A OUTPUT  -p tcp -m tcp ! --tcp-flags SYN,RST,ACK SYN -m state --state NEW -j DROP
-
-# drop packets that do not match any valid state
+# Drop invalid packets
 iptables -N drop_invalid
-iptables -A OUTPUT   -m state --state INVALID  -j drop_invalid 
-iptables -A INPUT    -m state --state INVALID  -j drop_invalid 
-iptables -A INPUT -p tcp -m tcp --sport 1:65535 --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j drop_invalid 
+iptables -A OUTPUT   -m state --state INVALID  -j drop_invalid
+iptables -A INPUT    -m state --state INVALID  -j drop_invalid
+iptables -A INPUT -p tcp -m tcp --sport 1:65535 --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j drop_invalid
 iptables -A drop_invalid -j DROP
 
-# ESTABLISHED,RELATED
-iptables -A INPUT  -m state --state ESTABLISHED,RELATED  -j ACCEPT
-
-# allow all on loopback
-iptables -A INPUT -i lo -m owner --uid-owner $UID_IP -j ACCEPT
-iptables -A OUTPUT -o lo -m owner --uid-owner $UID_IP -j ACCEPT
-iptables -A FORWARD -o lo -m owner --uid-owner $UID_IP -j ACCEPT
-
-#(INVALID OUT)
+# Drop TCP sessions opened prior to firewall restart
+iptables -A INPUT  -p tcp -m tcp ! --tcp-flags SYN,RST,ACK SYN -m state --state NEW -j DROP
 iptables -A OUTPUT -p tcp -m tcp ! --tcp-flags SYN,RST,ACK SYN -m state --state NEW -j DROP
 
-# ESTABLISHED,RELATED (OUT)
-iptables -A OUTPUT  -m state --state ESTABLISHED,RELATED  -j ACCEPT
+# Allow HTTP and HTTPS to contest.informatik-olympiade.de for that user
+iptables -A OUTPUT -p tcp --dport 80  -d 138.201.137.186 -m owner --uid-owner $UID_IP -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 443 -d 138.201.137.186 -m owner --uid-owner $UID_IP -j ACCEPT
 
-## repeat this section for multiple IPs
-add_accept "128.201.137.196"
+# Finally: drop everything else from that user
+iptables -A OUTPUT -m owner --uid-owner $UID_IP -j DROP
 
-more_sites
+# Drop everything IPv6 for that user
+ip6tables -A OUTPUT -m owner --uid-owner $UID_IP -j DROP
+
+
+# Save these Rules to make them Persistant
+iptables-save > /etc/iptables/rules.v4
+ip6tables-save > /etc/iptables/rules.v6
+
+# Activate the Persistant Netfilter
+systemctl enable netfilter-persistent.service
+systemctl status netfilter-persistent.service
+netfilter-persistent start
+
+# Add the Website to Hosts:
+if grep -Fxq '138.201.137.186 contest.informatik-olympiade.de' /etc/hosts; then
+  echo "contest.informatik-olympiade.de is already in the host file"
+else
+  echo "138.201.137.186 contest.informatik-olympiade.de" >> /etc/hosts
+fi
 
 
 
