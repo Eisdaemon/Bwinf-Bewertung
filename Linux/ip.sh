@@ -1,9 +1,9 @@
 
 add_accept () { #Add the accepted IP to the Accept list
-  iptables -A INPUT  -p tcp --dport 443 -s $1 -m owner --uid-owner $UID_IP tcp -j ACCEPT
-  iptables -A INPUT  -p tcp --dport 80 -s $1 -m owner --uid-owner $UID_IP tcp -j ACCEPT
-  iptables -A OUTPUT -p tcp --dport 80 -d $1 -m owner --uid-owner $UID_IP tcp -j ACCEPT
-  iptables -A OUTPUT -p tcp --dport 443 -d $1 -m owner --uid-owner $UID_IP tcp -j ACCEPT
+  iptables -A INPUT  -p tcp --dport 443 -s $1 -m owner --uid-owner $UID_IP -j ACCEPT
+  iptables -A INPUT  -p tcp --dport 80 -s $1 -m owner --uid-owner $UID_IP -j ACCEPT
+  iptables -A OUTPUT -p tcp --dport 80 -d $1 -m owner --uid-owner $UID_IP -j ACCEPT
+  iptables -A OUTPUT -p tcp --dport 443 -d $1 -m owner --uid-owner $UID_IP -j ACCEPT
   echo "Added $1 to Accept list\nNote: This Part only adds ip adresses, if you add ip addresses which are not for the contest site and you want to use dns you may need to add them  manually to /etc/hosts"
 
 }
@@ -53,8 +53,7 @@ fi
 # IPv6
 
 #Get uid of ioiuser
-UID_IP_IP=id -u ioiuser
-
+UID_IP=$(id -u ioiuser)
 ##
 ## set default policies to let everything in
 ip6tables --policy INPUT   ACCEPT;
@@ -83,14 +82,14 @@ iptables -X; # delete all extra chains
 
 
 # Drop everything
-iptables -A OUTPUT -m owner --uid-owner $UID_IP DROP
-iptables -A INPUT -m owner --uid-owner $UID_IP DROP
-iptables -A FORWARD -m owner --uid-owner $UID_IP DROP
+iptables -A OUTPUT -m owner --uid-owner $UID_IP -j DROP
+iptables -A INPUT -m owner --uid-owner $UID_IP -j DROP
+iptables -A FORWARD -m owner --uid-owner $UID_IP -j DROP
 
 # Drop everything IPv6
-ip6tables -A OUTPUT -m owner --uid-owner $UID_IP DROP
-ip6tables -A INPUT -m owner --uid-owner $UID_IP DROP
-ip6tables -A FORWARD -m owner --uid-owner $UID_IP DROP
+ip6tables -A OUTPUT -m owner --uid-owner $UID_IP -j DROP
+ip6tables -A INPUT -m owner --uid-owner $UID_IP -j DROP
+ip6tables -A FORWARD -m owner --uid-owner $UID_IP -j DROP
 
 # drop TCP sessions opened prior firewall restart
 iptables -A INPUT -p tcp -m tcp ! --tcp-flags SYN,RST,ACK SYN -m state --state NEW -j DROP

@@ -54,9 +54,9 @@ create_accounts () {
 
 set_ip_rules() {
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip.sh
-    mv ip.sh home/sysoperator/bin/
-    chmod +x home/sysoperator/bin/
-    sudo home/sysoperator/bin/
+    mv ip.sh /home/sysoperator/bin/
+    chmod +x /home/sysoperator/bin/ip.sh
+    sudo /home/sysoperator/bin/ip.sh
 }
 
 add_bin_container() {
@@ -68,6 +68,18 @@ add_bin_container() {
 create_backups() {
     sudo cp -r /home/ioiuser /home/sysoperator
     sudo cp -r /home/anderes /home/sysoperator
+}
+
+set_backup_commands() {
+#Todo Set up Service for automatic restore
+#Todo Create commands for ioiuser
+#Todo Create command for anderes
+}
+
+set_bewertung_config() {
+#ToDo Set up Wlan
+#ToDo Set up Dolphin Bookmark
+#ToDo Set up Samba Share
 }
 
 create_accounts
