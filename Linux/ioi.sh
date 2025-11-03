@@ -13,15 +13,17 @@ restore_old_snapshot() {
 }
 
 deactivate_automatic_reset(){
-    systemctl disable renew_ioi
+    systemctl disable renew_ioi.timer
+    systemctl stop renew_ioi.timer
 }
 
 activate_automatic_reset(){
-    systemctl enable renew_ioi
+    systemctl enable renew_ioi.timer
+    systemctl start renew_ioi.timer
 }
 
 reset_ioi_dir(){
-    /home/sysoperator/bin/ioi_reset.sh
+    /home/sysoperator/bin/ioi_renew.sh
 }
 
 show_help() {
@@ -43,6 +45,12 @@ opt_d=false
 opt_a=false
 opt_r=false
 opt_h=false
+
+# Check if running as root
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+    echo "Not running as root" >&2
+    exit 1
+fi
 
 # parse options
 while getopts "nodarh" opt; do

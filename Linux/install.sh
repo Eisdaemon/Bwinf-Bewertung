@@ -64,17 +64,37 @@ add_bin_container() {
 }
 
 create_backups() {
-    sudo cp -r /home/ioiuser /home/sysoperator
-    sudo cp -r /home/anderes /home/sysoperator
+    sudo cp -a /home/ioiuser /home/sysoperator
+    sudo cp -a /home/anderes /home/sysoperator
 }
 
 set_backup_commands() {
-    #Create first restore points
-    sudo cp -a /home/ioiuser/ /home/sysoperator/
-    sudo cp -a /home/anderes/ /home/sysoperator/
+    #Get all files
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/ioi.sh
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/ioi_reset.sh
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/anderes.sh
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/anderes_reset.sh
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/renew_ioi.service
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/renew_ioi.timer
+    #Commands
+    mv ioi.sh /home/sysoperator/bin
+    mv ioi_renew.sh /home/sysoperator/bin
+    mv anderes.sh /home/sysoperator/bin
+    mv anderes_renew.sh /home/sysoperator/bin
 
-#Todo Create commands for ioiuser
-#Todo Create command for anderes
+    chmod +x /home/sysoperator/ioi.sh
+    chmod +x /home/sysoperator/ioi_renew.sh
+    chmod +x /home/sysoperator/anderes.sh
+    chmod +x /home/sysoperator/anderes_renew.sh
+
+    #Services
+    sudo mv renew_ioi.service /etc/systemd/system
+    sudo mv renew_ioi.timer /etc/systemd/system
+
+    #Enable services
+    sudo systemctl daemon-reload
+    sudo systemctl enable renew_ioi.timer
+    sudo systemctl startrenew_ioi.timer
 }
 
 set_bewertung_config() {
@@ -88,4 +108,4 @@ install_all_programms
 add_bin_container
 set_ip_rules
 create_backups
-
+set_backup_commands
