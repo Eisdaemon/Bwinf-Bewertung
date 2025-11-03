@@ -7,3 +7,4 @@ echo "ioiuser:user" | chpasswd
 cp -a /home/sysoperator/ioiuser/. /home/ioiuser
 
 chown -R ioiuser:ioiuser /home/ioiuser
+/home/sysoperator/bin/ip.sh

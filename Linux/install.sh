@@ -34,9 +34,16 @@ install_all_programms () {
     #KDevelop
     sudo snap install kdevelop --classic
 
-    #ToDo
-    #Download and configure code add ons
-    #https://stackoverflow.com/questions/34286515/how-to-install-visual-studio-code-extensions-from-command-line
+
+    sudo -u ioiuser bash << 'EOF'
+    # Install code addon
+    code --install-extension ms-vscode.cpptools
+    EOF
+
+    sudo -u anderes bash << 'EOF'
+    # Install code addon
+    code --install-extension ms-vscode.cpptools
+    EOF
 }
 
 create_accounts () {
