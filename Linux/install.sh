@@ -20,7 +20,7 @@ install_all_programms () {
     sudo apt-get -y install build-essential
 
     #Apt installed editors
-    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre python3-pip
+    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre python3-pip kate
 
 
     #Jet Brains Packages
@@ -48,7 +48,7 @@ EOF
 
 create_accounts () {
     sudo useradd -m anderes && echo "anderes:user" | sudo chpasswd
-    echo "Enter the Password for bewertung"
+    echo "Enter the Password for the account bewertung"
     read bewertung_pass
     sudo useradd -m bewertung && echo "bewertung:$bewertung_pass" | sudo chpasswd
     sudo useradd -m ioiuser && echo "ioiuser:user" | sudo chpasswd
@@ -111,8 +111,12 @@ set_bewertung_config() {
     sudo netplan apply
     sudo netplan get
     #Echo the Bookmark to the QNAP
+    sudo mkdir /home/bewertung/.config
+    sudo mkdir /home/bewertung/.config/gtk-3.0
+    sudo touch /home/bewertung/.config/gtk-3.0/bookmarks
+    sudo chown -R bewertung:bewertung /home/bewertung/.config
     echo "smb://qnap.local/bewertung/ bewertung auf qnap.local" >> /home/bewertung/.config/gtk-3.0/bookmarks
-    echo "Add the credentials for the QNAP Manually with logging into it. To that set up the qnap fully, log into the account bewertung and access the qnap once."
+    echo "Add the credentials for the QNAP Manually with logging into it. To that set up the qnap fully, log into the account bewertung and access the qnap once.\n Using utility for gnome-keyring is unfortunatly a really bad experience."
 
 }
 
@@ -126,5 +130,5 @@ set_bewertung_config
 
 wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/Command_Explanation.md
 mv Command_Explanation.md /home/sysoperator/bin
-echo "################################################################\n \nFinished with the Setup of the Pool pc.\n \n################################################################"
+echo -e "################################################################\n \nFinished with the Setup of the Pool pc.\n \n################################################################"
 

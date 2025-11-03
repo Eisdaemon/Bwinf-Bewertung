@@ -2,10 +2,10 @@
 
 #### ip.sh
 Execute as Sudo.
-Applies the network rules preventing access to websites besides contest.informatik-olympiade.de for the account ioiuser
+Applies the network rules preventing access to websites besides contest.informatik-olympiade.de for the account ioiuser.
 
 #### ip_away.sh
-Drops all network ruley
+Drops all network rules.
 
 #### ioi.sh
 A tool to control the daily reset of the ioiuser.
@@ -13,14 +13,18 @@ It can be used to create a new backup from the ioiuser home dir to use for backu
 The backups are stored as ioiuser and ioiuser_og in the home dir of the sysoperator.
 It can also be used to execute as reset manually and disable and enable the daily reset. 
 
+For details on execution execute the script with -h as addition.
+
 #### ioi_renew.sh
-Executes the reset of the ioiuser. Is called by a systemd service each day at 5 AM
+Executes the reset of the ioiuser. Its called by a systemd service each day at 5 AM
 
 #### anderes.sh
 A tool to control the reset of the anderes user.
 It can be used to create a new backup from the anderes home dir to use for backup or restore the original backup. The original backup should never be deleted! 
 The backups are stored as anderes and anderes_og in the home dir of the sysoperator.
 It can also be used to execute as reset manually.
+
+For details on execution execute the script with -h as addition.
 
 #### anderes_renew.sh
 Executes the reset of the anderes.
