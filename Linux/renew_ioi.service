@@ -1,0 +1,6 @@
+[Unit]
+Description=Renews the home directory of the ioi user
+
+[Service]
+Type=oneshot
+ExecStart=/home/sysoperator/bin/ioi_reset.sh

@@ -61,8 +61,6 @@ set_ip_rules() {
 
 add_bin_container() {
     mkdir -p ~/bin
-    echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
-    source ~/.bashrc
 }
 
 create_backups() {
@@ -71,7 +69,10 @@ create_backups() {
 }
 
 set_backup_commands() {
-#Todo Set up Service for automatic restore
+    #Create first restore points
+    sudo cp -a /home/ioiuser/ /home/sysoperator/
+    sudo cp -a /home/anderes/ /home/sysoperator/
+
 #Todo Create commands for ioiuser
 #Todo Create command for anderes
 }

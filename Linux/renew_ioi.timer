@@ -1,0 +1,10 @@
+[Unit]
+Description=Runs the ioi reset daily
+
+[Timer]
+OnCalendar=*-*-* 05:00
+Persistent=true
+Unit=renew_ioi.service
+
+[Install]
+WantedBy=timers.target
