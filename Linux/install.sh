@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 
@@ -71,21 +70,21 @@ create_backups() {
 set_backup_commands() {
     #Get all files
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/ioi.sh
-    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/ioi_reset.sh
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/ioi_renew.sh
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/anderes.sh
-    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/anderes_reset.sh
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/anderes_renew.sh
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/renew_ioi.service
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/renew_ioi.timer
     #Commands
-    mv ioi.sh /home/sysoperator/bin
-    mv ioi_renew.sh /home/sysoperator/bin
-    mv anderes.sh /home/sysoperator/bin
-    mv anderes_renew.sh /home/sysoperator/bin
+    mv ioi.sh /home/sysoperator/bin/ioi.sh
+    mv ioi_renew.sh /home/sysoperator/bin/ioi_renew.sh
+    mv anderes.sh /home/sysoperator/bin/anderes.sh
+    mv anderes_renew.sh /home/sysoperator/bin/anderes_renew.sh
 
-    chmod +x /home/sysoperator/ioi.sh
-    chmod +x /home/sysoperator/ioi_renew.sh
-    chmod +x /home/sysoperator/anderes.sh
-    chmod +x /home/sysoperator/anderes_renew.sh
+    chmod +x /home/sysoperator/bin/ioi.sh
+    chmod +x /home/sysoperator/bin/ioi_renew.sh
+    chmod +x /home/sysoperator/bin/anderes.sh
+    chmod +x /home/sysoperator/bin/anderes_renew.sh
 
     #Services
     sudo mv renew_ioi.service /etc/systemd/system
@@ -94,7 +93,7 @@ set_backup_commands() {
     #Enable services
     sudo systemctl daemon-reload
     sudo systemctl enable renew_ioi.timer
-    sudo systemctl startrenew_ioi.timer
+    sudo systemctl start renew_ioi.timer
 }
 
 set_bewertung_config() {
