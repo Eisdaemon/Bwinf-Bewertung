@@ -38,12 +38,12 @@ install_all_programms () {
     sudo -u ioiuser bash << 'EOF'
     # Install code addon
     code --install-extension ms-vscode.cpptools
-    EOF
+EOF
 
     sudo -u anderes bash << 'EOF'
     # Install code addon
     code --install-extension ms-vscode.cpptools
-    EOF
+EOF
 }
 
 create_accounts () {
@@ -100,9 +100,20 @@ set_backup_commands() {
 }
 
 set_bewertung_config() {
-#ToDo Set up Wlan
-#ToDo Set up Dolphin Bookmark
-#ToDo Set up Samba Share
+    #Add the Wlan to the config
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/bewertungs-plan.yaml
+    echo "Enter the password for the WLAN: Bewertung"
+    read bewertung_pass
+    echo "            password: \"$bewertung_pass\"" >> bewertungs-plan.yaml
+    sudo chown root:root bewertungs-plan.yaml
+    sudo chmod 0600 bewertungs-plan.yaml
+    sudo mv bewertungs-plan.yaml /etc/netplan
+    sudo netplan apply
+    sudo netplan get
+    #Echo the Bookmark to the QNAP
+    echo "smb://qnap.local/bewertung/ bewertung auf qnap.local" >> /home/bewertung/.config/gtk-3.0/bookmarks
+    echo "Add the credentials for the QNAP Manually with logging into it. To that set up the qnap fully, log into the account bewertung and access the qnap once."
+
 }
 
 create_accounts
@@ -111,3 +122,9 @@ add_bin_container
 set_ip_rules
 create_backups
 set_backup_commands
+set_bewertung_config
+
+wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/Command_Explanation.md
+mv Command_Explanation.md /home/sysoperator/bin
+echo "################################################################\n \nFinished with the Setup of the Pool pc.\n \n################################################################"
+
