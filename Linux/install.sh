@@ -59,7 +59,7 @@ set_ip_rules() {
 }
 
 add_bin_container() {
-    mkdir -p ~/bin
+    mkdir -p /home/sysoperator/bin
 }
 
 create_backups() {
