@@ -40,15 +40,11 @@ install_all_programms () {
 }
 
 create_accounts () {
-    echo "Enter the Password for anderes"
-    read anderes_pass
-    sudo useradd -m anderes && echo "anderes:$anderes_pass" | sudo chpasswd
+    sudo useradd -m anderes && echo "anderes:user" | sudo chpasswd
     echo "Enter the Password for bewertung"
     read bewertung_pass
     sudo useradd -m bewertung && echo "bewertung:$bewertung_pass" | sudo chpasswd
-    echo "Enter the Password for ioiuser"
-    read ioi_pass
-    sudo useradd -m ioiuser && echo "ioiuser:$ioi_pass" | sudo chpasswd
+    sudo useradd -m ioiuser && echo "ioiuser:user" | sudo chpasswd
 }
 
 set_ip_rules() {

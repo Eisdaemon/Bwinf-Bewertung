@@ -8,7 +8,7 @@ make_new_snapshot() {
 }
 
 restore_old_snapshot() {
-    rm -rf /home/sysoperator/ioiuser_og
+    rm -rf /home/sysoperator/ioiuser
     mv /home/sysoperator/ioiuser_og /home/sysoperator/ioiuser
 }
 
