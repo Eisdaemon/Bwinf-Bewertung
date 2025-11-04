@@ -120,6 +120,13 @@ set_bewertung_config() {
 
 }
 
+other_config() {
+    #No Welcome Screen for new users.
+    sudo apt remove --autoremove gnome-initial-setup
+    #Auto Updates for Security Updates
+    sudo apt-get install unattended-upgrades
+    sudo dpkg-reconfigure unattended-upgrades
+}
 create_accounts
 install_all_programms
 add_bin_container
@@ -127,6 +134,7 @@ set_ip_rules
 create_backups
 set_backup_commands
 set_bewertung_config
+other_config
 
 wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/Command_Explanation.md
 mv Command_Explanation.md /home/sysoperator/bin
