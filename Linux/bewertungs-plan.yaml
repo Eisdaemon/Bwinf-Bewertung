@@ -2,7 +2,7 @@ network:
   version: 2
   renderer: NetworkManager
   wifis:
-    wlp2s0b1:
+    WLAN_DEVICE_PLACEHOLDER:
       dhcp4: yes
       dhcp6: yes
       access-points:

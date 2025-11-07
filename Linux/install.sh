@@ -102,6 +102,8 @@ set_backup_commands() {
 set_bewertung_config() {
     #Add the Wlan to the config
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/bewertungs-plan.yaml
+    wlan_device=$(ip link show | grep -E wl | awk '/^[0-9]+: [^:]+:/ {print $2}' | tr -d :)
+    sed -i -e "s/WLAN_DEVICE_PLACEHOLDER/$wlan_device/g" bewertungs-plan.yaml
     echo "Enter the password for the WLAN: Bewertung"
     read bewertung_pass
     echo "            password: \"$bewertung_pass\"" >> bewertungs-plan.yaml
