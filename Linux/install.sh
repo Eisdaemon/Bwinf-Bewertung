@@ -68,6 +68,9 @@ add_bin_container() {
 create_backups() {
     sudo cp -a /home/ioiuser /home/sysoperator
     sudo cp -a /home/anderes /home/sysoperator
+    sudo cp -a /home/ioiuser /home/sysoperator/ioiuser_og
+    sudo cp -a /home/anderes /home/sysoperator/anderes_og
+
 }
 
 set_backup_commands() {

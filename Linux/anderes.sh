@@ -2,14 +2,14 @@
 
 make_new_snapshot() {
     #Save og snapshot
-    mv /home/sysoperator/anderes /home/sysoperator/anderes_og
+    rm -rf /home/sysoperator/anderes
     #Create new backup
     cp -a /home/anderes/ /home/sysoperator/
 }
 
 restore_old_snapshot() {
     rm -rf /home/sysoperator/anderes
-    mv /home/sysoperator/anderes_og /home/sysoperator/anderes
+    cp -a /home/sysoperator/anderes_og /home/sysoperator/anderes
 }
 
 reset_ioi_dir(){
