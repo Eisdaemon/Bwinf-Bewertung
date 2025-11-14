@@ -5,18 +5,14 @@ function disable_bitlocker {
 }
 
 
-#Chris titus tool
-function chrissi {
-    iwr -useb https://christitus.com/win | iex
-}
-
-
 #Install all necessary programms for a pool laptop
 function install_programms {
     #Auto install from a config file, which has to be created.
-    iex "& { $(irm https://christitus.com/win) } -Config [path-to-your-config] -Run"
+    iex "& { $(irm https://christitus.com/win) } -Config pool.json -Run"
 
     winget install Romanitho.Winget-AutoUpdate
+    winget install Microsoft.OpenJDK.17
+    winget install -e --id MSYS2.MSYS2
 
 }
 
@@ -53,7 +49,6 @@ if (-not (Test-IsAdmin)) {
 disable_bitlocker
 set_up_accounts
 install_programms
-chrissi
 set_up_resets
 
 
