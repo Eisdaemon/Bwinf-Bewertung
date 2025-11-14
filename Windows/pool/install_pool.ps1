@@ -1,7 +1,8 @@
 
 #Bitlocker behaves badly on dual boot systems for the pool laptops
 function disable_bitlocker {
-
+    $BLV = Get-BitLockerVolume
+    Disable-BitLocker -MountPoint $BLV
 }
 
 
@@ -14,6 +15,13 @@ function install_programms {
     iex "& { $(irm https://christitus.com/win) } -Config pool.json -Run"
     winget install Romanitho.Winget-AutoUpdate
     winget install Microsoft.OpenJDK.17
+    winget install -e --id JetBrains.PyCharm.Community
+    winget uninstall "windows web experience pack"
+    $filename = "Transwiz.msi"
+    $TranswizPath = Join-Path -Path $PWD -ChildPath $filename
+    Invoke-WebRequest https://www.forensit.com/Downloads/Transwiz.msi -OutFile $TranswizPath
+
+
     #Install Clang
     winget install -e --id MSYS2.MSYS2
     C:\msys64\msys2_shell.cmd -defterm -no-start -mingw64 -here -c "pacman -Syu"
@@ -23,30 +31,9 @@ function install_programms {
 
     Set-PathVariable AddPath 'C:\msys64\mingw64\bin'
 
-    #Because why would it be easily possible to install packages system wide...
-    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /grant girlsuser:RX
-    runas /user:girluser "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install --scope user Anaconda.Anaconda3"
-    runas /user:girluser "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install --scope user Microsoft.VisualStudioCode"
-    runas /user:girluser "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install --scope user Microsoft.Spyder.Spyder"
-    runas /user:girluser "code --install-extension ms-vscode.cpptools"
-    runas /user:girluser "code --install-extension Oracle.oracle-java"
-    runas /user:girluser "code --install-extension ms-python.python"
-    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove girlsuser
-
-    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /grant anderes:RX
-    runas /user:girluser "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install --scope user Microsoft.VisualStudioCode"
-    runas /user:girluser "code --install-extension ms-vscode.cpptools"
-    runas /user:girluser "code --install-extension Oracle.oracle-java"
-    runas /user:girluser "code --install-extension ms-python.python"
-    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove anderes
-
-
-    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /grant bewertung:RX
-    runas /user:girluser "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install --scope user Microsoft.VisualStudioCode"
-    runas /user:girluser "code --install-extension ms-vscode.cpptools"
-    runas /user:girluser "code --install-extension Oracle.oracle-java"
-    runas /user:girluser "code --install-extension ms-python.python"
-    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove bewertung
+    $filename = "install_profile_programs.ps1"
+    $poolAccountInstallPath = Join-Path -Path $PWD -ChildPath $filename
+    Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/install_profile_programs.ps1 -OutFile $poolAccountInstallPath
 }
 
 #Set Up all necessary accounts.
@@ -62,20 +49,11 @@ function set_up_accounts {
   Set-LocalUser -Name "SysOperator" -PasswordNeverExpires:$true
 }
 
-function set_up_resets {
-}
 
 #Execution as Admin sets the folder path to a system folder – for some fucking reason. So we have to go back to a user folder.
 $homeFolder = $env:USERPROFILE
 cd $homeFolder
-$installPath = Join-Path -Path $homeFolder -ChildPath "install.ps1"
-if (-not (Test-IsAdmin)) {
-    Write-Error "This script is not running with administrative privileges."
-    Start-Sleep -Seconds 3
-    exit 1  # Exit the script with a non-zero exit code to indicate failure
-} else {
-    Write-Output "This script is running with administrative privileges."
-}Set-PathVariable AddPath 'C:\tmp\bin'
+
 
 
 function Set-PathVariable {
@@ -99,11 +77,24 @@ function Set-PathVariable {
     $env:Path = ($arrPath + $addPath) -join ';'
 }
 
-#Execute Functions here
-#disable_bitlocker
+function Set_UpBewertung {
+
+    $filename = "WiFi-bewertung.txt"
+    $WifiPathPath = Join-Path -Path $PWD -ChildPath $filename
+    Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/WiFi-bewertung.txt -OutFile $WifiPathPath
+
+    $BewertungPass  = Read-Host -Prompt "Enter the Password for the bewertungs wlan"
+    $find = '				<keyMaterial>PLACEHOLDER</keyMaterial>'
+    $replace = $find.Replace('PLACEHOLDER', $BewertungPass)
+
+    (Get-Content $WifiPathPath).replace($find, $replace) | Set-Content $WifiPathPath
+
+}
+
 set_up_accounts
+Set_UpBewertung
 install_programms
-#set_up_resets
+
 
 
 Write-Output "Changing execution Policy back"
