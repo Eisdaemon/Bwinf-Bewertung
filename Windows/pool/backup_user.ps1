@@ -7,6 +7,7 @@
 .NOTES
     Run as Administrator.
     The user must be logged off during restore.
+    Uses robocopy for multithreaded copying.
 #>
 param (
     [Parameter(Mandatory=$true)]
@@ -56,23 +57,25 @@ if ($Action -eq "Backup") {
         New-Item -ItemType Directory -Path $userBackupDir -Force | Out-Null
     }
 
-    # Backup profile folder (multithreaded)
+    # Backup profile folder (using robocopy)
     if (Test-Path $profilePath) {
         if (Test-Path $backupProfilePath) {
             Remove-Item $backupProfilePath -Recurse -Force
         }
-
-        # Start multithreaded copy job
-        $copyJob = Start-Job -ScriptBlock {
-            param($source, $destination)
-            Copy-Item $source $destination -Recurse -Force
-        } -ArgumentList $profilePath, $backupProfilePath
-
-        # Wait for job to complete
-        Wait-Job $copyJob | Out-Null
-        Receive-Job $copyJob
-        Remove-Job $copyJob -Force
-
+        # Use robocopy for multithreaded copying
+        $robocopyArgs = @(
+            $profilePath,
+            $backupProfilePath,
+            "/E",  # Copy subdirectories, including empty ones
+            "/ZB", # Use restartable mode; if access denied, use backup mode
+            "/COPYALL", # Copy all file information
+            "/R:1", # Retry once (reduce delays)
+            "/W:1", # Wait 1 second between retries
+            "/MT:16", # Use 16 threads for multithreaded copying
+            "/NP", # No progress (for cleaner output)
+            "/LOG:$backupProfilePath\robocopy.log" # Log output
+        )
+        Start-Process -FilePath "robocopy" -ArgumentList $robocopyArgs -NoNewWindow -Wait
         Write-Host "Profile folder backed up to $backupProfilePath"
     } else {
         Write-Error "Profile folder not found: $profilePath"
@@ -106,17 +109,20 @@ elseif ($Action -eq "Restore") {
         Remove-Item $profilePath -Recurse -Force
     }
 
-    # Restore profile folder (multithreaded)
-    $copyJob = Start-Job -ScriptBlock {
-        param($source, $destination)
-        Copy-Item $source $destination -Recurse -Force
-    } -ArgumentList $backupProfilePath, $profilePath
-
-    # Wait for job to complete
-    Wait-Job $copyJob | Out-Null
-    Receive-Job $copyJob
-    Remove-Job $copyJob -Force
-
+    # Restore profile folder (using robocopy)
+    $robocopyArgs = @(
+        $backupProfilePath,
+        $profilePath,
+        "/E",  # Copy subdirectories, including empty ones
+        "/ZB", # Use restartable mode; if access denied, use backup mode
+        "/COPYALL", # Copy all file information
+        "/R:1", # Retry once
+        "/W:1", # Wait 1 second between retries
+        "/MT:16", # Use 16 threads for multithreaded copying
+        "/NP", # No progress
+        "/LOG:$profilePath\robocopy_restore.log" # Log output
+    )
+    Start-Process -FilePath "robocopy" -ArgumentList $robocopyArgs -NoNewWindow -Wait
     Write-Host "Profile folder restored from $backupProfilePath"
 
     # Set permissions
