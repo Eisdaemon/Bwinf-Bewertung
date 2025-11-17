@@ -17,9 +17,6 @@ function install_programms {
     winget install Microsoft.OpenJDK.17
     winget install -e --id JetBrains.PyCharm.Community
     winget uninstall "windows web experience pack"
-    $filename = "Transwiz.msi"
-    $TranswizPath = Join-Path -Path $PWD -ChildPath $filename
-    Invoke-WebRequest https://www.forensit.com/Downloads/Transwiz.msi -OutFile $TranswizPath
 
 
     #Install Clang
