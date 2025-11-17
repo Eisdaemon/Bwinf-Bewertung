@@ -8,14 +8,12 @@
     Run as Administrator.
     The user must be logged off during restore.
 #>
-
 param (
     [Parameter(Mandatory=$true)]
     [string]$Username,
     [Parameter(Mandatory=$true)]
     [ValidateSet("Backup", "Restore")]
-    [string]$Action,
-    [string]$BackupPath = "C:\UserBackups"
+    [string]$Action
 )
 
 # Check if running as admin
@@ -36,27 +34,45 @@ if (-not $userSID) {
     exit 1
 }
 
-# Create backup path if not exists
-if (-not (Test-Path $BackupPath)) {
-    New-Item -ItemType Directory -Path $BackupPath -Force | Out-Null
-}
-
 # Define paths
+$backupRoot = "C:\User\SysOperator"
+$backupProfilePath = Join-Path $backupRoot "$Username\$Username_Profile"
+$backupRegPath = Join-Path $backupRoot "$Username\$Username_Registry.reg"
 $profilePath = "C:\Users\$Username"
-$backupProfilePath = Join-Path $BackupPath "$Username_Profile"
-$backupRegPath = Join-Path $BackupPath "$Username_Registry.reg"
 $ntuserDatPath = Join-Path $profilePath "NTUSER.DAT"
+
+# Create backup directory if not exists
+if (-not (Test-Path $backupRoot)) {
+    New-Item -ItemType Directory -Path $backupRoot -Force | Out-Null
+}
 
 # --- BACKUP ---
 if ($Action -eq "Backup") {
     Write-Host "Backing up user '$Username'..."
 
-    # Backup profile folder
+    # Create user backup directory if not exists
+    $userBackupDir = Join-Path $backupRoot $Username
+    if (-not (Test-Path $userBackupDir)) {
+        New-Item -ItemType Directory -Path $userBackupDir -Force | Out-Null
+    }
+
+    # Backup profile folder (multithreaded)
     if (Test-Path $profilePath) {
         if (Test-Path $backupProfilePath) {
             Remove-Item $backupProfilePath -Recurse -Force
         }
-        Copy-Item $profilePath $backupProfilePath -Recurse -Force
+
+        # Start multithreaded copy job
+        $copyJob = Start-Job -ScriptBlock {
+            param($source, $destination)
+            Copy-Item $source $destination -Recurse -Force
+        } -ArgumentList $profilePath, $backupProfilePath
+
+        # Wait for job to complete
+        Wait-Job $copyJob | Out-Null
+        Receive-Job $copyJob
+        Remove-Job $copyJob -Force
+
         Write-Host "Profile folder backed up to $backupProfilePath"
     } else {
         Write-Error "Profile folder not found: $profilePath"
@@ -90,8 +106,17 @@ elseif ($Action -eq "Restore") {
         Remove-Item $profilePath -Recurse -Force
     }
 
-    # Restore profile folder
-    Copy-Item $backupProfilePath $profilePath -Recurse -Force
+    # Restore profile folder (multithreaded)
+    $copyJob = Start-Job -ScriptBlock {
+        param($source, $destination)
+        Copy-Item $source $destination -Recurse -Force
+    } -ArgumentList $backupProfilePath, $profilePath
+
+    # Wait for job to complete
+    Wait-Job $copyJob | Out-Null
+    Receive-Job $copyJob
+    Remove-Job $copyJob -Force
+
     Write-Host "Profile folder restored from $backupProfilePath"
 
     # Set permissions
@@ -104,6 +129,5 @@ elseif ($Action -eq "Restore") {
     # Restore registry hive
     reg import $backupRegPath
     Write-Host "Registry hive restored from $backupRegPath"
-
     Write-Host "Restore completed successfully."
 }
