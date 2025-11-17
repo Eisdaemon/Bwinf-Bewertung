@@ -7,6 +7,7 @@
 .NOTES
     Run as Administrator.
     The user must be logged off during restore.
+    Requires PowerShell 7+ for parallel copying.
 #>
 param (
     [Parameter(Mandatory=$true)]
@@ -46,6 +47,29 @@ if (-not (Test-Path $backupRoot)) {
     New-Item -ItemType Directory -Path $backupRoot -Force | Out-Null
 }
 
+# Function for parallel file copying
+function Copy-FilesParallel {
+    param(
+        [string]$Source,
+        [string]$Destination
+    )
+    # Create destination directory if it doesn't exist
+    if (-not (Test-Path $Destination)) {
+        New-Item -ItemType Directory -Path $Destination -Force | Out-Null
+    }
+    # Get all files and subdirectories
+    $files = Get-ChildItem $Source -Recurse -File
+    # Copy files in parallel
+    $files | ForEach-Object -Parallel {
+        $destFile = Join-Path $using:Destination $_.FullName.Substring($using:Source.Length)
+        $destDir = Split-Path $destFile -Parent
+        if (-not (Test-Path $destDir)) {
+            New-Item -ItemType Directory -Path $destDir -Force | Out-Null
+        }
+        Copy-Item $_.FullName $destFile -Force
+    } -ThrottleLimit 10
+}
+
 # --- BACKUP ---
 if ($Action -eq "Backup") {
     Write-Host "Backing up user '$Username'..."
@@ -56,23 +80,12 @@ if ($Action -eq "Backup") {
         New-Item -ItemType Directory -Path $userBackupDir -Force | Out-Null
     }
 
-    # Backup profile folder (multithreaded)
+    # Backup profile folder (parallel)
     if (Test-Path $profilePath) {
         if (Test-Path $backupProfilePath) {
             Remove-Item $backupProfilePath -Recurse -Force
         }
-
-        # Start multithreaded copy job
-        $copyJob = Start-Job -ScriptBlock {
-            param($source, $destination)
-            Copy-Item $source $destination -Recurse -Force
-        } -ArgumentList $profilePath, $backupProfilePath
-
-        # Wait for job to complete
-        Wait-Job $copyJob | Out-Null
-        Receive-Job $copyJob
-        Remove-Job $copyJob -Force
-
+        Copy-FilesParallel -Source $profilePath -Destination $backupProfilePath
         Write-Host "Profile folder backed up to $backupProfilePath"
     } else {
         Write-Error "Profile folder not found: $profilePath"
@@ -106,17 +119,8 @@ elseif ($Action -eq "Restore") {
         Remove-Item $profilePath -Recurse -Force
     }
 
-    # Restore profile folder (multithreaded)
-    $copyJob = Start-Job -ScriptBlock {
-        param($source, $destination)
-        Copy-Item $source $destination -Recurse -Force
-    } -ArgumentList $backupProfilePath, $profilePath
-
-    # Wait for job to complete
-    Wait-Job $copyJob | Out-Null
-    Receive-Job $copyJob
-    Remove-Job $copyJob -Force
-
+    # Restore profile folder (parallel)
+    Copy-FilesParallel -Source $backupProfilePath -Destination $profilePath
     Write-Host "Profile folder restored from $backupProfilePath"
 
     # Set permissions
