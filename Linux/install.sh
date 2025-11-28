@@ -131,6 +131,7 @@ other_config() {
     #Auto Updates for Security Updates
     sudo apt-get install unattended-upgrades
     sudo dpkg-reconfigure unattended-upgrades
+    echo "Please set the default grub. For that open the file at /etc/default/grub and afterwards execute update-grub."
 }
 create_accounts
 install_all_programms
