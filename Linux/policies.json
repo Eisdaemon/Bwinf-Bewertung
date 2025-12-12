@@ -26,6 +26,6 @@
     },
     "PostQuantumKeyAgreementEnabled": true,
     "RequestedLocales": "de,en-US",
-    "SSLVersionMin": "tls1.3",
+    "SSLVersionMin": "tls1.3"
   }
 }

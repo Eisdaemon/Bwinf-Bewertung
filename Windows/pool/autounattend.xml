@@ -108,7 +108,7 @@
 						<DisplayName></DisplayName>
 						<Group>Users</Group>
 						<Password>
-							<Value>anderes</Value>
+							<Value>user</Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
@@ -117,12 +117,12 @@
 						<DisplayName></DisplayName>
 						<Group>Users</Group>
 						<Password>
-							<Value>girlsuser</Value>
+							<Value>user</Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
 					<LocalAccount wcm:action="add">
-						<Name>Bewertung</Name>
+						<Name>bewertung</Name>
 						<DisplayName></DisplayName>
 						<Group>Users</Group>
 						<Password>
