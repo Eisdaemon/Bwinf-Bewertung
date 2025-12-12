@@ -59,6 +59,19 @@ set_ip_rules() {
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip.sh
     mv ip.sh /home/sysoperator/bin/
     chmod +x /home/sysoperator/bin/ip.sh
+    echo -e "Note: As of now the policies are still disabled, so that VsCode can actually get the Addons on first open with the ioiuser and start vscode once...\n
+    Just change the account, do not log out and resume the install afterwards"
+    while true; do
+        echo "Do you want to continue? (y)"
+        read answer
+
+        if [ "$answer" = "y" ] || [ "$answer" = "Y" ]; then
+            echo "Resuming operation..."
+            break
+        else
+            echo "Invalid input. Please enter 'y' to continue."
+        fi
+    done
     sudo /home/sysoperator/bin/ip.sh
 }
 
