@@ -29,6 +29,10 @@ For details on execution execute the script with -h as addition.
 #### anderes_renew.sh
 Executes the reset of the anderes.
 
+#### bewertungs_mode.sh
+
+Disables and enables the other two user accounts to make sure the ioiuser is used.
+
 #### Other files and Explanations
 The installations was executed by "install.sh". Usually executed from the home dir where it then still lies.
 

@@ -16,12 +16,6 @@
       "TabGroups": true,
       "Locked": true
     },
-    "HardwareAcceleration": true | false,
-    "Homepage": {
-      "URL": "https://inter.bwinf.de/",
-      "Locked": true | false,
-      "StartPage": "previous-session"
-    },
     "HttpsOnlyMode": "enabled",
     "OfferToSaveLogins": false,
     "OfferToSaveLoginsDefault": false,
@@ -30,20 +24,7 @@
       "Enabled": false,
       "EnablePermissions": false
     },
-    "Permissions": {
-      "Camera": {
-        "Allow": ["share.bwinf.de"]
-      },
-      "Microphone": {
-        "Allow": ["share.bwinf.de"]
-      },
-      "ScreenShare": {
-        "Allow": ["share.bwinf.de"]
-      }
-    },
     "PostQuantumKeyAgreementEnabled": true,
-    "PrimaryPassword": true | false,
-    "PrintingEnabled": true | false,
     "RequestedLocales": "de,en-US",
     "SSLVersionMin": "tls1.3",
   }
