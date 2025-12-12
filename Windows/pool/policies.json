@@ -1,0 +1,34 @@
+{
+  "policies": {
+    "BlockAboutAddons": true,
+    "BlockAboutConfig": true,
+    "ExtensionSettings": {
+      "uBlock0@raymondhill.net": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
+        }
+      },
+    "ExtensionUpdate": true,
+    "GenerativeAI": {
+      "Enabled": false,
+      "Chatbot": false,
+      "LinkPreviews": true,
+      "TabGroups": true,
+      "Locked": true
+    },
+    "HardwareAcceleration": true | false,
+    "HttpsOnlyMode": "enabled",
+    "OfferToSaveLogins": false,
+    "OfferToSaveLoginsDefault": false,
+    "PasswordManagerEnabled":  false,
+    "PDFjs": {
+      "Enabled": false,
+      "EnablePermissions": false
+    },
+    "PostQuantumKeyAgreementEnabled": true,
+    "PrimaryPassword": true | false,
+    "PrintingEnabled": true | false,
+    "RequestedLocales": "de,en-US",
+    "SSLVersionMin": "tls1.3",
+  }
+}

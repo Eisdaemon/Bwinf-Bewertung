@@ -34,6 +34,7 @@ install_all_programms () {
     #KDevelop
     sudo snap install kdevelop --classic
 
+    sudo apt-get remove -y "telnetd"
 
     sudo -u ioiuser bash << 'EOF'
     # Install code addon
@@ -71,6 +72,11 @@ create_backups() {
     sudo cp -a /home/ioiuser /home/sysoperator/ioiuser_og
     sudo cp -a /home/anderes /home/sysoperator/anderes_og
 
+}
+
+set_bewertungs_mode () {
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/bewertungs_mode.sh
+    mv bewertungs_mode.sh /home/sysoperator/bin/bewertungs_mode.sh
 }
 
 set_backup_commands() {
@@ -115,23 +121,24 @@ set_bewertung_config() {
     sudo mv bewertungs-plan.yaml /etc/netplan
     sudo netplan apply
     sudo netplan get
-    #Echo the Bookmark to the QNAP
-    sudo mkdir /home/bewertung/.config
-    sudo mkdir /home/bewertung/.config/gtk-3.0
-    sudo touch /home/bewertung/.config/gtk-3.0/bookmarks
-    sudo chown -R bewertung:bewertung /home/bewertung/.config
-    echo "smb://qnap.local/bewertung/ bewertung auf qnap.local" >> /home/bewertung/.config/gtk-3.0/bookmarks
-    echo "Add the credentials for the QNAP Manually with logging into it. To that set up the qnap fully, log into the account bewertung and access the qnap once.\n Using utility for gnome-keyring is unfortunatly a really bad experience."
 
 }
 
 other_config() {
+
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/policies.json
+    sudo mv policies.json  /etc/firefox/policies
+    #Set Grub Password
     #No Welcome Screen for new users.
     sudo apt remove --autoremove gnome-initial-setup
     #Auto Updates for Security Updates
     sudo apt-get install unattended-upgrades
     sudo dpkg-reconfigure unattended-upgrades
-    echo "Please set the default grub. For that open the file at /etc/default/grub and afterwards execute update-grub."
+    echo "Please set up a password for grub"
+    grub-mkpasswd-pbkdf2
+    echo -e "Please set the default grub. For that open the file at /etc/default/grub and afterwards execute update-grub. Also add the following too /etc/grub.d/40_custom:
+    \nset superusers="boot"
+    \npassword_pbkdf2 boot grub.pbkdf2.sha512.VeryLongString"
 }
 create_accounts
 install_all_programms

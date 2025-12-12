@@ -1,0 +1,25 @@
+
+    #Disable JavaScript in pdf
+
+    $path = 'HKLM:\SOFTWARE\Policies\Adobe\Adobe Acrobar\DC\FeatureLockDown'
+
+    $key = try {
+        Get-Item -Path $path -ErrorAction Stop
+    }
+    catch {
+        New-Item -Path $path -Force
+    }
+
+    New-ItemProperty -Path $key.PSPath -Name bDisableJavaScript -PropertyType Dword -Value 1
+
+
+    Firefox under about:config pdfjs.enableScripting
+
+    https://www.uni-ulm.de/einrichtungen/kiz/service-katalog/informationssicherheit/empfehlungen-leitfaeden/leitfaden-mozilla-thunderbird/
+
+
+    #Discord doesnt behave well with auto update, so exclude them
+    Add-Contet -Path "C:\Program Files\Winget-AutoUpdate\config\default_excluded_apps.txt" -Value "Discord.Discord"
+
+
+    https://enterprise.thunderbird.net/manage-updates-policies-and-customization/managing-thunderbird-policies/customizing-thunderbird-using-policies.json

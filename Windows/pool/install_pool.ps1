@@ -1,11 +1,3 @@
-
-#Bitlocker behaves badly on dual boot systems for the pool laptops
-function disable_bitlocker {
-    $BLV = Get-BitLockerVolume
-    Disable-BitLocker -MountPoint $BLV
-}
-
-
 #Install all necessary programms for a pool laptop
 function install_programms {
     #Auto install from a config file, which has to be created.
@@ -33,23 +25,7 @@ function install_programms {
     Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/install_profile_programs.ps1 -OutFile $poolAccountInstallPath
 }
 
-#Set Up all necessary accounts.
-function set_up_accounts {
-  net user /add girlsuser user
-  net user /add anderes user
-  $BewertungPass  = Read-Host -Prompt "Enter the Password for the bewertungs Account"
-  net user /add bewertung $BewertungPass
-  #Make sure the passwords never expire
-  Set-LocalUser -Name "girlsuser" -PasswordNeverExpires:$true
-  Set-LocalUser -Name "anderes" -PasswordNeverExpires:$true
-  Set-LocalUser -Name "bewertung" -PasswordNeverExpires:$true
-  Set-LocalUser -Name "SysOperator" -PasswordNeverExpires:$true
-}
 
-
-#Execution as Admin sets the folder path to a system folder – for some fucking reason. So we have to go back to a user folder.
-$homeFolder = $env:USERPROFILE
-cd $homeFolder
 
 
 
@@ -88,12 +64,57 @@ function Set_UpBewertung {
 
 }
 
-set_up_accounts
+function user_setup {
+    #Because why would it be easily possible to install packages system wide...
+    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /grant girlsuser:RX
+    runas /user:girlsuser "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install Anaconda.Anaconda3"
+    runas /user:girlsuser "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install Microsoft.VisualStudioCode"
+    runas /user:girlsuser "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install Spyder.Spyder"
+    runas /user:girlsuser "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-vscode.cpptools"
+    runas /user:girlsuser "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension Oracle.oracle-java"
+    runas /user:girlsuser "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-python.python"
+    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove girlsuser
+
+    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /grant anderes:RX
+    runas /user:anderes "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install Microsoft.VisualStudioCode"
+    runas /user:anderes "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-vscode.cpptools"
+    runas /user:anderes "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension Oracle.oracle-java"
+    runas /user:anderes "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-python.python"
+    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove anderes
+
+
+    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /grant bewertung:RX
+    runas /user:bewertung "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install Microsoft.VisualStudioCode"
+    runas /user:bewertung "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-vscode.cpptools"
+    runas /user:bewertung "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension Oracle.oracle-java"
+    runas /user:bewertung "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-python.python"
+    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove bewertung
+
+}
+
+harden_windows {
+    #Install LibreOffice Group Policies
+    Invoke-WebRequest https://raw.githubusercontent.com/somedowntime/libreofficegrouppolicy/refs/heads/master/LibreOffice.admx -OutFile C:\Windows\PolicyDefintions\LibreOffice.admx
+    Invoke-WebRequest https://raw.githubusercontent.com/somedowntime/libreofficegrouppolicy/refs/heads/master/en-US/LibreOffice.adml -OutFile C:\Windows\PolicyDefintions\en-US\LibreOffice.adml
+    Write-Host "Configute the Libre Office Group Policies in accordance to the BSI: https://www.allianz-fuer-cybersicherheit.de/SharedDocs/Downloads/Webs/ACS/DE/BSI-CS/BSI-CS_147.pdf?__blob=publicationFile&v=7"
+
+
+    mkdir "C:\Program Files\Mozilla Firefox\distribution"
+    #Download Firefox config and set it up
+    Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/policies.json -OutFile "C:\Program Files\Mozilla Firefox\distribution\policies.json"
+
+}
+
+#Execution as Admin sets the folder path to a system folder – for some fucking reason. So we have to go back to a user folder.
+$homeFolder = $env:USERPROFILE
+cd $homeFolder
 Set_UpBewertung
 install_programms
+user_setup
+harden_windows
 
-
-
-Write-Output "Changing execution Policy back"
 Write-Output "Finished Install Script for Windows"
+Write-Output "Changing execution Policy back"
 Set-ExecutionPolicy -ExecutionPolicy AllSigned
+
+
