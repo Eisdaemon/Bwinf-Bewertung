@@ -16,7 +16,6 @@
       "TabGroups": true,
       "Locked": true
     },
-    "HardwareAcceleration": true | false,
     "HttpsOnlyMode": "enabled",
     "OfferToSaveLogins": false,
     "OfferToSaveLoginsDefault": false,
@@ -26,8 +25,6 @@
       "EnablePermissions": false
     },
     "PostQuantumKeyAgreementEnabled": true,
-    "PrimaryPassword": true | false,
-    "PrintingEnabled": true | false,
     "RequestedLocales": "de,en-US",
     "SSLVersionMin": "tls1.3",
   }
