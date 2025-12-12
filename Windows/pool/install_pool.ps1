@@ -20,9 +20,6 @@ function install_programms {
 
     Set-PathVariable AddPath 'C:\msys64\mingw64\bin'
 
-    $filename = "install_profile_programs.ps1"
-    $poolAccountInstallPath = Join-Path -Path $PWD -ChildPath $filename
-    Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/install_profile_programs.ps1 -OutFile $poolAccountInstallPath
 }
 
 
@@ -94,8 +91,10 @@ function user_setup {
 
 harden_windows {
     #Install LibreOffice Group Policies
-    Invoke-WebRequest https://raw.githubusercontent.com/somedowntime/libreofficegrouppolicy/refs/heads/master/LibreOffice.admx -OutFile C:\Windows\PolicyDefintions\LibreOffice.admx
-    Invoke-WebRequest https://raw.githubusercontent.com/somedowntime/libreofficegrouppolicy/refs/heads/master/en-US/LibreOffice.adml -OutFile C:\Windows\PolicyDefintions\en-US\LibreOffice.adml
+    Invoke-WebRequest https://raw.githubusercontent.com/somedowntime/libreofficegrouppolicy/refs/heads/master/LibreOffice.admx -OutFile LibreOffice.admx
+    mv LibreOffice.admx C:\Windows\PolicyDefintions\
+    Invoke-WebRequest https://raw.githubusercontent.com/somedowntime/libreofficegrouppolicy/refs/heads/master/en-US/LibreOffice.adml -OutFile LibreOffice.adml
+    mv LibreOffice.adml C:\Windows\PolicyDefintions\en-US\
     Write-Host "Configute the Libre Office Group Policies in accordance to the BSI: https://www.allianz-fuer-cybersicherheit.de/SharedDocs/Downloads/Webs/ACS/DE/BSI-CS/BSI-CS_147.pdf?__blob=publicationFile&v=7"
 
 
