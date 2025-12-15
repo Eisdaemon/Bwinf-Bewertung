@@ -68,8 +68,13 @@ function user_setup {
     icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /grant anderes:RX
     icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /grant bewertung:RX
 
+    $filename = "install_user_programms.txt"
+    $install_instruction_path = Join-Path -Path "C:\Users\Public\Documents" -ChildPath $filename
+    Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/install_user_programm.txt -OutFile $install_instruction_path
 
 
+    Read-Host -Prompt "Entery anything, after installing all programms for users"
+    del $install_instruction_path
     icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove anderes
     icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove girlsuser
     icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove bewertung
