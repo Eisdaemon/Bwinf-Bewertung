@@ -89,7 +89,7 @@ function user_setup {
 
 }
 
-harden_windows {
+function harden_windows {
     #Install LibreOffice Group Policies
     Invoke-WebRequest https://raw.githubusercontent.com/somedowntime/libreofficegrouppolicy/refs/heads/master/LibreOffice.admx -OutFile LibreOffice.admx
     mv LibreOffice.admx C:\Windows\PolicyDefintions\
