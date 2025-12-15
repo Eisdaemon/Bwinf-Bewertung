@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
-	<!--https://schneegans.de/windows/unattend-generator/?LanguageMode=Unattended&UILanguage=de-DE&Locale=de-DE&Keyboard=00000407&GeoLocation=94&ProcessorArchitecture=amd64&BypassRequirementsCheck=true&BypassNetworkCheck=true&ComputerNameMode=Custom&ComputerName=PLACEHOLD-NAME&CompactOsMode=Default&TimeZoneMode=Explicit&TimeZone=W.+Europe+Standard+Time&PartitionMode=Unattended&PartitionLayout=GPT&EspSize=300&RecoveryMode=None&DiskAssertionMode=Skip&WindowsEditionMode=Firmware&InstallFromMode=Automatic&PEMode=Default&UserAccountMode=Unattended&AccountName0=SysOperator&AccountDisplayName0=&AccountPassword0=&AccountGroup0=Administrators&AccountName1=anderes&AccountDisplayName1=&AccountPassword1=anderes&AccountGroup1=Users&AccountName2=girlsuser&AccountDisplayName2=&AccountPassword2=girlsuser&AccountGroup2=Users&AccountName3=Bewertung&AccountDisplayName3=&AccountPassword3=&AccountGroup3=Users&AutoLogonMode=Own&PasswordExpirationMode=Unlimited&LockoutMode=Default&HideFiles=Hidden&ShowFileExtensions=true&TaskbarSearch=Box&TaskbarIconsMode=Default&DisableWidgets=true&DisableBingResults=true&StartTilesMode=Default&StartPinsMode=Empty&DisableFastStartup=true&EnableLongPaths=true&PreventDeviceEncryption=true&HideEdgeFre=true&DisableEdgeStartupBoost=true&EffectsMode=Default&DeleteEdgeDesktopIcon=true&DesktopIconsMode=Default&StartFoldersMode=Default&VBoxGuestAdditions=true&WifiMode=Unattended&WifiName=bwinf-gast&WifiAuthentication=WPA3SAE&WifiPassword=PLACEHOLDER_WIFI_PASS&ExpressSettings=DisableAll&LockKeysMode=Skip&StickyKeysMode=Default&ColorMode=Default&WallpaperMode=Default&LockScreenMode=Default&Remove3DViewer=true&RemoveClipchamp=true&RemoveCopilot=true&RemoveCortana=true&RemoveDevHome=true&RemoveWindowsHello=true&RemoveFamily=true&RemoveMailCalendar=true&RemoveMaps=true&RemoveMediaFeatures=true&RemoveMixedReality=true&RemoveZuneVideo=true&RemoveNews=true&RemoveOffice365=true&RemoveOneDrive=true&RemoveOneNote=true&RemoveOneSync=true&RemoveOutlook=true&RemovePaint3D=true&RemovePeople=true&RemoveRecall=true&RemoveSkype=true&RemoveSolitaire=true&RemoveStepsRecorder=true&RemoveTeams=true&RemoveWallet=true&RemoveWeather=true&RemoveXboxApps=true&RemoveYourPhone=true&WdacMode=Skip&AppLockerMode=Skip-->
+	<!--https://schneegans.de/windows/unattend-generator/?LanguageMode=Unattended&UILanguage=de-DE&Locale=de-DE&Keyboard=00000407&GeoLocation=94&ProcessorArchitecture=amd64&BypassRequirementsCheck=true&BypassNetworkCheck=true&ComputerNameMode=Custom&ComputerName=$$PLACEHOLD-NAME$$&CompactOsMode=Default&TimeZoneMode=Explicit&TimeZone=W.+Europe+Standard+Time&PartitionMode=Unattended&PartitionLayout=GPT&EspSize=300&RecoveryMode=None&DiskAssertionMode=Skip&WindowsEditionMode=Firmware&InstallFromMode=Automatic&PEMode=Default&UserAccountMode=Unattended&AccountName0=SysOperator&AccountDisplayName0=&AccountPassword0=&AccountGroup0=Administrators&AccountName1=anderes&AccountDisplayName1=&AccountPassword1=anderes&AccountGroup1=Users&AccountName2=girlsuser&AccountDisplayName2=&AccountPassword2=girlsuser&AccountGroup2=Users&AccountName3=Bewertung&AccountDisplayName3=&AccountPassword3=&AccountGroup3=Users&AutoLogonMode=Own&PasswordExpirationMode=Unlimited&LockoutMode=Default&HideFiles=Hidden&ShowFileExtensions=true&TaskbarSearch=Box&TaskbarIconsMode=Default&DisableWidgets=true&DisableBingResults=true&StartTilesMode=Default&StartPinsMode=Empty&DisableFastStartup=true&EnableLongPaths=true&PreventDeviceEncryption=true&HideEdgeFre=true&DisableEdgeStartupBoost=true&EffectsMode=Default&DeleteEdgeDesktopIcon=true&DesktopIconsMode=Default&StartFoldersMode=Default&VBoxGuestAdditions=true&WifiMode=Unattended&WifiName=bwinf-gast&WifiAuthentication=WPA3SAE&WifiPassword=$$PLACEHOLDER_WIFI_PASS$$&ExpressSettings=DisableAll&LockKeysMode=Skip&StickyKeysMode=Default&ColorMode=Default&WallpaperMode=Default&LockScreenMode=Default&Remove3DViewer=true&RemoveClipchamp=true&RemoveCopilot=true&RemoveCortana=true&RemoveDevHome=true&RemoveWindowsHello=true&RemoveFamily=true&RemoveMailCalendar=true&RemoveMaps=true&RemoveMediaFeatures=true&RemoveMixedReality=true&RemoveZuneVideo=true&RemoveNews=true&RemoveOffice365=true&RemoveOneDrive=true&RemoveOneNote=true&RemoveOneSync=true&RemoveOutlook=true&RemovePaint3D=true&RemovePeople=true&RemoveRecall=true&RemoveSkype=true&RemoveSolitaire=true&RemoveStepsRecorder=true&RemoveTeams=true&RemoveWallet=true&RemoveWeather=true&RemoveXboxApps=true&RemoveYourPhone=true&WdacMode=Skip&AppLockerMode=Skip-->
 	<settings pass="offlineServicing"></settings>
 	<settings pass="windowsPE">
 		<component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
@@ -54,7 +54,7 @@
 	<settings pass="generalize"></settings>
 	<settings pass="specialize">
 		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-			<ComputerName>PLACEHOLD-NAME</ComputerName>
+			<ComputerName>$$PLACEHOLD_PC_NAME$$</ComputerName>
 			<TimeZone>W. Europe Standard Time</TimeZone>
 		</component>
 		<component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
@@ -126,7 +126,7 @@
 						<DisplayName></DisplayName>
 						<Group>Users</Group>
 						<Password>
-							<Value></Value>
+							<Value>$$BEWERTUNG_PASS$$</Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
@@ -366,7 +366,7 @@ $logfile = 'C:\Windows\Setup\Scripts\RemoveFeatures.log';
 			&lt;sharedKey&gt;
 				&lt;keyType&gt;passPhrase&lt;/keyType&gt;
 				&lt;protected&gt;false&lt;/protected&gt;
-				&lt;keyMaterial&gt;PLACEHOLDER_WIFI_PASS&lt;/keyMaterial&gt;
+				&lt;keyMaterial&gt;$$PLACEHOLDER_WIFI_PASS$$&lt;/keyMaterial&gt;
 			&lt;/sharedKey&gt;
 		&lt;/security&gt;
 	&lt;/MSM&gt;
