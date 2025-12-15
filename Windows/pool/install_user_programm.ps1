@@ -1,1 +1,0 @@
-Invoke-WebRequest https://download.sysinternals.com/files/PsExec.zip -OutFile $env:TEMP\psexec.zip; Expand-Archive $env:TEMP\psexec.zip $env:TEMP\psexec -Force; Copy-Item $env:TEMP\psexec\PsExec.exe C:\Windows\System32 -Force; psexec -accepteula

@@ -62,29 +62,16 @@ function Set_UpBewertung {
 }
 
 function user_setup {
+
     #Because why would it be easily possible to install packages system wide...
     icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /grant girlsuser:RX
-    runas /user:girlsuser "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install Anaconda.Anaconda3"
-    runas /user:girlsuser "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install Microsoft.VisualStudioCode"
-    runas /user:girlsuser "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install Spyder.Spyder"
-    runas /user:girlsuser "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-vscode.cpptools"
-    runas /user:girlsuser "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension Oracle.oracle-java"
-    runas /user:girlsuser "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-python.python"
-    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove girlsuser
-
     icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /grant anderes:RX
-    runas /user:anderes "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install Microsoft.VisualStudioCode"
-    runas /user:anderes "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-vscode.cpptools"
-    runas /user:anderes "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension Oracle.oracle-java"
-    runas /user:anderes "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-python.python"
-    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove anderes
-
-
     icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /grant bewertung:RX
-    runas /user:bewertung "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe install Microsoft.VisualStudioCode"
-    runas /user:bewertung "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-vscode.cpptools"
-    runas /user:bewertung "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension Oracle.oracle-java"
-    runas /user:bewertung "C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd --install-extension ms-python.python"
+
+
+
+    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove anderes
+    icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove girlsuser
     icacls "C:\Users\SysOperator\AppData\Local\Microsoft\WindowsApps\winget.exe" /remove bewertung
 
 }
@@ -92,9 +79,9 @@ function user_setup {
 function harden_windows {
     #Install LibreOffice Group Policies
     Invoke-WebRequest https://raw.githubusercontent.com/somedowntime/libreofficegrouppolicy/refs/heads/master/LibreOffice.admx -OutFile LibreOffice.admx
-    mv LibreOffice.admx C:\Windows\PolicyDefintions\
     Invoke-WebRequest https://raw.githubusercontent.com/somedowntime/libreofficegrouppolicy/refs/heads/master/en-US/LibreOffice.adml -OutFile LibreOffice.adml
-    mv LibreOffice.adml C:\Windows\PolicyDefintions\en-US\
+    mv LibreOffice.admx C:\Windows\PolicyDefinitions\
+    mv LibreOffice.adml C:\Windows\PolicyDefinitions\en-US\
     Write-Host "Configute the Libre Office Group Policies in accordance to the BSI: https://www.allianz-fuer-cybersicherheit.de/SharedDocs/Downloads/Webs/ACS/DE/BSI-CS/BSI-CS_147.pdf?__blob=publicationFile&v=7"
 
 
