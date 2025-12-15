@@ -60,7 +60,7 @@
 	<settings pass="generalize"></settings>
 	<settings pass="specialize">
 		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-			<ComputerName>$$PLACEHOLD-NAME$$</ComputerName>
+			<ComputerName>$$PLACEHOLD_NAME$$</ComputerName>
 			<TimeZone>W. Europe Standard Time</TimeZone>
 		</component>
 		<component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
@@ -105,7 +105,7 @@
 						<DisplayName></DisplayName>
 						<Group>Administrators</Group>
 						<Password>
-							<Value></Value>
+							<Value>$$PASSWORD_OP$$</Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
@@ -114,7 +114,7 @@
 						<DisplayName></DisplayName>
 						<Group>Users</Group>
 						<Password>
-							<Value>anderes</Value>
+							<Value>user</Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
@@ -123,7 +123,7 @@
 						<DisplayName></DisplayName>
 						<Group>Users</Group>
 						<Password>
-							<Value>girlsuser</Value>
+							<Value>user</Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
@@ -132,7 +132,7 @@
 						<DisplayName></DisplayName>
 						<Group>Users</Group>
 						<Password>
-							<Value></Value>
+							<Value>$$PASS_BEWERTUNG$$</Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
