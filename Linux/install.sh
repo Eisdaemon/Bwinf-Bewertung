@@ -140,6 +140,7 @@ set_bewertung_config() {
 other_config() {
 
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/policies.json
+    sudo mkdir -p /etc/firefox/policies
     sudo mv policies.json  /etc/firefox/policies
     #Set Grub Password
     #No Welcome Screen for new users.
@@ -160,6 +161,7 @@ set_ip_rules
 create_backups
 set_backup_commands
 set_bewertung_config
+set_bewertungs_mode
 other_config
 
 wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/Command_Explanation.md
