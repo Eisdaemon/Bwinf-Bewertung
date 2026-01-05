@@ -90,6 +90,7 @@ create_backups() {
 set_bewertungs_mode () {
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/bewertungs_mode.sh
     mv bewertungs_mode.sh /home/sysoperator/bin/bewertungs_mode.sh
+    chmod +x /home/sysoperator/bin/bewertungs_mode.sh
 }
 
 set_backup_commands() {
