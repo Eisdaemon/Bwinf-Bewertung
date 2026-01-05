@@ -60,7 +60,7 @@ if [ "$count" -ne 1 ]; then
 fi
 
 # do your logic
-elif $opt_d; then
+if $opt_d; then
   deactivate_mode
 elif $opt_a; then
   activate_mode
