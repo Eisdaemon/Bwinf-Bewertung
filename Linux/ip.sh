@@ -67,11 +67,11 @@ iptables -A OUTPUT -p tcp --dport 80  -d 138.201.137.186 -m owner --uid-owner $U
 iptables -A OUTPUT -p tcp --dport 443 -d 138.201.137.186 -m owner --uid-owner $UID_IP -j ACCEPT
 
 # Finally: drop everything else from that user
-iptables -A OUTPUT -m owner --uid-owner $UID_IP -j DROP
-
+iptables -A OUTPUT -p tcp -m owner --uid-owner $UID_IP -j REJECT --reject-with tcp-reset
+iptables -A OUTPUT -m owner --uid-owner $UID_IP -j REJECT
 # Drop everything IPv6 for that user
-ip6tables -A OUTPUT -m owner --uid-owner $UID_IP -j DROP
 
+ip6tables -A OUTPUT -m owner --uid-owner $UID_IP -j REJECT
 
 # Save these Rules to make them Persistant
 iptables-save > /etc/iptables/rules.v4
