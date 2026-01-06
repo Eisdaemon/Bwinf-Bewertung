@@ -20,12 +20,7 @@ install_all_programms () {
     sudo apt-get -y install build-essential
 
     #Apt installed editors
-    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre python3-pip kate
-
-
-    #Jet Brains Packages
-    sudo snap install clion --classic
-    sudo snap install pycharm-community --classic
+    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre python3-pip kat
 
 
     #Eclipse
