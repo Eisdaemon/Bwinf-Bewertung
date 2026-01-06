@@ -20,7 +20,7 @@ install_all_programms () {
     sudo apt-get -y install build-essential
 
     #Apt installed editors
-    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole keditbookmarks default-jre python3-pip kat
+    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole python3-pip kate
 
 
     #Eclipse
@@ -30,6 +30,14 @@ install_all_programms () {
     sudo snap install kdevelop --classic
 
     sudo apt-get remove -y "telnetd"
+
+    #Documentation
+    wget https://docs.python.org/3/archives/python-3.14-docs-html.tar.bz2
+    wget https://github.com/PeterFeicht/cppreference-doc/releases/download/v20250209/html-book-20250209.tar.xz
+    sudo mkdir -p /home/ioiuser/docs
+    sudo tar -xvjf python-3.14-docs-html.tar.bz2 -C /home/ioiuser/docs
+    sudo tar -xJf html-book-20250209.tar.x -C /home/ioiuser/docs
+    sudo chown -R ioiuser:ioiuser /home/ioiuser/docs
 
     sudo -u ioiuser bash << 'EOF'
     # Install code addon
