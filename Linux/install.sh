@@ -51,6 +51,7 @@ EOF
 }
 
 create_accounts () {
+    sudo sed -i 's|^SHELL=/bin/sh$|SHELL=/bin/bash|' /etc/default/useradd
     sudo useradd -m anderes && echo "anderes:user" | sudo chpasswd
     echo "Enter the Password for the account bewertung"
     read bewertung_pass
