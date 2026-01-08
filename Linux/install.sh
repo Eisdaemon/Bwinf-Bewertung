@@ -11,6 +11,7 @@ install_all_programms () {
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
     sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
     sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+    rm packages.microsoft.gpg
 
     sudo apt update
     sudo apt -y upgrade
@@ -18,6 +19,7 @@ install_all_programms () {
     wget github.com/atom/atom/releases/download/v1.60.0/atom-amd64.deb
     sudo apt -y install ./atom-amd64.deb
     sudo apt-get -y install build-essential
+    rm atom-amd64.deb
 
     #Apt installed editors
     sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole python3-pip kate
@@ -38,6 +40,8 @@ install_all_programms () {
     sudo tar -xvjf python-3.14-docs-html.tar.bz2 -C /home/ioiuser/docs
     sudo tar -xJf html-book-20250209.tar.xz -C /home/ioiuser/docs
     sudo chown -R ioiuser:ioiuser /home/ioiuser/docs
+    rm python-3.14-docs-html.tar.bz2
+    rm html-book-20250209.tar.xz
 
     sudo -u ioiuser bash << 'EOF'
     # Install code addon
@@ -48,6 +52,12 @@ EOF
     # Install code addon
     code --install-extension ms-vscode.cpptools
 EOF
+    #Bookmarks
+    wget https://share.bwinf.de/public.php/dav/files/MsQPaq2s8dNab88/?accept=zip
+    unzip firefox_backup.zip
+    sudo mv firefox_backup /home/ioiuser/snap/firefox
+    sudo chown -R ioiuser:ioiuser /home/ioiuser/snap/firefox
+    rm firefox_backup.zip
 }
 
 create_accounts () {
