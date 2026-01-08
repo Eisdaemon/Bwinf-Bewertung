@@ -36,7 +36,7 @@ install_all_programms () {
     wget https://github.com/PeterFeicht/cppreference-doc/releases/download/v20250209/html-book-20250209.tar.xz
     sudo mkdir -p /home/ioiuser/docs
     sudo tar -xvjf python-3.14-docs-html.tar.bz2 -C /home/ioiuser/docs
-    sudo tar -xJf html-book-20250209.tar.x -C /home/ioiuser/docs
+    sudo tar -xJf html-book-20250209.tar.xz -C /home/ioiuser/docs
     sudo chown -R ioiuser:ioiuser /home/ioiuser/docs
 
     sudo -u ioiuser bash << 'EOF'
