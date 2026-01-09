@@ -54,10 +54,10 @@ EOF
 EOF
     #Bookmarks
     wget https://share.bwinf.de/public.php/dav/files/MsQPaq2s8dNab88/?accept=zip
-    unzip firefox_backup.zip
+    unzip index.html?accept=zip
     sudo mv firefox_backup /home/ioiuser/snap/firefox
     sudo chown -R ioiuser:ioiuser /home/ioiuser/snap/firefox
-    rm firefox_backup.zip
+    rm index.html\?accept\=zip
 }
 
 create_accounts () {
