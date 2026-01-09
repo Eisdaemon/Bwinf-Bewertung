@@ -22,7 +22,7 @@ install_all_programms () {
     rm atom-amd64.deb
 
     #Apt installed editors
-    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole python3-pip kate
+    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole python3-pip kate virtualbox
 
 
     #Eclipse
