@@ -128,7 +128,7 @@
 						</Password>
 					</LocalAccount>
 					<LocalAccount wcm:action="add">
-						<Name>Bewertung</Name>
+						<Name>bewertung</Name>
 						<DisplayName></DisplayName>
 						<Group>Users</Group>
 						<Password>
