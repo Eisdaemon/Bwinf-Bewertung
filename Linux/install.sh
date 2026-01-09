@@ -158,10 +158,7 @@ other_config() {
     sudo apt-get install unattended-upgrades
     sudo dpkg-reconfigure unattended-upgrades
     echo "Please set up a password for grub"
-    grub-mkpasswd-pbkdf2
-    echo -e "Please set the default grub. For that open the file at /etc/default/grub and afterwards execute update-grub. Also add the following too /etc/grub.d/40_custom:
-    \nset superusers="boot"
-    \npassword_pbkdf2 boot grub.pbkdf2.sha512.VeryLongString"
+    echo -e "Please set the default grub. For that open the file at /etc/default/grub and afterwards execute update-grub."
 }
 create_accounts
 install_all_programms
