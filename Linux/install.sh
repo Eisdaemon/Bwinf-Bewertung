@@ -52,12 +52,6 @@ EOF
     # Install code addon
     code --install-extension ms-vscode.cpptools
 EOF
-    #Bookmarks
-    wget https://share.bwinf.de/public.php/dav/files/MsQPaq2s8dNab88/?accept=zip
-    unzip index.html?accept=zip
-    sudo mv firefox_backup /home/ioiuser/snap/firefox
-    sudo chown -R ioiuser:ioiuser /home/ioiuser/snap/firefox
-    rm index.html\?accept\=zip
 }
 
 create_accounts () {
@@ -74,7 +68,7 @@ set_ip_rules() {
     mv ip.sh /home/sysoperator/bin/
     chmod +x /home/sysoperator/bin/ip.sh
     echo -e "Note: As of now the policies are still disabled, so that VsCode can actually get the Addons on first open with the ioiuser and start vscode once...\n
-    Just change the account, do not log out and resume the install afterwards"
+    Just change the account, do not log out and resume the install afterwards. Also add the Bookmark.."
     while true; do
         echo "Do you want to continue? (y)"
         read answer
