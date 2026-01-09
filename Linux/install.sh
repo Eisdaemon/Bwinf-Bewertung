@@ -28,7 +28,7 @@ install_all_programms () {
 
     #Vbox
     sudo touch /etc/modprobe.d/blacklist-kvm.conf
-    sudo echo -e "blacklist kvm\nblacklist kvm_amd\nblacklist kvm_intel" >> /etc/modprobe.d/blacklist-kvm.conf
+    echo -e "blacklist kvm\nblacklist kvm_amd\nblacklist kvm_intel" | sudo tee /etc/modprobe.d/blacklist-kvm.conf
     sudo modprobe -r kvm_intel kvm 2>/dev/null
     sudo modprobe -r kvm_amd kvm 2>/dev/null
     sudo apt install virtualbox-7.2
