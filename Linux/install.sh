@@ -12,6 +12,8 @@ install_all_programms () {
     sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
     sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
     rm packages.microsoft.gpg
+    wget -O- https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmor --yes --output /usr/share/keyrings/oracle-virtualbox-2016.gpg
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox-2016.gpg] http://download.virtualbox.org/virtualbox/debian $(. /etc/os-release && echo "$VERSION_CODENAME") contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
 
     sudo apt update
     sudo apt -y upgrade
@@ -22,7 +24,20 @@ install_all_programms () {
     rm atom-amd64.deb
 
     #Apt installed editors
-    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole python3-pip kate virtualbox
+    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole python3-pip kate
+
+    #Vbox
+    sudo touch /etc/modprobe.d/blacklist-kvm.conf
+    sudo echo -e "blacklist kvm\nblacklist kvm_amd\nblacklist kvm_intel" >> /etc/modprobe.d/blacklist-kvm.conf
+    sudo modprobe -r kvm_intel kvm 2>/dev/null
+    sudo modprobe -r kvm_amd kvm 2>/dev/null
+    sudo apt install virtualbox-7.2
+    wget https://download.virtualbox.org/virtualbox/7.2.4/Oracle_VirtualBox_Extension_Pack-7.2.4.vbox-extpack
+    sudo vboxmanage extpack install Oracle_VirtualBox_Extension_Pack-7.2.4.vbox-extpack
+    sudo usermod -aG vboxusers $USER
+    sudo usermod -aG vboxusers anderes
+
+
 
 
     #Eclipse
