@@ -163,7 +163,7 @@ set_bewertung_config() {
 
 other_config() {
 
-    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/policies.json
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/policies.json
     sudo mkdir -p /etc/firefox/policies
     sudo mv policies.json  /etc/firefox/policies
     #Set Grub Password
