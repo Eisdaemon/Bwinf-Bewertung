@@ -1,5 +1,11 @@
 {
   "policies": {
+     "ManagedBookmarks": [
+      {
+        "url": "https://contest.informatik-olympiade.de",
+        "name": "Contest"
+      }
+    ],
     "BlockAboutAddons": true,
     "BlockAboutConfig": true,
     "ExtensionSettings": {
