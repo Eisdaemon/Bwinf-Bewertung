@@ -15,3 +15,21 @@
 &"C:\Users\bewertung\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension ms-vscode.cpptools
 &"C:\Users\bewertung\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension Oracle.oracle-java
 &"C:\Users\bewertung\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension ms-python.python
+
+&winget install Anaconda.Anaconda3
+&winget install Microsoft.VisualStudioCode
+&winget install Spyder.Spyder
+&"C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension ms-vscode.cpptools
+&"C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension Oracle.oracle-java
+&"C:\Users\girlsuser\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension ms-python.python
+
+&winget install Microsoft.VisualStudioCode
+&"C:\Users\anderes\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension ms-vscode.cpptools
+&"C:\Users\anderes\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension Oracle.oracle-java
+&"C:\Users\anderes\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension ms-python.python
+
+
+&winget install Microsoft.VisualStudioCode
+&"C:\Users\bewertung\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension ms-vscode.cpptools
+&"C:\Users\bewertung\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension Oracle.oracle-java
+&"C:\Users\bewertung\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" --install-extension ms-python.python
