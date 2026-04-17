@@ -3,6 +3,7 @@ function install_programms {
     #Auto install from a config file, which has to be created.
     $filename = "pool.json"
     $poolJsonPath = Join-Path -Path $PWD -ChildPath $filename
+    winget settings --enable BypassCertificatePinningForMicrosoftStore
     Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/pool.json -OutFile $poolJsonPath
     & ([ScriptBlock]::Create((irm "https://christitus.com/win"))) -Config pool.json -Run
     winget install Romanitho.Winget-AutoUpdate
