@@ -4,7 +4,7 @@ function install_programms {
     $filename = "pool.json"
     $poolJsonPath = Join-Path -Path $PWD -ChildPath $filename
     Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/pool.json -OutFile $poolJsonPath
-    iex "& { $(irm https://christitus.com/win) } -Config pool.json -Run"
+    & ([ScriptBlock]::Create((irm "https://christitus.com/win"))) -Config pool.json -Run
     winget install Romanitho.Winget-AutoUpdate
     winget install Microsoft.OpenJDK.17
     winget install -e --id JetBrains.PyCharm.Community
