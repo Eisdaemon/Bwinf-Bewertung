@@ -13,15 +13,14 @@
         }
       },
     "ExtensionUpdate": true,
-    "GenerativeAI": {
-      "Enabled": false,
-      "Chatbot": false,
-      "LinkPreviews": true,
-      "TabGroups": true,
-      "Locked": true
+    "AIControls": {
+      "SidebarChatbot": {
+        "Value": "blocked",
+        "Locked": true
+      }
     },
     "Homepage": {
-      "URL": "https://inter.bwinf.de/",
+      "URL": "https://intern.bwinf.de/",
       "Locked": true | false,
       "StartPage": "previous-session"
     },
@@ -35,17 +34,17 @@
     },
     "Permissions": {
       "Camera": {
-        "Allow": ["share.bwinf.de"]
+        "Allow": ["share.bwinf.de","chat.bwinf.de"]
       },
       "Microphone": {
-        "Allow": ["share.bwinf.de"]
+        "Allow": ["share.bwinf.de","chat.bwinf.de"]
       },
       "ScreenShare": {
-        "Allow": ["share.bwinf.de"]
+        "Allow": ["share.bwinf.de","chat.bwinf.de"]
       }
     },
     "PostQuantumKeyAgreementEnabled": true,
     "RequestedLocales": "de,en-US",
-    "SSLVersionMin": "tls1.3"
+    "SSLVersionMin": "tls1.2"
   }
 }

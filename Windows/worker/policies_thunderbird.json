@@ -1,0 +1,21 @@
+{
+  "policies": {
+    "BlockAboutConfig": true,
+    "BlockAboutAddons": true,
+    "OfferToSaveLogins": false,
+    "DisabledCiphers": {
+      "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": true,
+      "TLS_DHE_RSA_WITH_AES_256_CBC_SHA": true,
+      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": true,
+      "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": true,
+      "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": true,
+      "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": true,
+    },
+    "Preferences": {
+      "pdfjs.disabled": {
+        "Value": true,
+        "Status": "locked"
+      }
+    }
+  }
+}
