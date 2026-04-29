@@ -5,7 +5,7 @@ funcktion set_users ·{
     net user /ADD $user_name $user_pass
     #Add Worker as Wireguard User without Admin
     reg add HKLM\Software\WireGuard /v LimitedOperatorUI /t REG_DWORD /d 1 /f
-    Add-LocalGroupMember -Group "Network Configuration Operators" -Member $user_name -Verbose
+    Add-LocalGroupMember -Group "Netzwerkkonfigurations-Operatoren" -Member $user_name -Verbose
 }
 
 #Install all necessary programms for a pool laptop
