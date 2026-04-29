@@ -21,7 +21,7 @@
     },
     "Homepage": {
       "URL": "https://intern.bwinf.de/",
-      "Locked": true | false,
+      "Locked": false,
       "StartPage": "previous-session"
     },
     "HttpsOnlyMode": "enabled",

@@ -1,3 +1,13 @@
+funcktion set_users ·{
+
+    $user_name = Read-Host "Enter the username of the new worker"
+    $user_pass = Read-Host "Enter the password of the new worker"
+    net user /ADD $user_name $user_pass
+    #Add Worker as Wireguard User without Admin
+    reg add HKLM\Software\WireGuard /v LimitedOperatorUI /t REG_DWORD /d 1 /f
+    Add-LocalGroupMember -Group "Network Configuration Operators" -Member $user_name -Verbose
+}
+
 #Install all necessary programms for a pool laptop
 function install_programms {
     #Auto install from a config file, which has to be created.
@@ -7,7 +17,7 @@ function install_programms {
     Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/worker/worker.json -OutFile $poolJsonPath
     & ([ScriptBlock]::Create((irm "https://christitus.com/win"))) -Config pool.json -Run
     winget install Romanitho.Winget-AutoUpdate
-    Add-Contet -Path "C:\Program Files\Winget-AutoUpdate\config\default_excluded_apps.txt" -Value "Discord.Discord"
+    Add-Content -Path "C:\Program Files\Winget-AutoUpdate\config\default_excluded_apps.txt" -Value "Discord.Discord"
 
 }
 
@@ -24,8 +34,8 @@ function harden_windows {
     mkdir "C:\Program Files\Mozilla Firefox\distribution"
     #Download Firefox config and set it up
     Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/worker/policies_firefox.json -OutFile "C:\Program Files\Mozilla Firefox\distribution\policies.json"
-
-    #Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/worker/policies_thunderbird.json -OutFile "C:\Program Files\Mozilla Firefox\distribution\policies.json"
+    mkdir "C:\Program Files\Mozilla Thunderbird\distribution"
+    Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/worker/policies_thunderbird.json -OutFile "C:\Program Files\Mozilla Firefox\distribution\policies.json"
     $path = 'HKLM:\SOFTWARE\Policies\Adobe\Adobe Acrobar\DC\FeatureLockDown'
 
     $key = try {
@@ -37,16 +47,13 @@ function harden_windows {
 
     New-ItemProperty -Path $key.PSPath -Name bDisableJavaScript -PropertyType Dword -Value 1
 
-    #Add Worker as Wireguard User without Admin
-    reg add HKLM\Software\WireGuard /v LimitedOperatorUI /t REG_DWORD /d 1 /f
-    $user_name = Read-Host "Enter the username to add as Network Operator for Wireguard"
-    Add-LocalGroupMember -Group "Network Configuration Operators" -Member $user_name -Verbose
 
 }
 
 #Execution as Admin sets the folder path to a system folder – for some fucking reason. So we have to go back to a user folder.
 $homeFolder = $env:USERPROFILE
 cd $homeFolder
+set_users
 install_programms
 harden_windows
 

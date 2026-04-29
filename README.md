@@ -17,6 +17,9 @@ You can download the Script by using:
 
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/install_pool.ps1" -OutFile "C:\Users\SysOperator\install_pool.ps1"
 
+Or:
+    
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/worker/install_work.ps1" -OutFile "C:\Users\SysOperator\install_work.ps1"
     
 The linux script can be downladed at:
 
