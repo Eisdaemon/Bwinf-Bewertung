@@ -13,7 +13,7 @@
         "installation_mode": "force_installed",
         "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
       },
-      "bitwarden@bitwarden.com": {
+      "44f497d3-0aca-4c76-bc78-fb42fdf36c14": {
         "installation_mode": "force_installed",
         "install_url": "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi"
       }
