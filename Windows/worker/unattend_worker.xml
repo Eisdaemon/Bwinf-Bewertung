@@ -1,57 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
-	<!--https://schneegans.de/windows/unattend-generator/?LanguageMode=Unattended&UILanguage=de-DE&Locale=de-DE&Keyboard=00000407&GeoLocation=94&ProcessorArchitecture=amd64&BypassRequirementsCheck=true&BypassNetworkCheck=true&ComputerNameMode=Custom&ComputerName=PLACEHOLD-NAME&CompactOsMode=Default&TimeZoneMode=Explicit&TimeZone=W.+Europe+Standard+Time&PartitionMode=Unattended&PartitionLayout=GPT&EspSize=300&RecoveryMode=None&DiskAssertionMode=Skip&WindowsEditionMode=Firmware&InstallFromMode=Name&InstallFromName=Windows+11+Pro&PEMode=Default&UserAccountMode=Unattended&AccountName0=SysOperator&AccountDisplayName0=&AccountPassword0=&AccountGroup0=Administrators&AutoLogonMode=Own&PasswordExpirationMode=Unlimited&LockoutMode=Default&HideFiles=Hidden&ShowFileExtensions=true&TaskbarSearch=Box&TaskbarIconsMode=Default&DisableWidgets=true&DisableBingResults=true&StartTilesMode=Default&StartPinsMode=Empty&DisableFastStartup=true&EnableLongPaths=true&HardenSystemDriveAcl=true&HideEdgeFre=true&DisableEdgeStartupBoost=true&DisableAutomaticRestartSignOn=true&EffectsMode=Default&DeleteEdgeDesktopIcon=true&DesktopIconsMode=Default&StartFoldersMode=Default&WifiMode=Unattended&WifiName=bwinf&WifiAuthentication=WPA3SAE&WifiPassword=%24%24PLACEHOLDER_WIFI_PASS%24%24&ExpressSettings=DisableAll&LockKeysMode=Skip&StickyKeysMode=Default&ColorMode=Default&WallpaperMode=Default&LockScreenMode=Default&Remove3DViewer=true&RemoveClipchamp=true&RemoveCopilot=true&RemoveCortana=true&RemoveDevHome=true&RemoveWindowsHello=true&RemoveFamily=true&RemoveMailCalendar=true&RemoveMaps=true&RemoveMediaFeatures=true&RemoveMixedReality=true&RemoveZuneVideo=true&RemoveNews=true&RemoveOffice365=true&RemoveOneDrive=true&RemoveOneNote=true&RemoveOneSync=true&RemoveOutlook=true&RemovePaint3D=true&RemovePeople=true&RemoveRecall=true&RemoveSkype=true&RemoveSolitaire=true&RemoveStepsRecorder=true&RemoveTeams=true&RemoveWallet=true&RemoveWeather=true&RemoveXboxApps=true&RemoveYourPhone=true&WdacMode=Skip&AppLockerMode=Skip-->
+	<!--https://schneegans.de/windows/unattend-generator/?LanguageMode=Unattended&UILanguage=de-DE&Locale=de-DE&Keyboard=00000407&GeoLocation=94&PEMode=Generated&InstallFromMode=Name&InstallFromName=Windows+11+Pro&PartitionMode=Unattended&TargetDisk=0&PartitionLayout=GPT&EspSize=300&RecoveryMode=None&DiskAssertionMode=Skip&WindowsEditionMode=Firmware&ProcessorArchitecture=amd64&BypassRequirementsCheck=true&BypassNetworkCheck=true&ComputerNameMode=Custom&ComputerName=PLACEHOLD-NAME&TimeZoneMode=Explicit&TimeZone=W.+Europe+Standard+Time&UserAccountMode=Unattended&AccountName0=SysOperator&AccountDisplayName0=&AccountPassword0=&AccountGroup0=Administrators&AccountName1=%24%24PLACEHOLDER-ACC%24%24&AccountDisplayName1=&AccountPassword1=&AccountGroup1=Users&AutoLogonMode=Own&PasswordExpirationMode=Unlimited&LockoutMode=Default&HideFiles=Hidden&ShowFileExtensions=true&TaskbarSearch=Box&TaskbarIconsMode=Default&DisableWidgets=true&DisableBingResults=true&StartTilesMode=Default&StartPinsMode=Empty&DisableFastStartup=true&EnableLongPaths=true&HardenSystemDriveAcl=true&HideEdgeFre=true&DisableEdgeStartupBoost=true&DisableAutomaticRestartSignOn=true&EffectsMode=Default&DeleteEdgeDesktopIcon=true&DesktopIconsMode=Default&StartFoldersMode=Default&WifiMode=Unattended&WifiName=bwinf&WifiAuthentication=WPA3SAE&WifiPassword=%24%24PLACEHOLDER_WIFI_PASS%24%24&ExpressSettings=DisableAll&LockKeysMode=Skip&StickyKeysMode=Default&ColorMode=Default&WallpaperMode=Default&LockScreenMode=Default&Remove3DViewer=true&RemoveClipchamp=true&RemoveCopilot=true&RemoveCortana=true&RemoveDevHome=true&RemoveWindowsHello=true&RemoveFamily=true&RemoveMailCalendar=true&RemoveMaps=true&RemoveMediaFeatures=true&RemoveMixedReality=true&RemoveZuneVideo=true&RemoveNews=true&RemoveOffice365=true&RemoveOneDrive=true&RemoveOneNote=true&RemoveOneSync=true&RemoveOutlook=true&RemovePaint3D=true&RemovePeople=true&RemoveRecall=true&RemoveSkype=true&RemoveSolitaire=true&RemoveStepsRecorder=true&RemoveTeams=true&RemoveWallet=true&RemoveWeather=true&RemoveXboxApps=true&RemoveYourPhone=true&WdacMode=Skip&AppLockerMode=Skip-->
 	<settings pass="offlineServicing"></settings>
 	<settings pass="windowsPE">
-		<component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-			<UILanguage>de-DE</UILanguage>
-		</component>
 		<component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-			<ImageInstall>
-				<OSImage>
-					<InstallFrom>
-						<MetaData wcm:action="add">
-							<Key>/IMAGE/NAME</Key>
-							<Value>Windows 11 Pro</Value>
-						</MetaData>
-					</InstallFrom>
-					<InstallTo>
-						<DiskID>0</DiskID>
-						<PartitionID>3</PartitionID>
-					</InstallTo>
-				</OSImage>
-			</ImageInstall>
-			<UserData>
-				<ProductKey>
-					<WillShowUI>Never</WillShowUI>
-				</ProductKey>
-				<AcceptEula>true</AcceptEula>
-			</UserData>
-			<UseConfigurationSet>false</UseConfigurationSet>
 			<RunSynchronous>
 				<RunSynchronousCommand wcm:action="add">
 					<Order>1</Order>
-					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassTPMCheck /t REG_DWORD /d 1 /f</Path>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:rem Set keyboard layout&amp;echo:wpeutil.exe SetKeyboardLayout 0407:00000407&amp;echo:@for ^%^%d in (C D E F G H I J K L M N O P Q T U V X Y Z^) do @()</Path>
 				</RunSynchronousCommand>
 				<RunSynchronousCommand wcm:action="add">
 					<Order>2</Order>
-					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassSecureBootCheck /t REG_DWORD /d 1 /f</Path>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:if exist ^%^%d:\sources\install.wim set ^"IMAGE_FILE=^%^%d:\sources\install.wim^"&amp;echo:if exist ^%^%d:\sources\install.esd set ^"IMAGE_FILE=^%^%d:\sources\install.esd^")</Path>
 				</RunSynchronousCommand>
 				<RunSynchronousCommand wcm:action="add">
 					<Order>3</Order>
-					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassRAMCheck /t REG_DWORD /d 1 /f</Path>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:if exist ^%^%d:\sources\install.swm set ^"IMAGE_FILE=^%^%d:\sources\install.swm^" ^&amp; set ^"SWM_PARAM=/SWMFile:^%^%d:\sources\install*.swm^"&amp;echo:if exist ^%^%d:\autounattend.xml set ^"XML_FILE=^%^%d:\autounattend.xml^")</Path>
 				</RunSynchronousCommand>
 				<RunSynchronousCommand wcm:action="add">
 					<Order>4</Order>
-					<Path>cmd.exe /c &gt;&gt;X:\diskpart.txt (echo:SELECT DISK=0&amp;echo:CLEAN&amp;echo:CONVERT GPT&amp;echo:CREATE PARTITION EFI SIZE=300&amp;echo:FORMAT QUICK FS=FAT32 LABEL=^"System^"&amp;echo:ASSIGN LETTER=S&amp;echo:CREATE PARTITION MSR SIZE=16&amp;echo:CREATE PARTITION PRIMARY)</Path>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:if exist ^%^%d:\$OEM$ set ^"OEM_FOLDER=^%^%d:\$OEM$^"&amp;echo:if exist ^%^%d:\$WinPEDriver$ set ^"PEDRIVERS_FOLDER=^%^%d:\$WinPEDriver$^"&amp;echo:^))</Path>
 				</RunSynchronousCommand>
 				<RunSynchronousCommand wcm:action="add">
 					<Order>5</Order>
-					<Path>cmd.exe /c &gt;&gt;X:\diskpart.txt (echo:FORMAT QUICK FS=NTFS LABEL=^"Windows^"&amp;echo:ASSIGN LETTER=W)</Path>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:for /f ^"tokens=3^" ^%^%t in ('reg.exe query HKLM\System\Setup /v UnattendFile 2^^^&gt;nul'^) do ( if exist ^%^%t set ^"XML_FILE=^%^%t^" ^))</Path>
 				</RunSynchronousCommand>
 				<RunSynchronousCommand wcm:action="add">
 					<Order>6</Order>
-					<Path>cmd.exe /c "diskpart.exe /s "X:\diskpart.txt" &gt;&gt;"X:\diskpart.log" || ( type "X:\diskpart.log" &amp; echo diskpart encountered an error. &amp; pause &amp; exit /b 1 )"</Path>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:@if not defined IMAGE_FILE echo Could not locate install.wim, install.esd or install.swm. ^&amp; pause ^&amp; exit /b 1&amp;echo:@if not defined XML_FILE echo Could not locate autounattend.xml. ^&amp; pause ^&amp; exit /b 1)</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>7</Order>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:set ^"OS_VERSION=11^"&amp;echo:for /f ^"tokens=3 delims=.^" ^%^%v in ('ver'^) do (&amp;echo:if ^%^%v LSS 20000 set ^"OS_VERSION=10^"&amp;echo:^)&amp;echo:rem Install drivers from $WinPEDriver$ folder&amp;echo:if defined PEDRIVERS_FOLDER ()</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>8</Order>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:for /R ^%PEDRIVERS_FOLDER^% ^%^%f IN (*.inf^) do drvload.exe ^"^%^%f^"&amp;echo:^)&amp;echo:@^&gt;X:\diskpart.txt (&amp;echo:echo:SELECT DISK=0&amp;echo:echo:CLEAN&amp;echo:echo:CONVERT GPT&amp;echo:echo:CREATE PARTITION EFI SIZE=300)</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>9</Order>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:echo:FORMAT QUICK FS=FAT32 LABEL=^^^"System^^^"&amp;echo:echo:ASSIGN LETTER=S&amp;echo:echo:CREATE PARTITION MSR SIZE=16&amp;echo:echo:CREATE PARTITION PRIMARY&amp;echo:echo:FORMAT QUICK FS=NTFS LABEL=^^^"Windows^^^")</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>10</Order>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:echo:ASSIGN LETTER=W&amp;echo:^)&amp;echo:diskpart.exe /s X:\diskpart.txt ^|^| ( echo diskpart.exe encountered an error. ^&amp; pause ^&amp; exit /b 1 ^)&amp;echo:set ^"IMG_PARAM=/Name:^"Windows 11 Pro^"^")</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>11</Order>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:dism.exe /Apply-Image /ImageFile:^%IMAGE_FILE^% ^%SWM_PARAM^% ^%IMG_PARAM^% /ApplyDir:W:\  /CheckIntegrity /Verify ^|^| ( echo dism.exe encountered an error. ^&amp; pause ^&amp; exit /b 1 ^))</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>12</Order>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:bcdboot.exe W:\Windows /s S: ^|^| ( echo bcdboot.exe encountered an error. ^&amp; pause ^&amp; exit /b 1 ^)&amp;echo:rem Avoid creation of recovery partition&amp;echo:del W:\Windows\System32\Recovery\winre.wim&amp;echo:mkdir W:\Windows\Panther)</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>13</Order>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:copy ^%XML_FILE^% W:\Windows\Panther\unattend.xml&amp;echo:if defined PEDRIVERS_FOLDER (&amp;echo:dism.exe /Add-Driver /Image:W:\ /Driver:^"^%PEDRIVERS_FOLDER^%^" /Recurse&amp;echo:^))</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>14</Order>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:dism.exe /Image:W:\ /Set-TimeZone:^"W. Europe Standard Time^"&amp;echo:rem Set device setup region to Germany (GeoID 94^)&amp;echo:reg.exe LOAD HKLM\mount W:\Windows\System32\config\SOFTWARE)</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>15</Order>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:reg.exe ADD ^"HKLM\mount\Microsoft\Windows\CurrentVersion\Control Panel\DeviceRegion^" /v DeviceRegion /t REG_DWORD /d 94 /f&amp;echo:reg.exe UNLOAD HKLM\mount&amp;echo:rem Continue with next stage of Windows Setup after reboot)</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>16</Order>
+					<Path>cmd.exe /c &gt;&gt;X:\pe.cmd (echo:wpeutil.exe reboot)</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>17</Order>
+					<Path>cmd.exe /c "X:\pe.cmd"</Path>
 				</RunSynchronousCommand>
 			</RunSynchronous>
 		</component>
@@ -59,7 +79,7 @@
 	<settings pass="generalize"></settings>
 	<settings pass="specialize">
 		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-			<ComputerName>PLACEHOLD-NAME</ComputerName>
+			<ComputerName>$$PLACEHOLD-NAME$$</ComputerName>
 			<TimeZone>W. Europe Standard Time</TimeZone>
 		</component>
 		<component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
@@ -104,7 +124,16 @@
 						<DisplayName></DisplayName>
 						<Group>Administrators</Group>
 						<Password>
-							<Value></Value>
+							<Value>$$PASSWORD_OP$$</Value>
+							<PlainText>true</PlainText>
+						</Password>
+					</LocalAccount>
+					<LocalAccount wcm:action="add">
+						<Name>$$PLACEHOLDER-ACC$$</Name>
+						<DisplayName></DisplayName>
+						<Group>Users</Group>
+						<Password>
+							<Value>$$PASS_USER$$</Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
@@ -115,7 +144,7 @@
 				<Enabled>true</Enabled>
 				<LogonCount>1</LogonCount>
 				<Password>
-					<Value></Value>
+					<Value>$$PASSWORD_OP$$</Value>
 					<PlainText>true</PlainText>
 				</Password>
 			</AutoLogon>
@@ -135,8 +164,8 @@
 	<Extensions xmlns="https://schneegans.de/windows/unattend-generator/">
 		<Build>
 			<Commit>
-				<Hash>b5944ad0b8d26588e78d963562e0f80ee2e33aeb</Hash>
-				<GitHubUrl>https://github.com/cschneegans/unattend-generator/commit/b5944ad0b8d26588e78d963562e0f80ee2e33aeb</GitHubUrl>
+				<Hash>279ac2704dd9ad29a77c201389e1330145c33c6e</Hash>
+				<GitHubUrl>https://github.com/cschneegans/unattend-generator/commit/279ac2704dd9ad29a77c201389e1330145c33c6e</GitHubUrl>
 			</Commit>
 		</Build>
 		<ExtractScript>
@@ -368,14 +397,7 @@ Set-ItemProperty -LiteralPath $key -Name 'ConfigureStartPins' -Value $json -Type
 		<File path="C:\Windows\Setup\Scripts\Specialize.ps1">
 $scripts = @(
 	{
-		reg.exe add "HKLM\SYSTEM\Setup\MoSetup" /v AllowUpgradesWithUnsupportedTPMOrCPU /t REG_DWORD /d 1 /f;
-	};
-	{
 		reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE" /v BypassNRO /t REG_DWORD /d 1 /f;
-	};
-	{
-		ReAgentc.exe /disable;
-		Remove-Item -LiteralPath 'C:\Windows\System32\Recovery\Winre.wim' -Force -ErrorAction 'SilentlyContinue';
 	};
 	{
 		Remove-Item -LiteralPath 'Registry::HKLM\Software\Microsoft\WindowsUpdate\Orchestrator\UScheduler_Oobe\DevHomeUpdate' -Force -ErrorAction 'SilentlyContinue';

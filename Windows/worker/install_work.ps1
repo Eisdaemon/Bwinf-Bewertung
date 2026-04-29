@@ -37,6 +37,11 @@ function harden_windows {
 
     New-ItemProperty -Path $key.PSPath -Name bDisableJavaScript -PropertyType Dword -Value 1
 
+    #Add Worker as Wireguard User without Admin
+    reg add HKLM\Software\WireGuard /v LimitedOperatorUI /t REG_DWORD /d 1 /f
+    $user_name = Read-Host "Enter the username to add as Network Operator for Wireguard"
+    Add-LocalGroupMember -Group "Network Configuration Operators" -Member $user_name -Verbose
+
 }
 
 #Execution as Admin sets the folder path to a system folder – for some fucking reason. So we have to go back to a user folder.

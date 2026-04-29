@@ -1,13 +1,3 @@
 
     #Disable JavaScript in pdf
 
-    $path = 'HKLM:\SOFTWARE\Policies\Adobe\Adobe Acrobar\DC\FeatureLockDown'
-
-    $key = try {
-        Get-Item -Path $path -ErrorAction Stop
-    }
-    catch {
-        New-Item -Path $path -Force
-    }
-
-    New-ItemProperty -Path $key.PSPath -Name bDisableJavaScript -PropertyType Dword -Value 1

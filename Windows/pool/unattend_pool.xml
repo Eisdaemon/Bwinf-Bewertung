@@ -143,7 +143,7 @@
 				<Enabled>true</Enabled>
 				<LogonCount>1</LogonCount>
 				<Password>
-					<Value></Value>
+					<Value>$$PASSWORD_OP$$</Value>
 					<PlainText>true</PlainText>
 				</Password>
 			</AutoLogon>
