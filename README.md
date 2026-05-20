@@ -26,6 +26,11 @@ The linux script can be downladed at:
     wget raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/install.sh
     chmod +x install.sh
 
+And Lasty the Compile Speedtest at:
+
+    wget raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/compile/CompileSpeed.sh
+    chmod +x CompileSpeed.sh
+
 
 runtergeladen werden und ausführbar gemacht werden.
 
