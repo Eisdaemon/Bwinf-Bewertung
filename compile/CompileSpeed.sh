@@ -7,6 +7,8 @@ sudo apt install hyperfine
 
 hyperfine --warmup 3 'g++ main.cpp'
 
+hyperfine --warmup 3 'cat input.in | ./a.out'
+
 rm main.cpp
 rm input.in
 rm a.out
