@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+pkill -u ioiuser
 userdel -r ioiuser
 useradd -m ioiuser
 echo "ioiuser:user" | chpasswd
