@@ -1,5 +1,6 @@
 {
   "policies": {
+    "RequestedLocales": ["de"],
     "BlockAboutAddons": true,
     "BlockAboutConfig": true,
     "DisableSafeMode": true,

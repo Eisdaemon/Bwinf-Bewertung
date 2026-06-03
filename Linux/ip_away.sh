@@ -1,3 +1,4 @@
+#!/bin/bash
 # Flush all rules according to the Arch Wiki
 iptables -F
 iptables -X
