@@ -81,6 +81,10 @@ create_accounts () {
 set_ip_rules() {
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip.sh
     mv ip.sh /home/sysoperator/bin/
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip_dns_list
+    mv ip_dns_list /home/sysoperator/bin/
+    wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip6_dns_list
+    mv ip6_dns_list /home/sysoperator/bin/
     chmod +x /home/sysoperator/bin/ip.sh
     sudo /home/sysoperator/bin/ip.sh
 }
