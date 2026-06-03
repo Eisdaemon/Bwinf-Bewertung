@@ -6,6 +6,14 @@ fi
 
 set -e
 
+#Global because shit support with paramenters
+if [ ! -f /home/sysoperator/bin/ip_dns_list ] && [ ! -f /home/sysoperator/bin/ip6_dns_list ]; then
+    echo "Allow lists are missing!"; exit 1;
+fi
+readarray ip_dns -t a < /home/sysoperator/bin/ip_dns_list
+readarray ip6_dns -t a < /home/sysoperator/bin/ip6_dns_list
+ip=()
+ip6=()
 
 install_dependencies() {
     #Install iptables-persistant
@@ -17,27 +25,21 @@ install_dependencies() {
     else
         wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/ip_away.sh || { echo "Failed to download ip_away.sh"; exit 1; }
         # Make it executable
-        mv ip_away.sh /home/sysoperator/bin/
+        mv -f ip_away.sh /home/sysoperator/bin/
         chmod +x /home/sysoperator/bin/ip_away.sh
     fi
 }
 
 create_lists() {
-    if [ ! -f /home/sysoperator/bin/ip_dns_list ] && [ ! -f /home/sysoperator/bin/ip6_dns_list ]; then
-        echo "Allow lists are missing!"; exit 1;
-    fi
 
     #Get all ips and dns which should be allowed
-    readarray ip_dns -t a < /home/sysoperator/bin/ip_dns_list
-    readarray ip6_dns -t a < /home/sysoperator/bin/ip6_dns_list
+
 
     if [ ${#ip_dns[@]} -eq 0 ] && [ ${#ip6_dns[@]} -eq 0 ]; then
         echo "Allow lists are empty!"; exit 1;
     fi
 
     #Split them, since i also need the ip only
-    ip=()
-    ip6=()
 
     for i in "${ip_dns[@]}"
     do
@@ -49,10 +51,6 @@ create_lists() {
         substring=${i%% *}
         ip6+=($substring)
     done
-
-    set_ip_rules "$ip" "$ip6"
-    set_hosts_file "$ip_dns" "$ip6_dns"
-
 }
 
 set_ip_rules() {
@@ -96,9 +94,6 @@ set_ip_rules() {
     # Allow all on loopback for that user
     iptables -A OUTPUT -o lo -m owner --uid-owner $UID_IP -j ACCEPT
     ip6tables -A OUTPUT -o lo -m owner --uid-owner $UID_IP -j ACCEPT
-    iptables -A INPUT -i lo -m owner --uid-owner $UID_IP -j ACCEPT
-    ip6tables -A INPUT -i lo -m owner --uid-owner $UID_IP -j ACCEPT
-
     # Drop invalid packets
     iptables -N drop_invalid
     iptables -A OUTPUT   -m state --state INVALID  -j drop_invalid
@@ -120,14 +115,13 @@ set_ip_rules() {
     ip6tables -A OUTPUT -p tcp -m tcp ! --tcp-flags SYN,RST,ACK SYN -m state --state NEW -j DROP
 
     # Allow HTTP and HTTPS to the allowed ips
-    #$1 is the list of ip4 and $2 the list of ip6
-    for i in "${1[@]}"
+    for i in "${ip[@]}"
     do
         iptables -A OUTPUT -p tcp --dport 80  -d $i -m owner --uid-owner $UID_IP -j ACCEPT
         iptables -A OUTPUT -p tcp --dport 443 -d $i -m owner --uid-owner $UID_IP -j ACCEPT
     done
 
-    for i in "${2[@]}"
+    for i in "${ip6[@]}"
     do
         ip6tables -A OUTPUT -p tcp --dport 80  -d $i -m owner --uid-owner $UID_IP -j ACCEPT
         ip6tables -A OUTPUT -p tcp --dport 443 -d $i -m owner --uid-owner $UID_IP -j ACCEPT
@@ -155,8 +149,7 @@ set_ip_rules() {
 
 set_hosts_file() {
     # Add the Website to Hosts:
-    #1 and 2 are parameters from create_lists
-    for i in "${1[@]}"
+    for i in "${ip_dns[@]}"
     do
 
         if grep -Fxq "$i" /etc/hosts; then
@@ -165,7 +158,7 @@ set_hosts_file() {
         echo "$i" >> /etc/hosts || { echo "Failed to write to /etc/hosts"; exit 1; }
         fi
     done
-    for i in "${2[@]}"
+    for i in "${ip6_dns[@]}"
     do
         if grep -Fxq "$i" /etc/hosts; then
         echo "$i is already in the host file; addition is skipped"
@@ -178,3 +171,5 @@ set_hosts_file() {
 
 install_dependencies
 create_lists
+set_ip_rules
+set_hosts_file
