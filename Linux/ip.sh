@@ -30,7 +30,7 @@ install_dependencies() {
         chmod +x /home/sysoperator/bin/ip_away.sh
     fi
     #kill old rules
-    sudo /home/sysoperator/bin/ip_away.sh
+    /home/sysoperator/bin/ip_away.sh
 }
 
 create_lists() {

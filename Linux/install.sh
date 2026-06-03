@@ -4,57 +4,55 @@
 #Install all Programms for the IOI and Girls Workshop
 install_all_programms () {
     #Add Repos
-    sudo add-apt-repository universe
+    add-apt-repository universe
     wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo tee /etc/apt/keyrings/sublimehq-pub.asc > /dev/null
     echo -e 'Types: deb\nURIs: https://download.sublimetext.com/\nSuites: apt/stable/\nSigned-By: /etc/apt/keyrings/sublimehq-pub.asc' | sudo tee /etc/apt/sources.list.d/sublime-text.sources
     echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-    sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-    sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+    install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+    sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
     rm packages.microsoft.gpg
     wget -O- https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmor --yes --output /usr/share/keyrings/oracle-virtualbox-2016.gpg
     echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox-2016.gpg] http://download.virtualbox.org/virtualbox/debian $(. /etc/os-release && echo "$VERSION_CODENAME") contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
 
-    sudo apt update
-    sudo apt -y upgrade
+    apt update
+    apt -y upgrade
 
     wget github.com/atom/atom/releases/download/v1.60.0/atom-amd64.deb
-    sudo apt -y install ./atom-amd64.deb
-    sudo apt-get -y install build-essential
+    apt -y install ./atom-amd64.deb
+    apt-get -y install build-essential
     rm atom-amd64.deb
 
     #Apt installed editors
-    sudo apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole python3-pip kate
+    apt-get -y install python3 geany joe emacs nano neovim python3-neovim sublime-text vim code ddd gdb valgrind ruby konsole python3-pip kate
 
     #Vbox
-    sudo touch /etc/modprobe.d/blacklist-kvm.conf
+    touch /etc/modprobe.d/blacklist-kvm.conf
     echo -e "blacklist kvm\nblacklist kvm_amd\nblacklist kvm_intel" | sudo tee /etc/modprobe.d/blacklist-kvm.conf
-    sudo modprobe -r kvm_intel kvm 2>/dev/null
-    sudo modprobe -r kvm_amd kvm 2>/dev/null
-    sudo apt install virtualbox-7.2
-    wget https://download.virtualbox.org/virtualbox/7.2.4/Oracle_VirtualBox_Extension_Pack-7.2.4.vbox-extpack
-    sudo vboxmanage extpack install Oracle_VirtualBox_Extension_Pack-7.2.4.vbox-extpack
-    sudo usermod -aG vboxusers $USER
-    sudo usermod -aG vboxusers anderes
+    modprobe -r kvm_intel kvm 2>/dev/null
+    modprobe -r kvm_amd kvm 2>/dev/null
+    apt install virtualbox-7.2
+    usermod -aG vboxusers $USER
+    usermod -aG vboxusers anderes
 
 
 
 
     #Eclipse
-    sudo snap install eclipse --classic
+    snap install eclipse --classic
 
     #KDevelop
-    sudo snap install kdevelop --classic
+    snap install kdevelop --classic
 
-    sudo apt-get remove -y "telnetd"
+    apt-get remove -y "telnetd"
 
     #Documentation
     wget https://docs.python.org/3/archives/python-3.14-docs-html.tar.bz2
     wget https://github.com/PeterFeicht/cppreference-doc/releases/download/v20250209/html-book-20250209.tar.xz
-    sudo mkdir -p /home/ioiuser/docs
-    sudo tar -xvjf python-3.14-docs-html.tar.bz2 -C /home/ioiuser/docs
-    sudo tar -xJf html-book-20250209.tar.xz -C /home/ioiuser/docs
-    sudo chown -R ioiuser:ioiuser /home/ioiuser/docs
+    mkdir -p /home/ioiuser/docs
+    tar -xvjf python-3.14-docs-html.tar.bz2 -C /home/ioiuser/docs
+    tar -xJf html-book-20250209.tar.xz -C /home/ioiuser/docs
+    chown -R ioiuser:ioiuser /home/ioiuser/docs
     rm python-3.14-docs-html.tar.bz2
     rm html-book-20250209.tar.xz
 
@@ -70,12 +68,12 @@ EOF
 }
 
 create_accounts () {
-    sudo sed -i 's|^SHELL=/bin/sh$|SHELL=/bin/bash|' /etc/default/useradd
-    sudo useradd -m anderes && echo "anderes:user" | sudo chpasswd
+    sed -i 's|^SHELL=/bin/sh$|SHELL=/bin/bash|' /etc/default/useradd
+    useradd -m anderes && echo "anderes:user" | sudo chpasswd
     echo "Enter the Password for the account bewertung"
     read bewertung_pass
-    sudo useradd -m bewertung && echo "bewertung:$bewertung_pass" | sudo chpasswd
-    sudo useradd -m ioiuser && echo "ioiuser:user" | sudo chpasswd
+    useradd -m bewertung && echo "bewertung:$bewertung_pass" | sudo chpasswd
+    useradd -m ioiuser && echo "ioiuser:user" | sudo chpasswd
 }
 
 set_ip_rules() {
@@ -86,7 +84,7 @@ set_ip_rules() {
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/main/Linux/ip6_dns_list
     mv ip6_dns_list /home/sysoperator/bin/
     chmod +x /home/sysoperator/bin/ip.sh
-    sudo /home/sysoperator/bin/ip.sh
+    /home/sysoperator/bin/ip.sh
 }
 
 add_bin_container() {
@@ -94,16 +92,16 @@ add_bin_container() {
 }
 
 create_backups() {
-    sudo cp -a /home/ioiuser /home/sysoperator
-    sudo cp -a /home/anderes /home/sysoperator
-    sudo cp -a /home/ioiuser /home/sysoperator/ioiuser_og
-    sudo cp -a /home/anderes /home/sysoperator/anderes_og
+    cp -a /home/ioiuser /home/sysoperator
+    cp -a /home/anderes /home/sysoperator
+    cp -a /home/ioiuser /home/sysoperator/ioiuser_og
+    cp -a /home/anderes /home/sysoperator/anderes_og
 
 }
 
 set_bewertungs_mode () {
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/bewertungs_mode.sh
-    sudo mv bewertungs_mode.sh /home/sysoperator/bin/bewertungs_mode.sh
+    mv bewertungs_mode.sh /home/sysoperator/bin/bewertungs_mode.sh
     chmod +x /home/sysoperator/bin/bewertungs_mode.sh
 }
 
@@ -127,13 +125,13 @@ set_backup_commands() {
     chmod +x /home/sysoperator/bin/anderes_renew.sh
 
     #Services
-    sudo mv renew_ioi.service /etc/systemd/system
-    sudo mv renew_ioi.timer /etc/systemd/system
+    mv renew_ioi.service /etc/systemd/system
+    mv renew_ioi.timer /etc/systemd/system
 
     #Enable services
-    sudo systemctl daemon-reload
-    sudo systemctl enable renew_ioi.timer
-    sudo systemctl start renew_ioi.timer
+    systemctl daemon-reload
+    systemctl enable renew_ioi.timer
+    systemctl start renew_ioi.timer
 }
 
 set_bewertung_config() {
@@ -144,25 +142,25 @@ set_bewertung_config() {
     echo "Enter the password for the WLAN: Bewertung"
     read bewertung_pass
     echo "            password: \"$bewertung_pass\"" >> bewertungs-plan.yaml
-    sudo chown root:root bewertungs-plan.yaml
-    sudo chmod 0600 bewertungs-plan.yaml
-    sudo mv bewertungs-plan.yaml /etc/netplan
-    sudo netplan apply
-    sudo netplan get
+    chown root:root bewertungs-plan.yaml
+    chmod 0600 bewertungs-plan.yaml
+    mv bewertungs-plan.yaml /etc/netplan
+    netplan apply
+    netplan get
 
 }
 
 other_config() {
 
     wget https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Linux/policies.json
-    sudo mkdir -p /etc/firefox/policies
-    sudo mv policies.json  /etc/firefox/policies
+    mkdir -p /etc/firefox/policies
+    mv policies.json  /etc/firefox/policies
     #Set Grub Password
     #No Welcome Screen for new users.
-    sudo apt remove --autoremove gnome-initial-setup
+    apt remove --autoremove gnome-initial-setup
     #Auto Updates for Security Updates
-    sudo apt-get install unattended-upgrades
-    sudo dpkg-reconfigure unattended-upgrades
+    apt-get install unattended-upgrades
+    dpkg-reconfigure unattended-upgrades
     echo "Please set up a password for grub"
     echo -e "Please set the default grub. For that open the file at /etc/default/grub and afterwards execute update-grub."
 }
