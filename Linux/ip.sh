@@ -10,8 +10,8 @@ set -e
 if [ ! -f /home/sysoperator/bin/ip_dns_list ] && [ ! -f /home/sysoperator/bin/ip6_dns_list ]; then
     echo "Allow lists are missing!"; exit 1;
 fi
-readarray ip_dns -t a < /home/sysoperator/bin/ip_dns_list
-readarray ip6_dns -t a < /home/sysoperator/bin/ip6_dns_list
+readarray -t ip_dns < <(tail -n +2 /home/sysoperator/bin/ip_dns_list)
+readarray -t ip6_dns < <(tail -n +2 /home/sysoperator/bin/ip6_dns_list)
 ip=()
 ip6=()
 
@@ -149,21 +149,31 @@ set_ip_rules() {
 
 set_hosts_file() {
     # Add the Website to Hosts:
-    for i in "${ip_dns[@]}"
-    do
+    for i in "${ip_dns[@]}"; do
+        # Skip if the line contains "NODNS"
+        if [[ "$i" == *"NODNS"* ]]; then
+            echo "Skipping $i (NODNS)"
+            continue
+        fi
 
         if grep -Fxq "$i" /etc/hosts; then
-        echo "$i is already in the host file; addition is skipped"
+            echo "$i is already in the host file; addition is skipped"
         else
-        echo "$i" >> /etc/hosts || { echo "Failed to write to /etc/hosts"; exit 1; }
+            echo "$i" >> /etc/hosts || { echo "Failed to write to /etc/hosts"; exit 1; }
         fi
     done
-    for i in "${ip6_dns[@]}"
-    do
+
+    for i in "${ip6_dns[@]}"; do
+        # Skip if the line contains "NODNS"
+        if [[ "$i" == *"NODNS"* ]]; then
+            echo "Skipping $i (NODNS)"
+            continue
+        fi
+
         if grep -Fxq "$i" /etc/hosts; then
-        echo "$i is already in the host file; addition is skipped"
+            echo "$i is already in the host file; addition is skipped"
         else
-        echo "$i" >> /etc/hosts || { echo "Failed to write to /etc/hosts"; exit 1; }
+            echo "$i" >> /etc/hosts || { echo "Failed to write to /etc/hosts"; exit 1; }
         fi
     done
 }
