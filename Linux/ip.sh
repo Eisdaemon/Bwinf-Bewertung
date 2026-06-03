@@ -151,34 +151,39 @@ set_ip_rules() {
 
 
 set_hosts_file() {
-    # Add the Website to Hosts:
+    # Define markers
+    local start_marker="### ADDED BY IP.SH DO NOT ADD LINES MANULLY BETWEEN THEY WILL GET REMOVED###"
+    local end_marker="### END ADDED BY IP.SH###"
+
+    # Remove everything between the markers (including the markers)
+    if grep -Fq "$start_marker" /etc/hosts; then
+        # Use sed to remove the block between markers (inclusive)
+        sed -i "/$start_marker/,/$end_marker/d" /etc/hosts
+    fi
+
+    # Add the start marker
+    echo "$start_marker" >> /etc/hosts || { echo "Failed to write to /etc/hosts"; exit 1; }
+
+    # Add IPv4 entries
     for i in "${ip_dns[@]}"; do
-        # Skip if the line contains "NODNS"
         if [[ "$i" == *"NODNS"* ]]; then
             echo "Skipping $i (NODNS)"
             continue
         fi
-
-        if grep -Fxq "$i" /etc/hosts; then
-            echo "$i is already in the host file; addition is skipped"
-        else
-            echo "$i" >> /etc/hosts || { echo "Failed to write to /etc/hosts"; exit 1; }
-        fi
+        echo "$i" >> /etc/hosts || { echo "Failed to write to /etc/hosts"; exit 1; }
     done
 
+    # Add IPv6 entries
     for i in "${ip6_dns[@]}"; do
-        # Skip if the line contains "NODNS"
         if [[ "$i" == *"NODNS"* ]]; then
             echo "Skipping $i (NODNS)"
             continue
         fi
-
-        if grep -Fxq "$i" /etc/hosts; then
-            echo "$i is already in the host file; addition is skipped"
-        else
-            echo "$i" >> /etc/hosts || { echo "Failed to write to /etc/hosts"; exit 1; }
-        fi
+        echo "$i" >> /etc/hosts || { echo "Failed to write to /etc/hosts"; exit 1; }
     done
+
+    # Add the end marker
+    echo "$end_marker" >> /etc/hosts || { echo "Failed to write to /etc/hosts"; exit 1; }
 }
 
 
