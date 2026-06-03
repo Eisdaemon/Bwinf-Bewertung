@@ -1,0 +1,2 @@
+#Add IPs and DNS to allow. Add Lines like this "186.137.201.138 contest.informatik-olympiade.de"; if there is no DNS like that "186.137.201.138 NODNS"
+186.137.201.138 contest.informatik-olympiade.de

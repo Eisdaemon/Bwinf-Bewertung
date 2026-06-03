@@ -10,8 +10,9 @@ set -e
 if [ ! -f /home/sysoperator/bin/ip_dns_list ] && [ ! -f /home/sysoperator/bin/ip6_dns_list ]; then
     echo "Allow lists are missing!"; exit 1;
 fi
-readarray -t ip_dns < <(tail -n +2 /home/sysoperator/bin/ip_dns_list)
-readarray -t ip6_dns < <(tail -n +2 /home/sysoperator/bin/ip6_dns_list)
+#Read lines from the files, ignore first line, remove empty lines
+readarray -t ip_dns < <(tail -n +2 /home/sysoperator/bin/ip_dns_list | grep -v '^$')
+readarray -t ip6_dns < <(tail -n +2 /home/sysoperator/bin/ip6_dns_list | grep -v '^$')
 ip=()
 ip6=()
 
@@ -28,6 +29,8 @@ install_dependencies() {
         mv -f ip_away.sh /home/sysoperator/bin/
         chmod +x /home/sysoperator/bin/ip_away.sh
     fi
+    #kill old rules
+    sudo /home/sysoperator/bin/ip_away.sh
 }
 
 create_lists() {
