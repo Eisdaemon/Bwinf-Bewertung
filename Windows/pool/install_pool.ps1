@@ -18,8 +18,11 @@ function install_programms {
     C:\msys64\msys2_shell.cmd -defterm -no-start -mingw64 -here -c "pacman -S mingw-w64-x86_64-clang mingw-w64-x86_64-clang-tools-extra"
     C:\msys64\msys2_shell.cmd -defterm -no-start -mingw64 -here -c "pacman -S mingw-w64-x86_64-make"
     C:\msys64\msys2_shell.cmd -defterm -no-start -mingw64 -here -c "pacman -S mingw-w64-x86_64-gdb"
+    C:\msys64\msys2_shell.cmd -defterm -no-start -mingw64 -here -c "pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain"
+
 
     Set-PathVariable AddPath 'C:\msys64\mingw64\bin'
+    Set-PathVariable AddPath 'C:\msys64\ucrt64\bin'
 
 }
 
