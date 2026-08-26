@@ -34,8 +34,8 @@ function harden_windows {
     mkdir "C:\Program Files\Mozilla Firefox\distribution"
     #Download Firefox config and set it up
     Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/worker/policies_firefox.json -OutFile "C:\Program Files\Mozilla Firefox\distribution\policies.json"
-    mkdir "C:\Program Files\Mozilla Thunderbird\distribution"
-    Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/worker/policies_thunderbird.json -OutFile "C:\Program Files\Mozilla Firefox\distribution\policies.json"
+    mkdir "C:\Program Files\Betterbird\distribution"
+    Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/worker/policies_thunderbird.json -OutFile "C:\Program Files\Betterbird\distribution\policies.json"
     $path = 'HKLM:\SOFTWARE\Policies\Adobe\Adobe Acrobar\DC\FeatureLockDown'
 
     $key = try {
