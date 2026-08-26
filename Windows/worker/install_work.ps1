@@ -1,4 +1,4 @@
-funcktion set_users ·{
+function set_users {
 
     $user_name = Read-Host "Enter the username of the new worker"
     $user_pass = Read-Host "Enter the password of the new worker"
