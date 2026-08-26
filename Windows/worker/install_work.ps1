@@ -8,14 +8,14 @@ function set_users {
     Add-LocalGroupMember -Group "Netzwerkkonfigurations-Operatoren" -Member $user_name -Verbose
 }
 
-#Install all necessary programms for a pool laptop
+#Install all necessary programms for a workerlaptop
 function install_programms {
     #Auto install from a config file, which has to be created.
-    $filename = "pool.json"
+    $filename = "worker.json"
     $poolJsonPath = Join-Path -Path $PWD -ChildPath $filename
     winget settings --enable BypassCertificatePinningForMicrosoftStore
     Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/worker/worker.json -OutFile $poolJsonPath
-    & ([ScriptBlock]::Create((irm "https://christitus.com/win"))) -Config pool.json -Run
+    & ([ScriptBlock]::Create((irm "https://christitus.com/win"))) -Config worker.json
     winget install Romanitho.Winget-AutoUpdate
     Add-Content -Path "C:\Program Files\Winget-AutoUpdate\config\default_excluded_apps.txt" -Value "Discord.Discord"
 
