@@ -16,6 +16,7 @@ function install_programms {
     winget settings --enable BypassCertificatePinningForMicrosoftStore
     Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/worker/worker.json -OutFile $poolJsonPath
     & ([ScriptBlock]::Create((irm "https://christitus.com/win"))) -Config worker.json
+    winget install --id Mozilla.Firefox --locale de-DE
     winget install Romanitho.Winget-AutoUpdate
     Add-Content -Path "C:\Program Files\Winget-AutoUpdate\config\default_excluded_apps.txt" -Value "Discord.Discord"
 
