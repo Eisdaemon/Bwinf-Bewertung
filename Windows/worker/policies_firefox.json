@@ -27,7 +27,7 @@
       }
     },
     "Homepage": {
-      "URL": "https://intern.bwinf.de/",
+      "URL": "https://bwinf.de/",
       "Locked": false,
       "StartPage": "previous-session"
     },
@@ -52,6 +52,58 @@
     },
     "PostQuantumKeyAgreementEnabled": true,
     "RequestedLocales": "de,en-US",
-    "SSLVersionMin": "tls1.2"
+    "SSLVersionMin": "tls1.2",
+    "DisableProfileImport": true,
+    "PasswordManagerEnabled": true,
+    "SkipTermsOfUse": true,
+    "FirefoxHome": {
+    "SponsoredTopSites": false,
+    "Highlights":false,
+    "Stories": false,
+    "SponsoredStories": false
+      },
+        "NoDefaultBookmarks": true,
+        "Bookmarks": [
+      {
+        "Title": "Share Bwinf",
+        "URL": "https://share.bwinf.de",
+        "Favicon": "data:image/png;base64,UklGRtwBAABXRUJQVlA4TM8BAAAvH8AHEOfjoG0kScryJ7z3dJkG47ZtJLn/avd1r00EbdvGO3/IV8OgkSRFlTv/wuBBDdNEgRIggQCBBAiW/YEAYY3GgAT2JxhrNCuaAJYAwQKa/x1IjPsSiGEkBoT7Jvyv+Z2zP/fFsBgBEmONEeCeMfblPT4IFsNi/J8kBuzP/xwLhDVGIMY9sawJKwnsj6GBAIlRbEWKFCnW4i9SrkijuJ9Un1wr+5f3lSuALdm2aWePa8a2bdu2bWvGTv7+MnyO6P8EGPN2f60oXz+9G2Oe9aWv5k1f/Hn/VQ83X3Wr/+XGQGtL71r0jposAJa6g4i2FnclHWYDNhuQuS9pd3Er2EoeWKr2VAuF85dXS6VQqb0qC+SvStqOITBjHsrOJOmiHGbTCYzdkRqhabwcYmBdQXes+KFivBGapTiKpPNkIE0hs4CUc6mABMlDjaRcICtUPpAnqRqvVIxz6mTUAjiPg536AMvYyYSTEmmaoK5O6AjWDe0uAi0zkgbtgG/yLB1r/4V0OWQj9XTKBziGFLjZ2zayLy27Iam+IRmcC9L+cFvfpiKcTyRo/JyifdiT6/PmdB3oX3nzVXdPX/X4/lUf5vVrXowxnw830bp5/DAGAA==",
+        "Placement": "toolbar"
+      },
+      {
+        "Title": "BWINF",
+        "URL": "https://bwinf.de",
+        "Placement": "toolbar"
+      },
+      {
+        "Title": "BBB",
+        "URL": "https://video.bwinf.de",
+        "Placement": "toolbar"
+      },
+      {
+        "Title": "JWINF",
+        "URL": "https://jwinf.de",
+        "Placement": "toolbar",
+        "Folder": "BWINF"
+      },
+      {
+        "Title": "Mailbox",
+        "URL": "https://mailbox.org",
+        "Placement": "toolbar",
+        "Folder": "BWINF"
+      },
+      {
+        "Title": "AMS",
+        "URL": "https://login.bwinf.de/app/PMS",
+        "Placement": "toolbar",
+        "Folder": "BWINF"
+      },
+      {
+        "Title": "Git",
+        "URL": "https://git.bwinf.de",
+        "Placement": "toolbar",
+        "Folder": "BWINF"
+      }
+    ]
   }
 }
