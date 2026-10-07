@@ -6,6 +6,7 @@ function install_programms {
     winget settings --enable BypassCertificatePinningForMicrosoftStore
     Invoke-WebRequest https://raw.githubusercontent.com/Eisdaemon/Bwinf-Bewertung/refs/heads/main/Windows/pool/pool.json -OutFile $poolJsonPath
     & ([ScriptBlock]::Create((irm "https://christitus.com/win"))) -Config pool.json -Run
+    winget install --id Mozilla.Firefox --locale de-DE
     winget install Romanitho.Winget-AutoUpdate
     winget install Microsoft.OpenJDK.17
     winget install -e --id JetBrains.PyCharm.Community
