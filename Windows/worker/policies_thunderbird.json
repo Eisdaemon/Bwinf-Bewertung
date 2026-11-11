@@ -21,8 +21,7 @@
         "Status": "locked"
       },
       "mailnews.display.html_as": {
-        "Value": 3  ,
-        "Status": "false"
+        "Value": 3
       }
     }
   }
