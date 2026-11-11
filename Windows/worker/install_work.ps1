@@ -18,7 +18,8 @@ function install_programms {
     & ([ScriptBlock]::Create((irm "https://christitus.com/win"))) -Config worker.json
     winget install --id Mozilla.Firefox --locale de-DE
     winget install Romanitho.Winget-AutoUpdate
-    Add-Content -Path "C:\Program Files\Winget-AutoUpdate\config\default_excluded_apps.txt" -Value "\nDiscord.Discord*"
+    $exclusion = "Discord.Discord*"
+    Add-Content -Path "C:\Program Files\Winget-AutoUpdate\config\default_excluded_apps.txt" -Value $("`n" + $exclusion) -Encoding ASCII
 
 }
 
