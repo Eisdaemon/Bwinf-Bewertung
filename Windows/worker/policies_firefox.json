@@ -52,6 +52,15 @@
     },
     "PostQuantumKeyAgreementEnabled": true,
     "RequestedLocales": "de,en-US",
+    "Certificates": {
+      "ImportEnterpriseRoots": false
+    },
+    "Preferences": {
+      "security.disable_button.openCertManager": {
+        "Value": true,
+        "Status": "locked"
+      }
+    },
     "SSLVersionMin": "tls1.2",
     "DisableProfileImport": true,
     "PasswordManagerEnabled": true,
